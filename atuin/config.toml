@@ -1,0 +1,271 @@
+## where to store your database, default is your system data directory
+## linux/mac: ~/.local/share/atuin/history.db
+
+## where to store your encryption key, default is your system data directory
+## linux/mac: ~/.local/share/atuin/key
+
+## where to store your auth session token, default is your system data directory
+## linux/mac: ~/.local/share/atuin/session
+
+## date format used, either "us" or "uk"
+# dialect = "us"
+
+## default timezone to use when displaying time
+## JST (+9) for Japan Standard Time
+timezone = "+9"
+
+## enable or disable automatic sync
+# auto_sync = true
+
+## enable or disable automatic update checks
+# update_check = true
+
+## address of the sync server
+# sync_address = "https://api.atuin.sh"
+
+## how often to sync history. note that this is only triggered when a command
+## is ran, so sync intervals may well be longer
+## set it to 0 to sync after every command
+sync_frequency = "5m"
+
+## which search mode to use
+## possible values: prefix, fulltext, fuzzy, skim
+search_mode = "fuzzy"
+
+## which filter mode to use by default
+## possible values: "global", "host", "session", "directory", "workspace"
+filter_mode = "global"
+
+## With workspace filtering enabled, Atuin will filter for commands executed
+## in any directory within a git repository tree (default: false).
+workspaces = true
+
+## which filter mode to use when atuin is invoked from a shell up-key binding
+## Up-key search scoped to current host for more precise results
+filter_mode_shell_up_key_binding = "host"
+
+## which search mode to use when atuin is invoked from a shell up-key binding
+search_mode_shell_up_key_binding = "fuzzy"
+
+## which style to use
+## possible values: auto, full, compact
+## Compact mode is more friendly in small tmux panes
+style = "full"
+
+## the maximum number of lines the interface should take up
+## set it to 0 to always go full screen
+## Limit search UI height to avoid taking over small panes
+inline_height = 40
+
+## Invert the UI - put the search bar at the top
+# invert = false
+
+## enable or disable showing a preview of the selected command
+## useful when the command is longer than the terminal width and is cut off
+show_preview = true
+
+## what to do when the escape key is pressed when searching
+## possible values: return-original, return-query
+exit_mode = "return-original"
+
+## possible values: emacs, subl
+# word_jump_mode = "emacs"
+
+## characters that count as a part of a word
+# word_chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+
+## number of context lines to show when scrolling by pages
+# scroll_context_lines = 1
+
+## use ctrl instead of alt as the shortcut modifier key for numerical UI shortcuts
+# ctrl_n_shortcuts = false
+
+## default history list format - can also be specified with the --format arg
+history_format = "{time}\t{command}\t{duration}"
+
+## prevent commands matching any of these regexes from being written to history.
+## Note that these regular expressions are unanchored, i.e. if they don't start
+## with ^ or end with $, they'll match anywhere in the command.
+history_filter = [
+  "^secret-cmd",
+  "^innocuous-cmd .*--secret=.+",
+  "^export .*TOKEN",
+  "^export .*SECRET",
+  "^export .*PASSWORD",
+  "^export .*KEY=",
+]
+
+## prevent commands run with cwd matching any of these regexes from being written
+## to history.
+# cwd_filter = [
+#   "^/very/secret/area",
+# ]
+
+## Configure the maximum height of the preview to show.
+max_preview_height = 4
+
+## Configure whether or not to show the help row
+show_help = true
+
+## Configure whether or not to show tabs for search and inspect
+show_tabs = true
+
+## Configure whether or not the tabs row may be auto-hidden
+# auto_hide_height = 8
+
+## Defaults to true. This matches history against a set of default regex,
+## and will not save it if we get a match.
+secrets_filter = true
+
+## Defaults to true. If enabled, upon hitting enter Atuin will immediately
+## execute the command. Press tab to return to the shell and edit.
+enter_accept = true
+
+## Specifies the keymap on the startup of `atuin search`.
+## "auto" will detect based on the shell's current keymap.
+keymap_mode = "auto"
+
+## Cursor style in each keymap mode.
+# keymap_cursor = { emacs = "blink-block", vim_insert = "blink-block", vim_normal = "steady-block" }
+
+# network_connect_timeout = 5
+# network_timeout = 5
+
+## Timeout (in seconds) for acquiring a local database connection (sqlite)
+# local_timeout = 5
+
+## Set this to true and Atuin will minimize motion in the UI
+# prefers_reduced_motion = false
+
+[stats]
+## Set commands where we should consider the subcommand for statistics.
+## Enables distinguishing subcommands like git commit vs git push in stats
+common_subcommands = [
+  "az",
+  "bun",
+  "cargo",
+  "docker",
+  "git",
+  "go",
+  "kubectl",
+  "npm",
+  "pnpm",
+  "systemctl",
+  "terraform",
+  "tmux",
+  "yarn",
+]
+
+## Set commands that should be totally stripped and ignored from stats
+common_prefix = ["sudo"]
+
+## ignored_commands only supports exact matching (no regex)
+## Curated from history analysis + ~/.zshrc aliases
+ignored_commands = [
+  # Navigation — cd aliases from .zshrc (14k+ hits combined)
+  "cd",
+  "..",
+  "...",
+  "....",
+  ".....",
+  "cdwork", # cd ~/workspace
+  "cdcode", # cd ~/code
+  "z",      # zellij / zoxide
+
+  # Listing — lsd aliases from .zshrc (6k+ hits combined)
+  "ls",
+  "ll",  # lsd -lhF
+  "la",  # lsd -AF
+  "lla", # lsd -lahF
+  "l",
+  "lt",  # du -sh * | sort -h
+
+  # Git read-only aliases from .zshrc
+  "gs",  # git status (7700)
+  "gd",  # git diff (929)
+  "gad", # git diff --staged (154)
+  "gl",  # git log --oneline (89)
+  "glc", # git log --graph (formatted)
+  "g",   # bare git (1352)
+
+  # Editor/IDE launchers from .zshrc — just opening a tool
+  "vi",
+  "vim",      # alias vim=nvim
+  "v",        # nvim
+  "vv",       # nvim . (1780)
+  "code",     # code . (154)
+  "opencode", # (228)
+  "kiro",     # kiro (117)
+  "kk",       # kiro .
+  "agy",      # agy . (99)
+  "trae",     # (47)
+  "gemini",   # (196)
+  "webstorm", # webstorm .
+
+  # Bare package manager calls from .zshrc
+  "n", # npm
+  "y", # yarn
+  "p", # pnpm (774)
+  "b", # bun
+
+  # httpie aliases from .zshrc
+  "h",  # http (236)
+  "hs", # https (1088)
+
+  # Docker read-only aliases from .zshrc
+  "d",    # bare docker (327)
+  "di",   # docker images (141)
+  "dl",   # docker ps -l -q
+  "dps",  # docker ps (68)
+  "dpsa", # docker ps -a
+  "dcip", # docker inspect IP
+  "dirm", # docker rmi (47)
+
+  # Other trivial utilities
+  "clear",
+  "pwd",
+  "exit",
+  "history",
+  "open",    # open . (60)
+  "my",      # curl ifconfig.io (114)
+  "myip",    # dig myip
+  "t",       # tmux launcher (220)
+  "m",       # multipass (215)
+  "tf",      # bare terraform
+  "j",       # jobs -l
+  "reload",  # exec $SHELL -l
+  "s",       # (55)
+]
+
+[keys]
+# Defaults to true. If disabled, using the up/down key won't exit the TUI when scrolled past the first/last entry.
+# scroll_exits = true
+# exit_past_line_start = true
+# accept_past_line_end = true
+
+[sync]
+# Enable sync v2 by default
+records = true
+
+[preview]
+## which preview strategy to use to calculate the preview height
+## possible values: auto, static, fixed
+strategy = "auto"
+
+[daemon]
+## Enables using the daemon to sync. Requires the daemon to be running in the background.
+## Start it with `atuin daemon`
+# enabled = false
+
+## How often the daemon should sync in seconds
+# sync_frequency = 300
+
+# [theme]
+## Color theme to use for rendering in the terminal.
+# name = "autumn"
+# debug = true
+
+[search]
+## The list of enabled filter modes, in order of priority.
+## Workspace mode is especially useful inside git repositories
+filters = ["global", "host", "session", "workspace", "directory"]

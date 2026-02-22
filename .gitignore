@@ -1,4 +1,18 @@
 
+# ── Dotfiles-specific ignores ─────────────────────────────────────────────────
+# tmux: plugin manager binaries (oh-my-tmux uses symlink, don't track plugins dir)
+tmux/plugins/
+
+# yazi: cache & state dirs
+yazi/state/
+yazi/cache/
+
+# btop: log file
+btop/btop.log
+
+# atuin: db files if any end up here
+atuin/*.db
+
 # Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,macos
 # Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,macos
 

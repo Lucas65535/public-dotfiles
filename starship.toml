@@ -1,0 +1,331 @@
+palette = "catppuccin_latte"
+
+format = """
+$azure\
+$time\
+$kubernetes\
+$git_branch\
+$git_commit\
+$git_status\
+$directory\
+$python\
+$nodejs\
+$rust\
+$golang\
+$java\
+$line_break$character\
+"""
+# format = """
+# [](color_orange)\
+# $os\
+# $time\
+# [](bg:color_yellow fg:color_orange)\
+# $directory\
+# [](fg:color_yellow bg:color_green)\
+# $git_branch\
+# [](fg:color_green bg:color_aqua)\
+# $git_commit\
+# $git_status\
+# $git_state\
+# $git_metrics\
+# [](fg:color_aqua bg:color_blue)\
+# $c\
+# $rust\
+# $golang\
+# $nodejs\
+# $java\
+# $kotlin\
+# $haskell\
+# $python\
+# [](fg:color_blue bg:color_bg3)\
+# $docker_context\
+# $conda\
+# [ ](fg:color_bg3)\
+# $azure\
+# $line_break $character"""
+
+
+
+[line_break]
+disabled = false
+
+[character]
+success_symbol = "[󰀵](bold green)"
+error_symbol = "[](bold red)"
+
+[time]
+style = 'green'
+format = '[$time]($style) '
+disabled = false
+time_format = "%y-%m-%d %a(W%U) %T"
+
+[directory]
+truncation_length = 2
+read_only = " 🔒"
+style = "flamingo"
+
+[git_branch]
+symbol = ""
+style = 'mauve'
+format = '[$symbol $branch]($style)'
+
+[git_status]
+style = "teal"
+conflicted = '🏳'
+ahead = '🏎💨'
+behind = '😰'
+diverged = '😵'
+up_to_date = '✓ '
+untracked = '🤷'
+stashed = '📦'
+modified = '📝'
+staged = '[++\($count\)](green)'
+renamed = '👅'
+deleted = '🗑'
+
+[git_commit]
+only_detached = false
+disabled = false
+commit_hash_length = 8
+format = '[  $hash $tag]($style)'
+tag_symbol = "🔖"
+style = "yellow"
+
+[kubernetes]
+disabled = false
+format = '[$symbol$context\[$namespace\]]($style) '
+# format = 'via [$symbol $context\($namespace\)](bold purple) '
+symbol = "⎈ "
+style = "lavender"
+
+
+[azure]
+disabled = false
+format = "[$symbol($subscription)]($style) "
+symbol = "󰠅 "
+style = "blue italic"
+
+[azure.subscription_aliases]
+"SUB22013162557" = "DEV"
+"Azure subscription 1" = "Prod"
+"SUB24092532288_20240930" = "Gitlab"
+
+[python]
+format = "[$virtualenv( $version) ]($style)"
+style = "green"
+
+[nodejs]
+symbol = ''
+format = "[$symbol( $version) ]($style)"
+style = "green"
+
+[rust]
+symbol = ""
+format = "[$symbol( $version) ]($style)"
+style = "rosewater"
+
+[golang]
+symbol = ""
+format = "[$symbol( $version) ]($style)"
+style = "sky"
+
+[palettes.catppuccin_latte]
+rosewater = "#dc8a78"
+flamingo = "#dd7878"
+pink = "#ea76cb"
+mauve = "#8839ef"
+red = "#d20f39"
+maroon = "#e64553"
+peach = "#fe640b"
+yellow = "#df8e1d"
+green = "#40a02b"
+teal = "#179299"
+sky = "#04a5e5"
+sapphire = "#209fb5"
+blue = "#1e66f5"
+lavender = "#7287fd"
+text = "#4c4f69"
+subtext1 = "#5c5f77"
+subtext0 = "#6c6f85"
+overlay2 = "#7c7f93"
+overlay1 = "#8c8fa1"
+overlay0 = "#9ca0b0"
+surface2 = "#acb0be"
+surface1 = "#bcc0cc"
+surface0 = "#ccd0da"
+base = "#eff1f5"
+mantle = "#e6e9ef"
+crust = "#dce0e8"
+
+[palettes.catppuccin_frappe]
+rosewater = "#f2d5cf"
+flamingo = "#eebebe"
+pink = "#f4b8e4"
+mauve = "#ca9ee6"
+red = "#e78284"
+maroon = "#ea999c"
+peach = "#ef9f76"
+yellow = "#e5c890"
+green = "#a6d189"
+teal = "#81c8be"
+sky = "#99d1db"
+sapphire = "#85c1dc"
+blue = "#8caaee"
+lavender = "#babbf1"
+text = "#c6d0f5"
+subtext1 = "#b5bfe2"
+subtext0 = "#a5adce"
+overlay2 = "#949cbb"
+overlay1 = "#838ba7"
+overlay0 = "#737994"
+surface2 = "#626880"
+surface1 = "#51576d"
+surface0 = "#414559"
+base = "#303446"
+mantle = "#292c3c"
+crust = "#232634"
+
+[palettes.catppuccin_macchiato]
+rosewater = "#f4dbd6"
+flamingo = "#f0c6c6"
+pink = "#f5bde6"
+mauve = "#c6a0f6"
+red = "#ed8796"
+maroon = "#ee99a0"
+peach = "#f5a97f"
+yellow = "#eed49f"
+green = "#a6da95"
+teal = "#8bd5ca"
+sky = "#91d7e3"
+sapphire = "#7dc4e4"
+blue = "#8aadf4"
+lavender = "#b7bdf8"
+text = "#cad3f5"
+subtext1 = "#b8c0e0"
+subtext0 = "#a5adcb"
+overlay2 = "#939ab7"
+overlay1 = "#8087a2"
+overlay0 = "#6e738d"
+surface2 = "#5b6078"
+surface1 = "#494d64"
+surface0 = "#363a4f"
+base = "#24273a"
+mantle = "#1e2030"
+crust = "#181926"
+
+[palettes.catppuccin_mocha]
+rosewater = "#f5e0dc"
+flamingo = "#f2cdcd"
+pink = "#f5c2e7"
+mauve = "#cba6f7"
+red = "#f38ba8"
+maroon = "#eba0ac"
+peach = "#fab387"
+yellow = "#f9e2af"
+green = "#a6e3a1"
+teal = "#94e2d5"
+sky = "#89dceb"
+sapphire = "#74c7ec"
+blue = "#89b4fa"
+lavender = "#b4befe"
+text = "#cdd6f4"
+subtext1 = "#bac2de"
+subtext0 = "#a6adc8"
+overlay2 = "#9399b2"
+overlay1 = "#7f849c"
+overlay0 = "#6c7086"
+surface2 = "#585b70"
+surface1 = "#45475a"
+surface0 = "#313244"
+base = "#1e1e2e"
+mantle = "#181825"
+crust = "#11111b"
+# [palettes.tokyonight]
+# error = "#f7768e"
+# success = "#9ece6a"
+# directory = "#2ac3de"
+# commit = "#2ac3de"
+# branch = "#f7768e"
+# symbol = "#7dcfff"
+# status = "#9d7cd8"
+# python = "#565f89"
+# node = "#73daca"
+# rust = "#ff9e64"
+# go = "#7aa2f7"
+#
+# [palettes.gruvbox]
+# error = "#fb4934"
+# success = "#b8bb26"
+# directory = "#73daca"
+# commit = "#73daca"
+# branch = "#fabd2f"
+# symbol = "#83a598"
+# status = "#928374"
+# python = "#fabd2f"
+# node = "#83a598"
+# rust = "#fe8019"
+# go = "#83a598"
+#
+# [palettes.kanagawa]
+# error = "#E46876"
+# success = "#98BB6C"
+# directory = "#7FB4CA"
+# commit = "#7FB4CA"
+# branch = "#E46876"
+# symbol = "#7FB4CA"
+# status = "#54546D"
+# python = "#DCA561"
+# node = "#98BB6C"
+# rust = "#DCA561"
+# go = "#7FB4CA"
+#
+# [palettes.catppuccin_mocha]
+# error = "#F38BA8"
+# success = "#A6E3A1"
+# directory = "#89B4FA"
+# commit = "#89B4FA"
+# branch = "#F38BA8"
+# symbol = "#89B4FA"
+# status = "#9399B2"
+# python = "#F9E2AF"
+# node = "#A6E3A1"
+# rust = "F9E2AF"
+# go = "#89B4FA"
+
+# [palettes.darkplus]
+# error = "#ff1212"
+# success = "#4EC9B0"
+# directory = "#569CD6"
+# commit = "#569CD6"
+# branch = "#FF6B6B"
+# symbol = "#4EC9B0"
+# status = "#C586C0"
+# python = "#DCDCAA"
+# go = "#9CDCFE"
+# node = "#4EC9B0"
+# rust = "#4EC9B0"
+#
+# [palettes.ayumirage]
+# error = "#f28779"
+# success = "#D5FF80"
+# directory = "#FAD07B"
+# commit = "#FAD07B"
+# branch = "#f28779"
+# symbol = "#73D0FF"
+# status = "#DFBFFF"
+# python = "#DCDCAA"
+# go = "#9CDCFE"
+# node = "#4EC9B0"
+# rust = "#4EC9B0"
+#
+# [palettes.everforestdark]
+# error = "#E67E81"
+# success = "#7EB98C"
+# directory = "#DBBC7F"
+# commit = "#DBBC7F"
+# branch = "#E67E81"
+# symbol = "#7FBBB3"
+# status = "#D699B6"
+# python = "#DBBC7F"
+
+

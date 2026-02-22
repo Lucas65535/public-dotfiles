@@ -1,0 +1,56 @@
+# font-family = "Google Sans Code"
+# font-family = TX-02-Data
+# font-family = "Maple Mono NF CN"
+font-family = "Ioskeley Mono"
+font-size = 12.6
+font-thicken = true
+cursor-style = block
+cursor-style-blink = true
+adjust-cell-height = 0
+
+macos-option-as-alt = true
+
+# shiftやctrlを押しながらでも改行が入力できるように
+keybind = shift+enter=text:\x0d
+keybind = ctrl+enter=text:\x0d
+
+# Quake Terminal
+keybind = global:cmd+shift+space=toggle_quick_terminal
+
+# タイピング中はカーソルを非表示
+mouse-hide-while-typing = true
+
+# titlebarをtab形式に
+macos-titlebar-style = hidden
+
+# シェル連携のカーソル制御を無効化
+shell-integration-features = no-cursor
+
+# ssh接続先での$TERM対策
+term = xterm-256color
+
+# 减少滚动历史，节省内存
+scrollback-limit = 50000
+# 减少水平边距，节省屏幕空间
+window-padding-x = 15
+# 统一垂直边距
+window-padding-y = 15
+window-save-state = "always"
+background-blur-radius = 10
+
+background-opacity = 1
+window-colorspace = "display-p3"
+theme = catppuccin-mocha.conf
+# theme = Glacier.conf
+# theme = TokyoNight.conf
+# theme = aura.conf
+# theme = tokyonight
+# theme = monokai-pro.conf
+# theme = Breadog
+# Rosé Pine Dawn https://rosepinetheme.com/palette/ingredients
+# background = faf4ed
+background = #0d0d0d
+selection-invert-fg-bg = true
+
+keybind = ¥=text:\\
+
