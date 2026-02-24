@@ -1,0 +1,5 @@
+# ── Yazi Theme ───────────────────────────────────────────────────────────────
+# Use Catppuccin Mocha flavor as the base, consistent with fzf/bat/zsh/ghostty
+
+[flavor]
+use = "catppuccin-mocha"

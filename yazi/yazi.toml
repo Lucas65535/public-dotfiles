@@ -1,0 +1,41 @@
+# ── Yazi File Manager Configuration ──────────────────────────────────────────
+
+[manager]
+# Show hidden files by default
+show_hidden = true
+# Sort: natural order, directories first
+sort_by = "natural"
+sort_dir_first = true
+sort_sensitive = false
+sort_reverse = false
+# Line mode: show size + mtime
+linemode = "size"
+
+[preview]
+# Max preview width/height
+max_width = 600
+max_height = 900
+# Image preview cache size
+cache_dir = ""
+
+[opener]
+edit = [
+  { run = 'nvim "$@"', block = true, desc = "nvim" },
+]
+open = [
+  { run = 'open "$@"', desc = "Open with system default" },
+]
+
+[open]
+rules = [
+  { mime = "text/*", use = "edit" },
+  { mime = "application/json", use = "edit" },
+  { name = "*.toml", use = "edit" },
+  { name = "*.yaml", use = "edit" },
+  { name = "*.yml", use = "edit" },
+  { name = "*.md", use = "edit" },
+  { name = "*.sh", use = "edit" },
+  { name = "*.lua", use = "edit" },
+  { name = "*.conf", use = "edit" },
+  { mime = "*", use = "open" },
+]

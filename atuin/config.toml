@@ -170,7 +170,8 @@ ignored_commands = [
   ".....",
   "cdwork", # cd ~/workspace
   "cdcode", # cd ~/code
-  "z",      # zellij / zoxide
+  "z",      # zoxide
+  "zi",     # zoxide interactive
 
   # Listing — lsd aliases from .zshrc (6k+ hits combined)
   "ls",
@@ -203,10 +204,11 @@ ignored_commands = [
   "webstorm", # webstorm .
 
   # Bare package manager calls from .zshrc
-  "n", # npm
-  "y", # yarn
-  "p", # pnpm (774)
-  "b", # bun
+  "n",  # npm
+  "y",  # yazi wrapper
+  "ya", # yarn
+  "p",  # pnpm (774)
+  "b",  # bun
 
   # httpie aliases from .zshrc
   "h",  # http (236)

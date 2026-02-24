@@ -1,0 +1,17 @@
+# ── Yazi Keymap ──────────────────────────────────────────────────────────────
+# Only override/add keys here; defaults are inherited automatically.
+
+[manager]
+prepend_keymap = [
+  # Quick navigation with zoxide
+  { on = [
+    "g",
+    "z",
+  ], run = "plugin zoxide", desc = "Jump with zoxide" },
+
+  # Open shell at current directory
+  { on = [
+    "g",
+    "s",
+  ], run = "shell zsh --block --confirm", desc = "Open shell here" },
+]

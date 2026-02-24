@@ -1,25 +1,4 @@
 
-function get_azure_subscription_alias() {
-    local sub="$1"
-    case "$sub" in
-        "SUB22013162557") echo "dev_sub" ;;
-        "Azure subscription 1") echo "prod_sub" ;;
-        "SUB24092532288_20240930") echo "gitlab_sub" ;;
-        *) echo "$sub" ;;
-    esac
-}
-
-# export STARSHIP_AZURE_SUBSCRIPTION_NAME=$(get_azure_subscription_alias $(az account show --query name -o tsv 2>/dev/null))
-# export subscription=$(get_azure_subscription_alias $(az account show --query name -o tsv 2>/dev/null))
-
-# Delay slow Azure lookup until needed to speed up terminal startup
-get_current_sub() {
-    export subscription=$(get_azure_subscription_alias $(az account show --query name -o tsv 2>/dev/null))
-    echo "Current subscription: $subscription"
-}
-# Default placeholder
-export subscription="unknown (run get_current_sub)"
-
 # aliases
 alias ls="lsd"
 alias la="lsd -AF"
@@ -48,7 +27,7 @@ alias gcamendnoedit="git commit --amend --no-edit"
 alias ga="git add ."
 alias gp="git push"
 alias startgit="cd \$(git rev-parse --show-toplevel) && git checkout main && git pull"
-alias y="yarn"
+alias ya="yarn"
 alias p="pnpm"
 alias b="bun"
 alias nn='/opt/homebrew/bin/n'
@@ -58,7 +37,6 @@ alias t="tmux -f ~/.config/tmux/tmux.conf"
 alias '..'='cd ../'
 alias '...'='cd ../../'
 alias '....'='cd ../../../'
-alias '.....'='cd ../../../../'
 alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
 
 # httpie
@@ -77,16 +55,13 @@ alias k="kubectl"
 alias m="multipass"
 
 # Docker alias
-# Docker
 alias d="docker"
-
 dtags() {
   local image="${1}"
   curl -s -S "https://registry.hub.docker.com/v2/repositories/library/${image}/tags/" \
     | jq '."results"[]["name"]' \
     | sort
 }
-
 # Docker Images
 alias di="docker images"
 alias dirm="docker rmi"
@@ -110,16 +85,13 @@ alias dci="docker container run -it -P"
 alias dcke="docker exec -it"
 
 # ==========================
-
-alias z=zellij
 alias tf=terraform
 alias cdcode="cd $HOME/code"
 alias cdwork="cd $HOME/workspace"
 alias code="code ."
-alias kk="kiro ."
+alias kiro="kiro ."
 alias agy="agy ."
 alias open="open ."
-alias webstorm="webstorm ."
 
 alias reload='exec $SHELL -l'
 alias connections='lsof -PiTCP -n'
@@ -132,9 +104,20 @@ export PATH="$HOME/.bun/bin:$HOME/.local/bin:$PATH"
 
 # path of node version management (n which lts)
 export PATH="/usr/local/bin:$PATH"
+# ── auto completion ──────────────────────────────────────────────────────────
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
 autoload -Uz compinit && compinit
 
+# ── fzf ──────────────────────────────────────────────────────────────────────
 eval "$(fzf --zsh)"
+export FZF_DEFAULT_OPTS="\
+  --height=40% --layout=reverse --border=rounded --margin=0,1 \
+  --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
+  --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
+  --color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8 \
+  --color=selected-bg:#45475a \
+  --prompt='❯ ' --pointer='▶' --marker='✓' \
+  --bind='ctrl-d:half-page-down,ctrl-u:half-page-up'"
 # Optimize Homebrew plugin loading by avoiding $(brew --prefix) call
 if [[ -d /opt/homebrew ]]; then
     source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -190,6 +173,20 @@ ZSH_HIGHLIGHT_STYLES[cursor]='bg=#f5e0dc'
 
 eval "$(atuin init zsh)"
 
+# ── zoxide (smart cd) ────────────────────────────────────────────────────────
+eval "$(zoxide init zsh)"
+
+# ── yazi (file manager) ─────────────────────────────────────────────────────
+# Wrapper: quit yazi and cd to the directory you navigated to
+function y() {
+  local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+  yazi "$@" --cwd-file="$tmp"
+  if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+    builtin cd -- "$cwd"
+  fi
+  rm -f -- "$tmp"
+}
+
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
@@ -210,16 +207,11 @@ azswitch() {
         local sub_id=$(echo "$sub_info" | awk '{print $(NF-1)}') 
         
         if [[ -n "$sub_id" ]]; then
-            echo "Switching to subscription: $sub_id"
             az account set --subscription "$sub_id"
-            
-            # Update the subscription variable after switch
-            get_current_sub
+            echo "Switched to: $(az account show --query name -o tsv)"
         fi
     fi
 }
-
-
 
 
 # Kiro CLI post block. Keep at the bottom of this file.

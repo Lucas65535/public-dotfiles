@@ -45,7 +45,6 @@ $line_break$character\
 # $line_break $character"""
 
 
-
 [line_break]
 disabled = false
 
@@ -105,10 +104,6 @@ format = "[$symbol($subscription)]($style) "
 symbol = "󰠅 "
 style = "blue italic"
 
-[azure.subscription_aliases]
-"SUB22013162557" = "DEV"
-"Azure subscription 1" = "Prod"
-"SUB24092532288_20240930" = "Gitlab"
 
 [python]
 format = "[$virtualenv( $version) ]($style)"
@@ -327,5 +322,3 @@ crust = "#11111b"
 # symbol = "#7FBBB3"
 # status = "#D699B6"
 # python = "#DBBC7F"
-
-
