@@ -1,7 +1,7 @@
 # ── Yazi Keymap ──────────────────────────────────────────────────────────────
 # Only override/add keys here; defaults are inherited automatically.
 
-[manager]
+[mgr]
 prepend_keymap = [
   # Quick navigation with zoxide
   { on = [

@@ -1,6 +1,6 @@
 # ── Yazi File Manager Configuration ──────────────────────────────────────────
 
-[manager]
+[mgr]
 # Show hidden files by default
 show_hidden = true
 # Sort: natural order, directories first
@@ -19,12 +19,8 @@ max_height = 900
 cache_dir = ""
 
 [opener]
-edit = [
-  { run = 'nvim "$@"', block = true, desc = "nvim" },
-]
-open = [
-  { run = 'open "$@"', desc = "Open with system default" },
-]
+edit = [{ run = 'nvim "$@"', block = true, desc = "nvim" }]
+open = [{ run = 'open "$@"', desc = "Open with system default" }]
 
 [open]
 rules = [
@@ -39,3 +35,14 @@ rules = [
   { name = "*.conf", use = "edit" },
   { mime = "*", use = "open" },
 ]
+
+# ── Plugin: Git status fetcher ───────────────────────────────────────────────
+[[plugin.prepend_fetchers]]
+id = "git"
+url = "*"
+run = "git"
+
+[[plugin.prepend_fetchers]]
+id = "git"
+url = "*/"
+run = "git"

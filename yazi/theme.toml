@@ -2,4 +2,5 @@
 # Use Catppuccin Mocha flavor as the base, consistent with fzf/bat/zsh/ghostty
 
 [flavor]
-use = "catppuccin-mocha"
+dark = "catppuccin-mocha"
+light = "catppuccin-mocha"
