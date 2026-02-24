@@ -42,10 +42,14 @@ done
 
 # 5. Symlinks — ~/.config (file-level, target dir has other content)
 ln -sf ~/code/public-dotfiles/starship/starship.toml ~/.config/starship.toml
+
+# 6. tmux — install oh-my-tmux framework + link config
+git clone https://github.com/gpakosz/.tmux.git ~/.local/share/tmux/oh-my-tmux
 mkdir -p ~/.config/tmux
+ln -sf ~/.local/share/tmux/oh-my-tmux/.tmux.conf ~/.config/tmux/tmux.conf
 ln -sf ~/code/public-dotfiles/tmux/tmux.conf.local ~/.config/tmux/tmux.conf.local
 
-# 6. Symlinks — AI agent configs (skills shared across all agents)
+# 7. Symlinks — AI agent configs (skills shared across all agents)
 mkdir -p ~/.agents ~/.claude ~/.codex
 rm -rf ~/.agents/skills ~/.gemini/antigravity/skills ~/.claude/skills ~/.codex/skills
 ln -sf ~/code/public-dotfiles/agents/skills ~/.agents/skills
@@ -57,7 +61,7 @@ ln -sf ~/code/public-dotfiles/agents/GEMINI.md ~/.gemini/GEMINI.md
 ln -sf ~/code/public-dotfiles/agents/GEMINI.md ~/.claude/CLAUDE.md
 ln -sf ~/code/public-dotfiles/agents/GEMINI.md ~/.codex/instructions.md
 
-# 7. Reload
+# 8. Reload
 exec $SHELL -l
 ```
 
@@ -71,6 +75,25 @@ All configs live in `~/code/public-dotfiles/`. Edit them there — changes take 
 # Example: tweak Ghostty config
 nvim ~/code/public-dotfiles/ghostty/config  # edit in repo, live immediately
 ```
+
+### tmux (oh-my-tmux)
+
+This repo manages only `tmux/tmux.conf.local` — the user customization layer. The framework itself is installed separately and not tracked in git.
+
+| Component | Path | Managed? |
+|---|---|---|
+| oh-my-tmux framework | `~/.local/share/tmux/oh-my-tmux/` | ❌ git clone from upstream |
+| Main config (symlink → framework) | `~/.config/tmux/tmux.conf` | ❌ auto-created on setup |
+| **User config** | `~/.config/tmux/tmux.conf.local` | ✅ **this repo** |
+| TPM plugins | `~/.config/tmux/plugins/` | ❌ auto-installed by TPM |
+
+To update oh-my-tmux to the latest version:
+
+```bash
+cd ~/.local/share/tmux/oh-my-tmux && git pull
+```
+
+After editing `tmux.conf.local`, reload inside tmux with `<prefix>` + `r`.
 
 ### Saving Changes
 
