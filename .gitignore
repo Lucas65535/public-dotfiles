@@ -13,6 +13,14 @@ btop/btop.log
 # atuin: db files if any end up here
 atuin/*.db
 
+# agents: caches and runtime artifacts
+agents/skills/**/node_modules/
+agents/skills/**/__pycache__/
+agents/skills/**/*.pyc
+
+# agents: sensitive project configs (internal team info, user IDs)
+agents/skills/backlog-issue-management/references/project-config.md
+
 # Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,macos
 # Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,macos
 

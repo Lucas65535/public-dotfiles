@@ -16,6 +16,8 @@ macOS development environment managed via symlinks. One clone, one `brew bundle`
 | btop | `btop/` | `~/.config/btop` |
 | lsd | `lsd/` | `~/.config/lsd` |
 | Yazi (file manager) | `yazi/` | `~/.config/yazi` |
+| AI agent skills | `agents/skills/` | `~/.agents/skills`, `~/.gemini/antigravity/skills`, `~/.claude/skills`, `~/.codex/skills` |
+| AI agent instructions | `agents/GEMINI.md` | `~/.gemini/GEMINI.md`, `~/.claude/CLAUDE.md`, `~/.codex/instructions.md` |
 | Homebrew packages | `Brewfile` | — |
 
 Theme: **Catppuccin Mocha** across all tools (fzf, bat, yazi, zsh highlighting).
@@ -43,7 +45,19 @@ ln -sf ~/code/public-dotfiles/starship/starship.toml ~/.config/starship.toml
 mkdir -p ~/.config/tmux
 ln -sf ~/code/public-dotfiles/tmux/tmux.conf.local ~/.config/tmux/tmux.conf.local
 
-# 6. Reload
+# 6. Symlinks — AI agent configs (skills shared across all agents)
+mkdir -p ~/.agents ~/.claude ~/.codex
+rm -rf ~/.agents/skills ~/.gemini/antigravity/skills ~/.claude/skills ~/.codex/skills
+ln -sf ~/code/public-dotfiles/agents/skills ~/.agents/skills
+ln -sf ~/code/public-dotfiles/agents/skills ~/.gemini/antigravity/skills
+ln -sf ~/code/public-dotfiles/agents/skills ~/.claude/skills
+ln -sf ~/code/public-dotfiles/agents/skills ~/.codex/skills
+ln -sf ~/code/public-dotfiles/agents/.skill-lock.json ~/.agents/.skill-lock.json
+ln -sf ~/code/public-dotfiles/agents/GEMINI.md ~/.gemini/GEMINI.md
+ln -sf ~/code/public-dotfiles/agents/GEMINI.md ~/.claude/CLAUDE.md
+ln -sf ~/code/public-dotfiles/agents/GEMINI.md ~/.codex/instructions.md
+
+# 7. Reload
 exec $SHELL -l
 ```
 
@@ -119,6 +133,8 @@ Credentials and secrets stay local — never commit these:
 - `~/.gnupg/` — GPG keys
 - `~/.gitconfig` — may contain tokens
 - `~/.npmrc` — may contain auth tokens
+- `~/.gemini/settings.json` — contains MCP server configs with API keys
+- `~/.gemini/antigravity/mcp_config.json` — contains API keys
 
 ## Symlink Strategy
 

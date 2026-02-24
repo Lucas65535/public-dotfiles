@@ -1,0 +1,116 @@
+{
+  "version": 3,
+  "skills": {
+    "supabase-postgres-best-practices": {
+      "source": "supabase/agent-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/supabase/agent-skills.git",
+      "skillPath": "skills/postgres-best-practices/SKILL.md",
+      "skillFolderHash": "e549f070fca7ca2284e06f17e8a27260443aaf0d",
+      "installedAt": "2026-01-26T04:34:26.063Z",
+      "updatedAt": "2026-01-26T04:34:26.063Z"
+    },
+    "skill-creator": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/anthropics/skills.git",
+      "skillPath": "skills/skill-creator/SKILL.md",
+      "skillFolderHash": "a01fbe3fa7f17f64173bd4fdcfecea86a3fd664c",
+      "installedAt": "2026-01-28T07:25:05.395Z",
+      "updatedAt": "2026-02-19T02:06:32.212Z"
+    },
+    "find-skills": {
+      "source": "vercel-labs/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/vercel-labs/skills.git",
+      "skillPath": "skills/find-skills/SKILL.md",
+      "skillFolderHash": "c2f31172b6f256272305a5e6e7228b258446899f",
+      "installedAt": "2026-01-28T07:25:11.148Z",
+      "updatedAt": "2026-01-28T07:25:11.148Z"
+    },
+    "go-concurrency-patterns": {
+      "source": "wshobson/agents",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/wshobson/agents.git",
+      "skillPath": "plugins/systems-programming/skills/go-concurrency-patterns/SKILL.md",
+      "skillFolderHash": "e3f31c7bfadbcb28d189e51aa7e1303a59d5b3d5",
+      "installedAt": "2026-01-29T09:26:56.313Z",
+      "updatedAt": "2026-01-29T09:26:56.313Z"
+    },
+    "requesting-code-review": {
+      "source": "obra/superpowers",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/obra/superpowers.git",
+      "skillPath": "skills/requesting-code-review/SKILL.md",
+      "skillFolderHash": "dbe9c65c5af4fa294ec9d60c1732d806e664530c",
+      "installedAt": "2026-01-29T09:42:32.328Z",
+      "updatedAt": "2026-01-29T09:42:32.328Z"
+    },
+    "writing-plans": {
+      "source": "obra/superpowers",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/obra/superpowers.git",
+      "skillPath": "skills/writing-plans/SKILL.md",
+      "skillFolderHash": "cf6f5c8813cf0445276129a5f2b443927b50f645",
+      "installedAt": "2026-01-30T01:57:45.718Z",
+      "updatedAt": "2026-02-19T02:06:37.591Z"
+    },
+    "api-design-principles": {
+      "source": "wshobson/agents",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/wshobson/agents.git",
+      "skillPath": "plugins/backend-development/skills/api-design-principles/SKILL.md",
+      "skillFolderHash": "d9f49b5a4c69c1372041ac3892b9c4a3bdd4b02a",
+      "installedAt": "2026-01-30T02:00:02.506Z",
+      "updatedAt": "2026-01-30T02:00:02.506Z"
+    },
+    "architecture-patterns": {
+      "source": "wshobson/agents",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/wshobson/agents.git",
+      "skillPath": "plugins/backend-development/skills/architecture-patterns/SKILL.md",
+      "skillFolderHash": "f1065fb3a70a01b204c1343deb7f8c7e377a90cc",
+      "installedAt": "2026-01-30T02:00:23.032Z",
+      "updatedAt": "2026-01-30T02:00:23.032Z"
+    },
+    "postgresql-table-design": {
+      "source": "wshobson/agents",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/wshobson/agents.git",
+      "skillPath": "plugins/database-design/skills/postgresql/SKILL.md",
+      "skillFolderHash": "b4117b0efdd5b2b1d4dece79c1d99643f60e77b9",
+      "installedAt": "2026-01-30T02:00:59.123Z",
+      "updatedAt": "2026-01-30T02:00:59.123Z"
+    },
+    "pnpm": {
+      "source": "antfu/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/antfu/skills.git",
+      "skillPath": "skills/pnpm/SKILL.md",
+      "skillFolderHash": "3e2f92c74abae6e9d2e4fc45b5d73a7b307348c9",
+      "installedAt": "2026-01-30T02:01:37.401Z",
+      "updatedAt": "2026-01-30T02:01:37.401Z"
+    },
+    "sql-optimization-patterns": {
+      "source": "wshobson/agents",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/wshobson/agents.git",
+      "skillPath": "plugins/developer-essentials/skills/sql-optimization-patterns/SKILL.md",
+      "skillFolderHash": "0dbc921386fa71a0e7b1ec324ea65022a4934552",
+      "installedAt": "2026-01-30T02:02:32.026Z",
+      "updatedAt": "2026-01-30T02:02:32.026Z"
+    }
+  },
+  "dismissed": {
+    "findSkillsPrompt": true
+  },
+  "lastSelectedAgents": [
+    "antigravity",
+    "claude-code",
+    "codex",
+    "gemini-cli",
+    "kiro-cli",
+    "trae",
+    "opencode"
+  ]
+}
