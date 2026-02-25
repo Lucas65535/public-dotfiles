@@ -99,18 +99,27 @@
       "skillFolderHash": "0dbc921386fa71a0e7b1ec324ea65022a4934552",
       "installedAt": "2026-01-30T02:02:32.026Z",
       "updatedAt": "2026-01-30T02:02:32.026Z"
+    },
+    "xlsx": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/anthropics/skills.git",
+      "skillPath": "skills/xlsx/SKILL.md",
+      "skillFolderHash": "f5fb1cdb7993b2feee8367e983e9d4d58d2eedd4",
+      "installedAt": "2026-02-25T01:50:59.781Z",
+      "updatedAt": "2026-02-25T01:50:59.781Z"
     }
   },
   "dismissed": {
     "findSkillsPrompt": true
   },
   "lastSelectedAgents": [
-    "antigravity",
-    "claude-code",
+    "amp",
     "codex",
+    "cursor",
     "gemini-cli",
-    "kiro-cli",
-    "trae",
+    "github-copilot",
+    "kimi-cli",
     "opencode"
   ]
 }
