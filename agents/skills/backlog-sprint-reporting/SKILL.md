@@ -233,4 +233,5 @@ Generate a Sprint retrospective report and optionally save to Wiki.
 
 ## Resources
 
+- `../_backlog-common/references/project-config.md` — Shared project configuration (project keys, team members, milestones, priorities, etc.). Read this first to skip runtime metadata queries.
 - `references/report-templates.md` — Customizable output format templates for standup, weekly, monthly, and health reports.

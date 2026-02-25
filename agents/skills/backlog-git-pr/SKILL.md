@@ -118,4 +118,5 @@ Call `backlog_update_pull_request` with `number` and `statusId`.
 
 ## Resources
 
+- `../_backlog-common/references/project-config.md` — Shared project configuration (project keys, team members, etc.). Read this first to skip runtime metadata queries.
 - `references/pr-templates.md` — PR description templates for features, bugfixes, and releases.

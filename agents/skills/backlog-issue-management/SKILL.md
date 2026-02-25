@@ -7,6 +7,56 @@ description: Nulab Backlog issue lifecycle management via MCP tools. Covers crea
 
 Procedural guide for managing Backlog issues through MCP tools. Always query metadata IDs before operations — never hardcode or guess IDs.
 
+## Content Rules (MUST FOLLOW)
+
+These rules apply to **every** issue creation and update operation.
+
+### Language Rules
+
+| Field                  | Language | Style                      |
+| ---------------------- | -------- | -------------------------- |
+| **Summary (Title)**    | 日本語   | 簡潔で正確な書面語         |
+| **Description (Body)** | 中文     | 清晰易懂的技术文档风格     |
+
+Title examples (日本語):
+```
+✗ Bad:  做一个登录功能
+✗ Bad:  make login feature
+✓ Good: 【Backend】ユーザー認証バグの修正
+✓ Good: 【DevOps】PostgreSQLの接続プール構成の最適化検討（PgBouncer導入）
+```
+
+### Footer Signature
+
+Always append at the end of issue description:
+
+```
+<small>via Backlog MCP</small>
+```
+
+### Pre-creation Confirmation
+
+Before calling `backlog_add_issue`, **always** present a preview and wait for user confirmation:
+
+```
+## Issue 作成確認
+
+**Project**: SC_DEVOPS (One人事 DevOps)
+**Type**: タスク (ID: 442104)
+**Priority**: 中 (ID: 3)
+**Summary**: ログイン機能の実装
+**Description**: (preview)
+**Milestone**: SP_2026/02
+**Assignee**: yang.jiguang 楊 済光 
+
+---
+确认创建此 Issue 吗？(是/否)
+```
+
+- **Single Issue**: Show preview, wait for user confirmation to proceed
+- **Batch Issues**: Show summary table, wait for user confirmation
+- **User Rejects**: Ask for modifications or cancel operation
+
 ## Metadata-First Principle
 
 Before any create/update operation, resolve human-readable names to IDs:
@@ -23,22 +73,22 @@ Before any create/update operation, resolve human-readable names to IDs:
 
 Cache results within the conversation — do not re-query unchanged metadata.
 
-If the user has a project-config file, read `references/project-config.md` first to skip known mappings.
+Read `../_backlog-common/references/project-config.md` first to skip known mappings.
 
 ## Workflow 1: Create a Single Issue
 
 1. Identify the target project (ask user if ambiguous).
 2. Call `backlog_get_project` with `projectKey` to confirm project info (ID, text formatting rule, etc.).
 3. Query metadata: issue types, priorities, (optionally) categories, milestones, custom fields.
-3. Map user intent to IDs:
+4. Map user intent to IDs:
    - Match issue type by name (e.g., "bug" -> Bug type ID).
    - Match priority by name (e.g., "high" -> High priority ID).
    - For custom fields: match field name -> field ID, option name -> option item ID.
-4. Call `backlog_add_issue` with:
+5. Call `backlog_add_issue` with:
    - `projectId`, `summary`, `issueTypeId`, `priorityId` (required)
-   - `description` (use Backlog markdown or plain text based on project's `textFormattingRule`)
+   - `description` (use Backlog markdown or plain text based on project's `textFormattingRule`). Apply Language Rules and Footer Signature.
    - Optional: `assigneeId`, `categoryId`, `milestoneId`, `versionId`, `startDate`, `dueDate`, `estimatedHours`, `parentIssueId`, `customFields`
-5. Report created issue key back to user.
+6. Report created issue key back to user.
 
 ### Custom Fields Format
 
@@ -93,8 +143,8 @@ For input format examples, see `references/batch-creation-patterns.md`.
 ### Closing an Issue
 
 When setting status to "Closed" (status ID 4):
-- Must also set `resolutionId`. Query `backlog_get_resolutions` to find the appropriate reason (Fixed, Won't Fix, Invalid, Duplicate, etc.).
-- Common pattern: `statusId: 4, resolutionId: 0` (Fixed).
+- Must also set `resolutionId`. Query `backlog_get_resolutions` to find the appropriate reason.
+- Common pattern: `statusId: 4, resolutionId: 0` (対応済み).
 
 ## Workflow 4: Search and Filter Issues
 
@@ -103,7 +153,7 @@ Use `backlog_get_issues` with filter combinations:
 ### Common Filter Patterns
 
 | Scenario | Key params |
-|----------|-----------|
+|----------|-----------:|
 | My open issues | `assigneeId: [myId]`, `statusId: [1,2,3]` |
 | Overdue issues | `dueDateUntil: "YYYY-MM-DD"` (today), `statusId: [1,2,3]` |
 | Sprint backlog | `milestoneId: [sprintId]` |
@@ -136,6 +186,6 @@ Combine with `order`: `asc` or `desc`.
 
 ## Resources
 
-- `references/project-config.md` — User-customizable project configuration (project keys, type mappings, team members). Read this first if it has been filled in.
+- `../_backlog-common/references/project-config.md` — Shared project configuration (project keys, type mappings, team members, priorities, milestones, etc.). Read this first to skip runtime metadata queries.
 - `references/issue-templates.md` — Reusable issue description templates for Bug, Task, Story, etc.
 - `references/batch-creation-patterns.md` — Input format examples for batch issue creation.

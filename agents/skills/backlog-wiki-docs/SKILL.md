@@ -81,4 +81,5 @@ Call `backlog_get_documents` with `projectIds: [id]` and optional `offset` for p
 
 ## Resources
 
+- `../_backlog-common/references/project-config.md` — Shared project configuration (project keys, team members, etc.). Read this first to skip runtime metadata queries.
 - `references/doc-templates.md` — Templates for meeting notes, technical docs, Sprint reviews, and other common document types.

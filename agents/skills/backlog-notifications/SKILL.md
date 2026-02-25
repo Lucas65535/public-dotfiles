@@ -96,3 +96,7 @@ When presenting notifications, classify urgency:
 | **Action Required** | Assigned to you, @mentioned, review requested |
 | **Status Update** | Issues you watch changed status |
 | **FYI** | Comments on watched issues, other activity |
+
+## Resources
+
+- `../_backlog-common/references/project-config.md` — Shared project configuration (project keys, team members, etc.). Read this first to skip runtime metadata queries.

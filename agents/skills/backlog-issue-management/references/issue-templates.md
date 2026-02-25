@@ -1,6 +1,8 @@
 # Issue Description Templates
 
-Reusable templates for common issue types. Use the appropriate template based on the issue type, and adapt content from user input.
+Reusable **structural** templates for common issue types. These templates define the section layout — adapt the content language according to the Content Rules in SKILL.md (Summary in 日本語, Description body in 中文).
+
+Use the appropriate template based on the issue type, and adapt content from user input.
 
 ## Bug Report
 
