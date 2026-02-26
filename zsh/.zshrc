@@ -163,7 +163,7 @@ ZSH_HIGHLIGHT_STYLES[back-dollar-quoted-argument]='fg=#f5e0dc'
 ZSH_HIGHLIGHT_STYLES[assign]='fg=#f5e0dc'
 ZSH_HIGHLIGHT_STYLES[named-fd]='fg=#f5e0dc'
 ZSH_HIGHLIGHT_STYLES[numeric-fd]='fg=#f5e0dc'
-ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=#f9e2af' # Changed to Yellow for testing
+ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=#f9e2af'
 ZSH_HIGHLIGHT_STYLES[root]='fg=#f38ba8,bold'
 ZSH_HIGHLIGHT_STYLES[cursor]='bg=#f5e0dc'
 
