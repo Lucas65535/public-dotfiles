@@ -14,8 +14,6 @@ vim.api.nvim_create_autocmd("FileType", {
     -- This ensures the Roman numerals stay visible
     vim.opt_local.concealcursor = "nc"
     -- Disable virtual text diagnostics for the current buffer to keep the view clean
-    vim.diagnostic.config({
-      virtual_text = false,
-    }, event.buf)
+    vim.diagnostic.enable(false, { bufnr = event.buf })
   end,
 })
