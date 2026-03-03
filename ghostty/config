@@ -32,9 +32,8 @@ term = xterm-256color
 # 减少滚动历史，节省内存
 scrollback-limit = 50000
 # 减少水平边距，节省屏幕空间
-window-padding-x = 15
-# 统一垂直边距
-window-padding-y = 15
+window-padding-x = 3
+window-padding-y = 2
 window-save-state = "always"
 background-blur-radius = 10
 
@@ -53,4 +52,3 @@ background = #0d0d0d
 selection-invert-fg-bg = true
 
 keybind = ¥=text:\\
-

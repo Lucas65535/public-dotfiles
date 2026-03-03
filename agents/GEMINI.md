@@ -1,4 +1,4 @@
-# Global Gemini Instructions
+# Agent Instructions
 
 ## Identity
 
