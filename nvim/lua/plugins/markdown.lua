@@ -4,8 +4,8 @@ return {
     opts = {
       heading = {
         enabled = true,
-        -- overlay mode hides the original '#' characters
-        position = "overlay",
+        -- sign = false ensures we don't have multiple icons in the sign column
+        sign = false,
         -- Classic Roman numeral icons for H1 to H6
         icons = { "Ⅰ ", "Ⅱ ", "Ⅲ ", "Ⅳ ", "Ⅴ ", "Ⅵ " },
         -- 'full' mode provides background colors to clearly distinguish header levels
@@ -25,7 +25,7 @@ return {
         checked = { icon = " " },
       },
       -- Render in all modes to maintain visual consistency
-      render_modes = true,
+      render_modes = { "n", "c", "i", "v" },
     },
   },
 

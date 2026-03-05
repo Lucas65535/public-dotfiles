@@ -13,11 +13,13 @@ return {
       pattern = 'AutoSaveWritePost',
       group = group,
       callback = function(opts)
-        if opts.data.saved_buffer ~= nil then
-          local filename = vim.api.nvim_buf_get_name(opts.data.saved_buffer)
-          local basename = vim.fn.fnamemodify(filename, ":t")
-          vim.notify('AutoSave: saved ' .. basename .. ' at ' .. vim.fn.strftime('%H:%M:%S'), vim.log.levels.INFO)
-        end
+        vim.schedule(function()
+          if opts.data.saved_buffer ~= nil and vim.api.nvim_buf_is_valid(opts.data.saved_buffer) then
+            local filename = vim.api.nvim_buf_get_name(opts.data.saved_buffer)
+            local basename = vim.fn.fnamemodify(filename, ":t")
+            vim.notify('AutoSave: saved ' .. basename .. ' at ' .. vim.fn.strftime('%H:%M:%S'), vim.log.levels.INFO)
+          end
+        end)
       end,
     })
   end,
