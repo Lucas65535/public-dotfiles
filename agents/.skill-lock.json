@@ -6,9 +6,10 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/anthropics/skills.git",
       "skillPath": "skills/skill-creator/SKILL.md",
-      "skillFolderHash": "a01fbe3fa7f17f64173bd4fdcfecea86a3fd664c",
+      "skillFolderHash": "98a510d1cfef9f82c3b1eec200229ca68725e613",
+      "pluginName": "example-skills",
       "installedAt": "2026-01-28T07:25:05.395Z",
-      "updatedAt": "2026-02-19T02:06:32.212Z"
+      "updatedAt": "2026-03-12T15:03:52.526Z"
     },
     "find-skills": {
       "source": "vercel-labs/skills",
