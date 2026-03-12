@@ -9,8 +9,8 @@ fi
 
 alias lt='du -sh * | sort -h'
 alias grep='grep --color=auto'
-alias egrep='egrep --color=auto'
-alias fgrep='fgrep --color=auto'
+alias egrep='grep -E --color=auto'
+alias fgrep='grep -F --color=auto'
 alias j='jobs -l'
 alias mv='mv -i'
 alias cp='cp -i'
@@ -30,7 +30,6 @@ alias gcamendnoedit='git commit --amend --no-edit'
 alias ga='git add .'
 alias gp='git push'
 
-alias ya='yarn'
 alias p='pnpm'
 alias b='bun'
 alias nn='/opt/homebrew/bin/n'
@@ -38,12 +37,13 @@ alias n='npm'
 alias t='tmux -f ~/.config/tmux/tmux.conf'
 alias cx='codex'
 alias cc='claude'
-alias co='opencode'
+alias oc='opencode'
+alias og='gemini'
 
 alias '..'='cd ../'
 alias '...'='cd ../../'
 alias '....'='cd ../../../'
-alias myip='dig +short myip.opendns.com @resolver1.opendns.com'
+my() { curl -fsS ifconfig.io; echo; }
 
 # httpie
 alias h='http'
@@ -53,12 +53,21 @@ alias xheader='xh -h'
 alias headerc='curl -I --compressed'
 
 # kubernetes / infra
-alias k='kubectl'
+# alias k='kubectl'
+alias k='kubecolor'
 alias m='multipass'
 alias d='docker'
 alias di='docker images'
-alias dirm='docker rmi'
-alias dl='docker ps -l -q'
+drmi() {
+  if [[ -t 0 ]]; then
+    print -n "docker rmi $* (y/N) "
+    read -r reply
+    [[ "$reply" == "y" || "$reply" == "Y" ]] || return 1
+  fi
+  docker rmi "$@"
+}
+alias dpslast='docker ps -l -q'
+alias dl='dpslast'
 alias dps='docker ps'
 alias dkb='docker buildx build --platform linux/amd64'
 alias dpsa='docker ps -a'
@@ -66,7 +75,41 @@ alias dcip="docker inspect --format '{{ .NetworkSettings.IPAddress }}'"
 alias dcd='docker container run -d -P'
 alias dci='docker container run -it -P'
 alias dcke='docker exec -it'
-alias tf='terraform'
+
+# kubernetes helpers
+alias kpods='k get pods'
+alias kpodsall='k get pods -A'
+kpodsns() { k get pods -n "$1" -owide; }
+
+alias knodes='k get nodes'
+alias klogs='k logs'
+alias kcfg='k config view'
+alias kctx='k config get-contexts'
+
+alias kpoddesc='k describe pod'
+kpoddescns() { k describe pod -n "$1" "$2"; }
+
+# gitlab-runner helpers
+alias krunnerpods='k get pods -n gitlab-runner -owide'
+alias krunnerwatch='k get pods -n gitlab-runner -w'
+alias krunnerpodscount='k get pods -n gitlab-runner --no-headers | wc -l'
+alias krunnernodescount='k get nodes --no-headers | grep "runner" | wc -l'
+alias krunnernodescountby='k get pods -n gitlab-runner -o custom-columns="NODE:.spec.nodeName" --no-headers | sort | uniq -c'
+alias knodescountby='k get pods -A -o custom-columns="NODE:.spec.nodeName" --no-headers | sort | uniq -c'
+
+# grafana (no public IP, local access)
+kgrafana() { k port-forward -n monitoring svc/prometheus-grafana 3000:80; }
+kgrafanabg() { k port-forward -n monitoring svc/prometheus-grafana 3000:80 >/dev/null 2>&1 & }
+kgrafanapass() { k get secret prometheus-grafana -n monitoring -o jsonpath="{.data.admin-password}" | base64 -d; echo; }
+kgrafanastop() { pkill -f "kubecolor port-forward -n monitoring svc/prometheus-grafana 3000:80" || pkill -f "kubectl port-forward -n monitoring svc/prometheus-grafana 3000:80"; }
+
+alias gpull='g pull'
+gnew() { g checkout -b "$1"; }
+alias gmaster='g checkout master'
+alias gshow='g show'
+greset() { g reset "HEAD~${1:-1}"; }
+
+alias brewup='brew update && brew upgrade && brew cleanup -v --prune=all'
 
 alias cdcode='cd "$HOME/code"'
 alias cdwork='cd "$HOME/workspace"'
@@ -79,6 +122,7 @@ alias o.='open .'
 
 alias reload='exec "$SHELL" -l'
 alias connections='lsof -PiTCP -n'
-alias conns-nali='lsof -PiTCP -n | nali'
-alias conns-estab-nali='lsof -PiTCP -n -sTCP:ESTABLISHED | nali'
-alias my='curl ifconfig.io'
+if command -v nali >/dev/null 2>&1; then
+  alias conns-nali='lsof -PiTCP -n | nali'
+  alias conns-estab-nali='lsof -PiTCP -n -sTCP:ESTABLISHED | nali'
+fi

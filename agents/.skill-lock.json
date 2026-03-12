@@ -82,6 +82,15 @@
       "pluginName": "document-skills",
       "installedAt": "2026-03-02T01:42:10.338Z",
       "updatedAt": "2026-03-02T01:42:10.338Z"
+    },
+    "azure-pricing": {
+      "source": "github/awesome-copilot",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/github/awesome-copilot.git",
+      "skillPath": "skills/azure-pricing/SKILL.md",
+      "skillFolderHash": "dc69c6dbacbef673d76ba5490fb16b53002d0222",
+      "installedAt": "2026-03-11T05:42:04.902Z",
+      "updatedAt": "2026-03-11T05:42:04.902Z"
     }
   },
   "dismissed": {

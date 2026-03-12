@@ -34,28 +34,28 @@ Always append at the end of issue description:
 <small>via Backlog MCP</small>
 ```
 
-### Pre-creation Confirmation
+### Pre-modification Confirmation (MANDATORY)
 
-Before calling `backlog_add_issue`, **always** present a preview and wait for user confirmation:
+Before calling ANY tool that mutates data (e.g., `backlog_add_issue`, `backlog_update_issue`, `backlog_add_issue_comment`, `backlog_delete_issue`), **always** present a detailed preview of the specific changes and wait for user confirmation:
 
 ```
-## Issue 作成確認
+## 変更確認 (Change Confirmation)
 
-**Project**: SC_DEVOPS (One人事 DevOps)
-**Type**: タスク (ID: 442104)
-**Priority**: 中 (ID: 3)
-**Summary**: ログイン機能の実装
-**Description**: (preview)
-**Milestone**: SP_2026/02
-**Assignee**: yang.jiguang 楊 済光 
+**Action**: [Create Issue / Update Issue / Add Comment]
+**Target**: [New Issue / PROJ-123]
+**Changes**:
+- **Status**: [e.g., In Progress -> 処理済み]
+- **Assignee**: [e.g., unassigned -> user.name]
+- **Comment**: [e.g., "The fix has been deployed."]
+- ... [other changes]
 
 ---
-确认创建此 Issue 吗？(是/否)
+确认执行此操作吗？(是/否) / Are you sure you want to apply these changes? (Y/N)
 ```
 
-- **Single Issue**: Show preview, wait for user confirmation to proceed
-- **Batch Issues**: Show summary table, wait for user confirmation
-- **User Rejects**: Ask for modifications or cancel operation
+- **You MUST NOT make any modifying tool calls until the user has explicitly confirmed.**
+- **Batch Issues**: Show summary table of all changes, wait for user confirmation.
+- **User Rejects**: Ask for modifications or cancel operation.
 
 ## Metadata-First Principle
 
@@ -84,11 +84,12 @@ Read `../_backlog-common/references/project-config.md` first to skip known mappi
    - Match issue type by name (e.g., "bug" -> Bug type ID).
    - Match priority by name (e.g., "high" -> High priority ID).
    - For custom fields: match field name -> field ID, option name -> option item ID.
-5. Call `backlog_add_issue` with:
+5. Present the confirmation preview to the user.
+6. Once confirmed, call `backlog_add_issue` with:
    - `projectId`, `summary`, `issueTypeId`, `priorityId` (required)
    - `description` (use Backlog markdown or plain text based on project's `textFormattingRule`). Apply Language Rules and Footer Signature.
    - Optional: `assigneeId`, `categoryId`, `milestoneId`, `versionId`, `startDate`, `dueDate`, `estimatedHours`, `parentIssueId`, `customFields`
-6. Report created issue key back to user.
+7. Report created issue key back to user.
 
 ### Custom Fields Format
 
@@ -112,39 +113,39 @@ For creating multiple issues from a requirements list, spec, or user-provided it
 1. Parse the user's input into a structured list of issues (summary, type, priority, description, etc.).
 2. Query ALL needed metadata **once** upfront (types, priorities, milestones, categories, custom fields).
 3. Build the ID-resolved issue list.
-4. Create issues sequentially with `backlog_add_issue`:
-   - If `parentIssueId` is specified for all items, set it on each call.
-   - If the user wants a new parent issue + children: create the parent first, then use its returned ID as `parentIssueId` for children.
-5. Collect all created issue keys and present a summary table to the user.
+4. Present the confirmation summary table to the user.
+5. Once confirmed, create issues sequentially with `backlog_add_issue`.
+6. Collect all created issue keys and present a summary to the user.
 
 ### Efficiency Rules
 
 - Query metadata only once, reuse across all issues.
 - If creation of one issue fails, continue with remaining issues and report failures at the end.
-- Present a summary: created count, failed count, issue key list.
 
 For input format examples, see `references/batch-creation-patterns.md`.
 
 ## Workflow 3: Update Issues
 
-### Single Issue Update
+### Single Issue Update (Combined Operations)
+
+Whenever possible, **combine multiple updates into a SINGLE `backlog_update_issue` call**. For example, if you need to add a comment, change the assignee, and update the status, do it all in one call.
 
 1. Get current state: `backlog_get_issue` (by key or ID).
-2. Call `backlog_update_issue` with only the fields that need changing.
-3. Optionally add a `comment` in the same update call to explain the change.
+2. Prepare the fields to change (e.g., `statusId`, `assigneeId`, `comment`).
+3. Present the confirmation preview to the user.
+4. Once confirmed, call `backlog_update_issue` with the combined fields.
+
+### Resolving/Changing Status
+
+- **DEFAULT TO "処理済み" (Resolved)**: When asked to change an issue's status to done/completed, unless explicitly instructed otherwise by the user, you should update the status to "処理済み" (usually ID 3) rather than "完了" (Closed, usually ID 4).
+- **Closing ("完了")**: Only set status to "Closed" (status ID 4) if explicitly instructed. When doing so, you must also set `resolutionId`. Query `backlog_get_resolutions` to find the appropriate reason. Common pattern: `statusId: 4, resolutionId: 0` (対応済み).
 
 ### Bulk Status Update
 
 1. Search target issues: `backlog_get_issues` with appropriate filters (statusId, milestoneId, assigneeId, etc.).
-2. Confirm the list with the user before modifying.
-3. Loop `backlog_update_issue` on each issue.
+2. Present the confirmation list to the user before modifying.
+3. Once confirmed, loop `backlog_update_issue` on each issue.
 4. Report summary.
-
-### Closing an Issue
-
-When setting status to "Closed" (status ID 4):
-- Must also set `resolutionId`. Query `backlog_get_resolutions` to find the appropriate reason.
-- Common pattern: `statusId: 4, resolutionId: 0` (対応済み).
 
 ## Workflow 4: Search and Filter Issues
 
@@ -175,14 +176,15 @@ Combine with `order`: `asc` or `desc`.
 ## Workflow 5: Comments
 
 - **Read comments**: `backlog_get_issue_comments` with `issueKey`, use `order: "desc"` for latest first.
-- **Add comment**: `backlog_add_issue_comment` with `issueKey` and `content`. Optionally set `notifiedUserId` to ping specific users.
+- **Add comment**: Only use `backlog_add_issue_comment` if you are ONLY adding a comment. If you are also modifying the issue (status, assignee, etc.), use `backlog_update_issue` and pass the `comment` parameter. Always confirm with the user first.
 
 ## Safety Rules
 
-1. **Delete operations**: Always confirm with the user before calling `backlog_delete_issue`. State the issue key and summary being deleted.
-2. **Bulk updates**: Always show the list of issues to be modified and get user confirmation before executing.
-3. **Status transitions**: Confirm when closing issues — the user may want a specific resolution reason.
-4. **Never guess IDs**: Always query metadata tools to resolve names to IDs.
+1. **Confirmation Rule**: ALWAYS explicitly ask for confirmation with a preview of changes BEFORE mutating any data (`add_issue`, `update_issue`, `add_issue_comment`, `delete_issue`).
+2. **Delete operations**: Always confirm with the user before calling `backlog_delete_issue`. State the issue key and summary being deleted.
+3. **Bulk updates**: Always show the list of issues to be modified and get user confirmation before executing.
+4. **Status transitions**: Confirm when closing issues — the user may want a specific resolution reason.
+5. **Never guess IDs**: Always query metadata tools to resolve names to IDs.
 
 ## Resources
 

@@ -93,6 +93,58 @@ history_filter = [
   "^export .*SECRET",
   "^export .*PASSWORD",
   "^export .*KEY=",
+  # Navigation / listing / read-only noise from history analysis
+  "^ls$",
+  "^ll$",
+  "^la$",
+  "^lla$",
+  "^l$",
+  "^tree( .*)?$",
+  "^cd($| )",
+  "^cd -$",
+  "^cdwork$",
+  "^cdcode$",
+  "^\\.\\.$",
+  "^\\.\\.\\.$",
+  "^\\.\\.\\.\\.$",
+  "^pwd$",
+  "^clear$",
+  "^exit$",
+  "^du -sh (\\*|\\.|\\.\\*|\\.git)$",
+  "^open( .*)?$",
+  "^code$",
+  "^vv$",
+  "^v$",
+  "^vi$",
+  "^vim$",
+  "^a\\.$",
+  "^k\\.$",
+  "^c\\.$",
+  "^o\\.$",
+  "^k$",
+  "^g$",
+  "^t$",
+  "^p$",
+  "^y$",
+  "^b$",
+  "^n$",
+  "^z$",
+  "^s$",
+  "^h$",
+  "^hs$",
+  "^cx$",
+  "^cc$",
+  "^oc$",
+  "^og$",
+  "^kk$",
+  "^my(ip)?$",
+  "^k get pods( .*)?$",
+  "^k get nodes( .*)?$",
+  "^k config (view|get-contexts)$",
+  "^gs$",
+  "^git status$",
+  "^gd$",
+  "^git diff( .*)?$",
 ]
 
 ## prevent commands run with cwd matching any of these regexes from being written
@@ -168,6 +220,7 @@ ignored_commands = [
   "...",
   "....",
   ".....",
+  "cd -",
   "cdwork", # cd ~/workspace
   "cdcode", # cd ~/code
   "z",      # zoxide
@@ -179,6 +232,7 @@ ignored_commands = [
   "la",  # lsd -AF
   "lla", # lsd -lahF
   "l",
+  "tree",
   "lt",  # du -sh * | sort -h
 
   # Git read-only aliases from .zshrc
@@ -198,6 +252,11 @@ ignored_commands = [
   "opencode", # (228)
   "kiro",     # kiro (117)
   "kk",       # kiro .
+  "ks",       # kubernetes helper
+  "cx",       # codex
+  "cc",       # claude
+  "oc",       # opencode
+  "og",       # gemini
   "agy",      # agy . (99)
   "trae",     # (47)
   "gemini",   # (196)
@@ -218,6 +277,7 @@ ignored_commands = [
   "d",    # bare docker (327)
   "di",   # docker images (141)
   "dl",   # docker ps -l -q
+  "dpslast",
   "dps",  # docker ps (68)
   "dpsa", # docker ps -a
   "dcip", # docker inspect IP
@@ -229,14 +289,33 @@ ignored_commands = [
   "exit",
   "history",
   "open",    # open . (60)
+  "open .",
   "my",      # curl ifconfig.io (114)
-  "myip",    # dig myip
+  "myip",    # curl ifconfig.io
+  "a.",      # agy .
+  "k.",      # kiro .
+  "c.",      # code .
+  "o.",      # open .
   "t",       # tmux launcher (220)
   "m",       # multipass (215)
   "tf",      # bare terraform
   "j",       # jobs -l
+  "ld",
+  "lls",
+  "gas",
   "reload",  # exec $SHELL -l
   "s",       # (55)
+
+  # Kubernetes read-only helpers
+  "k",
+  "k get pods",
+  "k get nodes",
+  "k config view",
+  "k config get-contexts",
+
+  # Git read-only full commands (non-alias)
+  "git status",
+  "git diff",
 ]
 
 [keys]
