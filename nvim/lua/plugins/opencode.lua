@@ -30,7 +30,17 @@ return {
     config = function()
       -- @type opencode.Opts
       vim.g.opencode_opts = {
-        -- Your configuration, if any; goto definition on the type or field for details
+        server = {
+          start = function()
+            require("opencode.terminal").start("opencode --port 4096")
+          end,
+          stop = function()
+            require("opencode.terminal").stop()
+          end,
+          toggle = function()
+            require("opencode.terminal").toggle("opencode --port 4096")
+          end,
+        },
       }
 
       vim.o.autoread = true -- Required for `opts.events.reload`
@@ -42,7 +52,7 @@ return {
       vim.keymap.set({ "n", "x" }, "<C-x>", function()
         require("opencode").select()
       end, { desc = "Execute opencode action…" })
-      vim.keymap.set({ "n", "t" }, "<C-.>", function()
+      vim.keymap.set({ "n", "t" }, "<leader>oc", function()
         require("opencode").toggle()
       end, { desc = "Toggle opencode" })
 
