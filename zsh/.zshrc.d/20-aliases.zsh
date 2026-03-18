@@ -107,7 +107,38 @@ kgrafanastop() { pkill -f "kubecolor port-forward -n monitoring svc/prometheus-g
 
 alias gpull='g pull'
 gnew() { g checkout -b "$1"; }
-alias gmaster='g checkout master'
+gdefault() {
+  local remote branch remote_head
+
+  if ! g rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    echo "gdefault: not in a git repository" >&2
+    return 1
+  fi
+
+  remote="${1:-origin}"
+  if ! g config --get "remote.${remote}.url" >/dev/null 2>&1; then
+    remote="$(g remote | head -n 1)"
+  fi
+
+  if [[ -n "$remote" ]]; then
+    # Ask the remote first so the result follows the actual default branch.
+    remote_head="$(g ls-remote --symref "$remote" HEAD 2>/dev/null | awk '/^ref:/ && $3 == "HEAD" {sub("refs/heads/", "", $2); print $2; exit}')"
+    if [[ -n "$remote_head" ]]; then
+      branch="$remote_head"
+    else
+      branch="$(g symbolic-ref --quiet --short "refs/remotes/${remote}/HEAD" 2>/dev/null)"
+      branch="${branch#${remote}/}"
+    fi
+  fi
+
+  if [[ -z "$branch" ]]; then
+    echo "gdefault: unable to determine default branch from remote HEAD" >&2
+    return 1
+  fi
+
+  g checkout "$branch"
+}
+alias gmaster='gdefault'
 alias gshow='g show'
 greset() { g reset "HEAD~${1:-1}"; }
 
