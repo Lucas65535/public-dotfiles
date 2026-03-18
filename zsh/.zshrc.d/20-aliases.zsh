@@ -85,6 +85,8 @@ alias knodes='k get nodes'
 alias klogs='k logs'
 alias kcfg='k config view'
 alias kctx='k config get-contexts'
+alias kcx='kubectx'
+alias kns='kubens'
 
 alias kpoddesc='k describe pod'
 kpoddescns() { k describe pod -n "$1" "$2"; }
