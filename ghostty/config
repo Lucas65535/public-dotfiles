@@ -1,7 +1,7 @@
 # font-family = "Google Sans Code"
 # font-family = TX-02-Data
-# font-family = "Maple Mono NF CN"
-font-family = "Ioskeley Mono"
+font-family = "Maple Mono NF CN"
+# font-family = "Ioskeley Mono"
 font-size = 12.6
 font-thicken = true
 cursor-style = block

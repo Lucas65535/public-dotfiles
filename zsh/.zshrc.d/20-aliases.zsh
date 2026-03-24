@@ -15,6 +15,7 @@ alias j='jobs -l'
 alias mv='mv -i'
 alias cp='cp -i'
 alias ln='ln -i'
+alias lg='lazygit'
 alias g=git
 alias vim=nvim
 alias v=nvim
