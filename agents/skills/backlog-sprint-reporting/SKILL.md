@@ -1,242 +1,188 @@
 ---
 name: backlog-sprint-reporting
-description: Sprint or milestone management and Backlog reporting via MCP tools. Covers creating and updating sprints or milestones, generating standup summaries, weekly or monthly reports, sprint reviews, and project health analysis across issue volume, workload, priority, and overdue risk. Use this skill whenever the user asks for project-level aggregation, planning, reporting, or health analysis rather than editing individual issues. Requires the Backlog MCP server to be connected.
+description: Plan milestones and generate Nulab Backlog reports with the Bee CLI. Use this skill whenever the user wants sprint or milestone setup, standup summaries, weekly or monthly reporting, sprint review notes, or project health analysis from Backlog data rather than issue-by-issue editing.
 ---
 
-# Backlog Sprint & Reporting
+# Backlog Sprint Reporting
 
-Procedural guide for sprint/milestone management and generating progress reports from Backlog data.
+Use `bee` to gather Backlog data for milestone management, standups, sprint reviews, and project health reporting.
+
+## Working Rules
+
+- Confirm Bee authentication if needed with `bee auth status`.
+- Prefer `--json` for all reads so counts and grouping are reproducible.
+- Use first-class CLI commands such as `bee milestone list`, `bee issue list`, and `bee wiki create` before considering `bee api`.
+- Any write step such as creating a milestone or publishing a wiki page needs a preview and explicit confirmation.
 
 ## Scope
 
-Use this skill when the task is primarily about planning, aggregation, or reporting.
+Use this skill when the main task is planning, aggregation, or reporting.
 
-- If the user wants to create, update, close, comment on, or bulk-edit issues, prefer `backlog-issue-management`.
-- If the user wants unread summaries, mentions, or watch management, prefer `backlog-notifications`.
+- If the user wants issue CRUD or issue state changes, prefer `backlog-issue-management`.
+- If the user wants notification triage or watching cleanup, prefer `backlog-notifications`.
 
-Read `references/project-config.md` before resolving common project or priority mappings. Read `references/policies.md` before building a report so status semantics stay consistent with issue-management.
+Read `references/policies.md` before interpreting status groups and date phrases. Use `references/report-templates.md` when the user wants a formatted standup, weekly, monthly, or health report.
 
-## Workflow 1: Sprint / Milestone Management
+## Workflow 1: Milestone Management
 
-### Create a Sprint or Milestone
+### Create a Milestone
 
-Before any sprint or milestone mutation, show a short change preview and ask for confirmation.
+1. Resolve the project key or ID.
+2. Show a preview with name, date range, and description.
+3. After confirmation, run:
 
-1. Identify the target project.
-2. Call `backlog_add_version_milestone` with:
-   - `projectKey` or `projectId`
-   - `name` (e.g., "Sprint 15", "v2.1.0")
-   - `startDate`, `releaseDueDate` (YYYY-MM-DD format)
-   - Optional: `description`
-3. Report created milestone name and ID.
-
-### List Sprints / Milestones
-
-Call `backlog_get_version_milestone_list` with `projectKey`. Present as table:
-
-```
-| Name | ID | Start | Release Due | Archived |
-|------|----|-------|-------------|----------|
+```sh
+bee milestone create \
+  -p PROJECT \
+  -n "Sprint 15" \
+  --start-date YYYY-MM-DD \
+  --release-due-date YYYY-MM-DD \
+  -d "DESCRIPTION" \
+  --json \
+  --yes
 ```
 
-### Update Sprint / Milestone
+### List Milestones
 
-Before calling `backlog_update_version_milestone`, show the old and new values and ask for confirmation.
+```sh
+bee milestone list -p PROJECT --json
+```
 
-Call `backlog_update_version_milestone` with `id`, `name` (required), and fields to change (`startDate`, `releaseDueDate`, `description`, `archived`).
+### Update or Archive a Milestone
 
-### Close a Sprint
+1. Read current milestones with `bee milestone list -p PROJECT --json`.
+2. Show old and new values.
+3. After confirmation, run `bee milestone edit`:
 
-Set `archived: true` via `backlog_update_version_milestone` to archive a completed sprint.
+```sh
+bee milestone edit MILESTONE_ID \
+  -p PROJECT \
+  -n "NEW NAME" \
+  --start-date YYYY-MM-DD \
+  --release-due-date YYYY-MM-DD \
+  --archived \
+  --json \
+  --yes
+```
+
+Use `--archived` when the user wants to close or archive a completed sprint.
 
 ## Workflow 2: Daily Standup Summary
 
-Generate a quick status overview for a team standup meeting.
+Build a short team update from live issue data.
 
-### Steps
+Typical sequence:
 
-1. Call `backlog_get_myself` to confirm current user identity.
-2. Determine today's date and the target project.
-3. Get team members: `backlog_get_users`.
-3. Query in-progress issues: `backlog_get_issues` with `statusId: [2]` (Processing), `projectId: [id]`, `count: 100`.
-4. Query recently completed (today/yesterday): `backlog_get_issues` with `statusId: [3,4]`, `updatedSince: "YYYY-MM-DD"` (yesterday).
-5. Query newly created (today): `backlog_get_issues` with `createdSince: "YYYY-MM-DD"` (today).
-6. Group results by assignee.
-7. Format output:
+1. Resolve date boundaries from `references/policies.md`.
+2. Load team and project context:
+   - `bee user me --json`
+   - `bee user list --json` when the user wants a team-wide view
+   - `bee project view -p PROJECT --json`
+3. Pull issue sets:
 
-```
-## Standup Summary — YYYY-MM-DD
-
-### [Member Name]
-**In Progress:**
-- PROJ-101: Login page implementation (High, due 02/20)
-- PROJ-103: API refactoring (Medium)
-
-**Completed (since yesterday):**
-- PROJ-99: Fix header layout
-
-### [Member Name]
-...
-
-### Unassigned Issues in Progress
-- PROJ-110: Database migration (High, due 02/18 — OVERDUE)
+```sh
+bee issue list -p PROJECT --status 2 --count 100 --json
+bee issue list -p PROJECT --status 3 --status 4 --updated-since YYYY-MM-DD --count 100 --json
+bee issue list -p PROJECT --created-since YYYY-MM-DD --count 100 --json
 ```
 
-Flag overdue items (dueDate < today).
+4. Group by assignee and flag:
+   - in progress
+   - completed since yesterday
+   - new today
+   - overdue or unassigned work
+5. Format with the standup template.
 
-## Workflow 3: Weekly / Monthly Report
+## Workflow 3: Weekly or Monthly Report
 
-Generate a structured report for a given date range.
+Use multiple Bee queries and synthesize them in one report.
 
-### Steps
+Suggested data pulls:
 
-1. Call `backlog_get_myself` to confirm current user identity.
-2. Define the date range (ask user or infer: "this week" = Monday to today, "this month" = 1st to today, "last week" = previous Mon-Sun).
-3. Collect data with multiple queries:
-
-| Metric | Tool | Params |
-|--------|------|--------|
-| New issues count | `backlog_count_issues` | `createdSince`, `createdUntil`, `projectId` |
-| Business-done issues count | `backlog_count_issues` | `statusId: [3,4]`, `updatedSince`, `updatedUntil`, `projectId` |
-| Formally closed issues count | `backlog_count_issues` | `statusId: [4]`, `updatedSince`, `updatedUntil`, `projectId` |
-| Currently open | `backlog_count_issues` | `statusId: [1,2,3]`, `projectId` |
-| Overdue list | `backlog_get_issues` | `dueDateUntil: today`, `statusId: [1,2,3]`, `projectId`, `sort: dueDate`, `order: asc` |
-| High priority open | `backlog_count_issues` | `priorityId: [2]`, `statusId: [1,2,3]`, `projectId` |
-| PR activity | `backlog_get_pull_requests` | `projectKey`, `repoName`, filter by date in results |
-
-4. Optionally collect PR merge data: call `backlog_get_git_repositories` to list repos, then `backlog_get_pull_requests` with `statusId: [3]` (Merged) for each repo. Filter by date range in results.
-5. Format using the report template from `references/report-templates.md`.
-6. Optionally save to Wiki: call `backlog_get_project` to get `projectId`, then `backlog_add_wiki` with the report content.
-
-### Output Format
-
+```sh
+bee issue count -p PROJECT --created-since START --created-until END --json
+bee issue count -p PROJECT --status 3 --status 4 --updated-since START --updated-until END --json
+bee issue count -p PROJECT --status 4 --updated-since START --updated-until END --json
+bee issue count -p PROJECT --status 1 --status 2 --status 3 --json
+bee issue list -p PROJECT --status 1 --status 2 --status 3 --due-until TODAY --sort dueDate --order asc --count 100 --json
+bee issue count -p PROJECT --priority high --status 1 --status 2 --status 3 --json
 ```
-## Weekly Report — YYYY/MM/DD ~ YYYY/MM/DD
 
-### Summary
-| Metric | Count |
-|--------|-------|
-| New issues | XX |
-| Business-done issues | XX |
-| Formally closed issues | XX |
-| Net change | +/-XX |
-| Currently open | XX |
-| Overdue | XX |
-| High priority open | XX |
+If PR activity matters, collect it per repository:
 
-### Overdue Issues
-| Key | Summary | Assignee | Due Date | Days Overdue |
-|-----|---------|----------|----------|-------------|
+```sh
+bee pr list -p PROJECT -R REPO --status merged --count 100 --json
+```
 
-### Activity by Member
-| Member | Created | Closed | In Progress |
-|--------|---------|--------|-------------|
+Then format the result with the relevant template.
+
+### Publishing to Wiki
+
+If the user wants the report saved to Backlog Wiki:
+
+1. Show the final page name and body preview.
+2. After confirmation, run:
+
+```sh
+bee wiki create -p PROJECT -n "Weekly Report - YYYY-MM-DD" -b "BODY" --json --yes
 ```
 
 ## Workflow 4: Project Health Analysis
 
-Comprehensive multi-dimensional analysis of project status.
+Use issue counts plus issue lists for a compact health report.
 
-### Steps
+Recommended dimensions:
 
-1. Collect all dimensions:
+- Priority distribution of open work
+- Overdue volume and age
+- Workload by assignee
+- High-priority unassigned work
+- Velocity trend if the user asks for it
 
-**Priority Distribution** (open issues):
-- Query `backlog_count_issues` for each priority level with `statusId: [1,2,3]`.
+Suggested query patterns:
 
-**Overdue Analysis**:
-- `backlog_get_issues` with `dueDateUntil: today`, `statusId: [1,2,3]`, `sort: dueDate`, `order: asc`.
-- Calculate days overdue for each.
-
-**Workload per Member**:
-- `backlog_get_issues` with `statusId: [1,2,3]`, `count: 100`, group by assignee.
-- Or loop `backlog_count_issues` per `assigneeId`.
-
-**Velocity Trend** (if requested):
-- Compare closed counts across recent weeks/sprints.
-
-2. Format output:
-
-```
-## Project Health — PROJECT_KEY — YYYY-MM-DD
-
-### Priority Distribution (Open Issues)
-| Priority | Count | % |
-|----------|-------|---|
-| Urgent | X | X% |
-| High | X | X% |
-| Medium | X | X% |
-| Low | X | X% |
-
-### Overdue Issues (X total)
-| Key | Summary | Assignee | Due | Days Over |
-|-----|---------|----------|-----|-----------|
-
-### Workload Distribution
-| Member | Open Issues | High Priority | Overdue |
-|--------|-------------|---------------|---------|
-
-### Risk Assessment
-- [Highlight any member with >X open issues]
-- [Highlight issues overdue by >7 days]
-- [Note if high-priority issues lack assignees]
+```sh
+bee issue count -p PROJECT --priority high --status 1 --status 2 --status 3 --json
+bee issue list -p PROJECT --due-until TODAY --status 1 --status 2 --status 3 --count 100 --sort dueDate --order asc --json
+bee issue list -p PROJECT --status 1 --status 2 --status 3 --count 100 --json
 ```
 
-## Workflow 5: Sprint Review Report
+Compute ratios and overload flags locally after retrieval rather than making many tiny follow-up requests.
 
-Generate a Sprint retrospective report and optionally save to Wiki.
+## Workflow 5: Sprint Review
 
-### Steps
+1. List milestones and resolve the target sprint ID:
 
-1. Call `backlog_get_version_milestone_list` with `projectKey` to find the target Sprint's `milestoneId`.
-2. Query completed issues: `backlog_get_issues` with `milestoneId: [sprintId]`, `statusId: [3,4]`, `count: 100`.
-3. Query incomplete issues: `backlog_get_issues` with `milestoneId: [sprintId]`, `statusId: [1,2,3]`, `count: 100`.
-4. Count by status: `backlog_count_issues` with `milestoneId: [sprintId]` for each status.
-5. **Work hours analysis**: From the issues retrieved in steps 2-3, aggregate `estimatedHours` and `actualHours` fields. Calculate:
-   - Total estimated vs actual hours
-   - Per-assignee breakdown
-   - Estimation accuracy (actual / estimated ratio)
-6. Generate report content:
-
-```
-## Sprint {N} Review — YYYY/MM/DD
-
-### Sprint Goal
-{goal description}
-
-### Metrics
-| Metric | Value |
-|--------|-------|
-| Planned issues | {total} |
-| Completed | {n} ({%}) |
-| Incomplete / Carried over | {n} |
-| Estimated hours | {n}h |
-| Actual hours | {n}h |
-| Estimation accuracy | {%} |
-
-### Completed Issues
-| Key | Summary | Type | Assignee | Est. | Actual |
-|-----|---------|------|----------|------|--------|
-
-### Carried Over Issues
-| Key | Summary | Reason | Next Sprint? |
-|-----|---------|--------|-------------|
-
-### Work Hours by Member
-| Member | Estimated | Actual | Accuracy |
-|--------|-----------|--------|----------|
-
-### Retrospective Notes
-- What went well: {items}
-- What could improve: {items}
-- Action items: {items}
+```sh
+bee milestone list -p PROJECT --json
 ```
 
-7. Save to Wiki: call `backlog_add_wiki` with `projectId`, `name` (e.g., "Sprint {N} Review — {date}"), and the formatted content.
-8. Optionally, for key completed issues, call `backlog_add_issue_comment` to leave a summary comment (e.g., "Completed in Sprint {N}. Actual hours: {n}h vs estimated: {n}h.").
+2. Pull sprint-scoped issue sets:
+
+```sh
+bee issue list -p PROJECT --milestone SPRINT_ID --status 3 --status 4 --count 100 --json
+bee issue list -p PROJECT --milestone SPRINT_ID --status 1 --status 2 --status 3 --count 100 --json
+```
+
+3. Aggregate:
+   - planned vs completed
+   - carried-over work
+   - estimated vs actual hours
+   - per-assignee workload and accuracy
+4. Format with the sprint review template style.
+5. If requested, publish the review to wiki with `bee wiki create`.
+
+## When to Use `bee api`
+
+Use `bee api` only if:
+
+- the CLI lacks the needed endpoint or filter
+- the user needs a niche field the subcommand output does not expose
+- the reporting task depends on a Backlog object that Bee has not wrapped yet
+
+Explain why `bee api` is necessary and keep the request read-only unless the user explicitly confirms a write.
 
 ## Resources
 
-- `references/project-config.md` — Stable project, priority, and common team mappings for reporting workflows.
-- `references/policies.md` — Shared reporting semantics for status groups and relative date resolution.
-- `references/report-templates.md` — Customizable output format templates for standup, weekly, monthly, and health reports.
+- `references/policies.md`
+- `references/report-templates.md`

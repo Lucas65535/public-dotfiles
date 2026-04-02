@@ -18,6 +18,6 @@ Use these shared reporting semantics so this skill stays aligned with issue-mana
 - `this week` -> Monday of current week through today
 - `last week` -> previous Monday through previous Sunday
 - `this month` -> first day of current month through today
-- `this sprint` -> resolve from `backlog_get_version_milestone_list`
+- `this sprint` -> resolve from `bee milestone list -p PROJECT --json`
 
 Use `YYYY-MM-DD` for Backlog date parameters.

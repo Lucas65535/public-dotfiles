@@ -23,5 +23,5 @@ Good: 【DevOps】PostgreSQLの接続プール構成の最適化検討（PgBounc
 Append this footer at the end of issue descriptions:
 
 ```html
-<small>via Backlog MCP</small>
+<small>Prepared with AI via CLI</small>
 ```

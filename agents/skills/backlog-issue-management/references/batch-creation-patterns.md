@@ -47,7 +47,7 @@ Children:
 
 Parse as:
 - All children get `parentIssueId` = ID of PROJECT-KEY-100
-- Resolve parent issue key to numeric ID via `backlog_get_issue`
+- Resolve parent issue key to numeric ID via `bee issue view PROJECT-KEY-100 --json`
 
 ## Pattern 4: Create Parent with Children
 
