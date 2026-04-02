@@ -24,3 +24,4 @@
 - Be concise and direct
 - If uncertain, ask clarifying questions rather than guessing
 - When explaining changes, focus on the "why" not just the "what"
+- In Chinese responses, avoid Chinese tech-company jargon or internet slang such as "吃到"; prefer natural, standard phrasing like "加载", "应用", or "生效"

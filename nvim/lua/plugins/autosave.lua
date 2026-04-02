@@ -9,11 +9,23 @@ return {
   },
   init = function()
     local group = vim.api.nvim_create_augroup('autosave', {})
+    local exiting = false
+
+    vim.api.nvim_create_autocmd({ 'QuitPre', 'VimLeavePre' }, {
+      group = group,
+      callback = function()
+        exiting = true
+      end,
+    })
+
     vim.api.nvim_create_autocmd('User', {
       pattern = 'AutoSaveWritePost',
       group = group,
       callback = function(opts)
         vim.schedule(function()
+          if exiting then
+            return
+          end
           if opts.data.saved_buffer ~= nil and vim.api.nvim_buf_is_valid(opts.data.saved_buffer) then
             local filename = vim.api.nvim_buf_get_name(opts.data.saved_buffer)
             local basename = vim.fn.fnamemodify(filename, ":t")

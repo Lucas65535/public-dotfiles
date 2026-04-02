@@ -1,38 +1,23 @@
 ---
 name: backlog-issue-management
-description: Nulab Backlog issue lifecycle management via MCP tools. Covers creating single/batch issues, updating status/assignee/priority, searching with filters (custom fields, dates, milestones), managing comments, and handling issue metadata (types, priorities, categories, custom fields, resolutions). Use when the user wants to create, update, search, filter, bulk-modify, or close issues in Backlog. Also triggers when the user provides a requirements list or spec to be decomposed into Backlog issues, or asks to change issue status/assignee in bulk. Requires the Backlog MCP server to be connected.
+description: Nulab Backlog issue lifecycle management via MCP tools. Covers creating single or batch issues, updating status/assignee/priority, adding comments, closing issues, and searching/filtering issues by milestone, date, keyword, assignee, or custom field. Use this skill whenever the user intends to create or modify Backlog issues, bulk-update issue state, or decompose a spec or requirements list into Backlog issues, even if the request starts from a sprint or notification context. Requires the Backlog MCP server to be connected.
 ---
 
 # Backlog Issue Management
 
 Procedural guide for managing Backlog issues through MCP tools. Always query metadata IDs before operations — never hardcode or guess IDs.
 
-## Content Rules (MUST FOLLOW)
+## Scope
 
-These rules apply to **every** issue creation and update operation.
+Use this skill when the task is primarily about issue CRUD and issue state changes.
 
-### Language Rules
+- If the user wants unread summaries, mentions, or watch management, prefer `backlog-notifications`.
+- If the user wants a standup, weekly report, sprint review, or project health summary, prefer `backlog-sprint-reporting`.
+- If a request starts from notifications or a sprint report but the real task is "change these issues", switch to this skill for the mutation step.
 
-| Field                  | Language | Style                      |
-| ---------------------- | -------- | -------------------------- |
-| **Summary (Title)**    | 日本語   | 簡潔で正確な書面語         |
-| **Description (Body)** | 中文     | 清晰易懂的技术文档风格     |
+## Content Rules
 
-Title examples (日本語):
-```
-✗ Bad:  做一个登录功能
-✗ Bad:  make login feature
-✓ Good: 【Backend】ユーザー認証バグの修正
-✓ Good: 【DevOps】PostgreSQLの接続プール構成の最適化検討（PgBouncer導入）
-```
-
-### Footer Signature
-
-Always append at the end of issue description:
-
-```
-<small>via Backlog MCP</small>
-```
+Read `references/policies.md` before creating or updating issues. Apply its language rules and footer convention unless the user explicitly asks to override them.
 
 ### Pre-modification Confirmation (MANDATORY)
 
@@ -73,7 +58,7 @@ Before any create/update operation, resolve human-readable names to IDs:
 
 Cache results within the conversation — do not re-query unchanged metadata.
 
-Read `../_backlog-common/references/project-config.md` first to skip known mappings.
+Read `references/project-config.md` before calling lookup tools. If the target project or value is missing there, fall back to MCP metadata queries.
 
 ## Workflow 1: Create a Single Issue
 
@@ -188,6 +173,7 @@ Combine with `order`: `asc` or `desc`.
 
 ## Resources
 
-- `../_backlog-common/references/project-config.md` — Shared project configuration (project keys, type mappings, team members, priorities, milestones, etc.). Read this first to skip runtime metadata queries.
+- `references/project-config.md` — Stable project, priority, resolution, issue type, and team ID mappings for common Backlog work.
+- `references/policies.md` — Language rules and footer conventions for issue titles and descriptions.
 - `references/issue-templates.md` — Reusable issue description templates for Bug, Task, Story, etc.
 - `references/batch-creation-patterns.md` — Input format examples for batch issue creation.

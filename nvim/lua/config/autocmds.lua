@@ -17,3 +17,13 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.diagnostic.enable(false, { bufnr = event.buf })
   end,
 })
+
+vim.api.nvim_create_autocmd("VimLeavePre", {
+  callback = function()
+    for _, client in ipairs(vim.lsp.get_clients({ name = "taplo" })) do
+      if not client:is_stopped() then
+        client:stop(true)
+      end
+    end
+  end,
+})

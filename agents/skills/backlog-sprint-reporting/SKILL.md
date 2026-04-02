@@ -1,15 +1,26 @@
 ---
 name: backlog-sprint-reporting
-description: Sprint/milestone management and progress reporting for Nulab Backlog via MCP tools. Covers creating and managing sprints/milestones/versions, generating daily standup summaries, weekly/monthly reports, and project health analysis. Use when the user asks for a progress report, standup summary, sprint planning, milestone management, issue statistics, workload distribution, overdue analysis, or any form of Backlog data aggregation and reporting. Also triggers when the user mentions "report", "standup", "sprint", "milestone", "statistics", "overdue", or "health check" in the context of Backlog project management. Requires the Backlog MCP server to be connected.
+description: Sprint or milestone management and Backlog reporting via MCP tools. Covers creating and updating sprints or milestones, generating standup summaries, weekly or monthly reports, sprint reviews, and project health analysis across issue volume, workload, priority, and overdue risk. Use this skill whenever the user asks for project-level aggregation, planning, reporting, or health analysis rather than editing individual issues. Requires the Backlog MCP server to be connected.
 ---
 
 # Backlog Sprint & Reporting
 
 Procedural guide for sprint/milestone management and generating progress reports from Backlog data.
 
+## Scope
+
+Use this skill when the task is primarily about planning, aggregation, or reporting.
+
+- If the user wants to create, update, close, comment on, or bulk-edit issues, prefer `backlog-issue-management`.
+- If the user wants unread summaries, mentions, or watch management, prefer `backlog-notifications`.
+
+Read `references/project-config.md` before resolving common project or priority mappings. Read `references/policies.md` before building a report so status semantics stay consistent with issue-management.
+
 ## Workflow 1: Sprint / Milestone Management
 
 ### Create a Sprint or Milestone
+
+Before any sprint or milestone mutation, show a short change preview and ask for confirmation.
 
 1. Identify the target project.
 2. Call `backlog_add_version_milestone` with:
@@ -30,6 +41,8 @@ Call `backlog_get_version_milestone_list` with `projectKey`. Present as table:
 
 ### Update Sprint / Milestone
 
+Before calling `backlog_update_version_milestone`, show the old and new values and ask for confirmation.
+
 Call `backlog_update_version_milestone` with `id`, `name` (required), and fields to change (`startDate`, `releaseDueDate`, `description`, `archived`).
 
 ### Close a Sprint
@@ -46,7 +59,7 @@ Generate a quick status overview for a team standup meeting.
 2. Determine today's date and the target project.
 3. Get team members: `backlog_get_users`.
 3. Query in-progress issues: `backlog_get_issues` with `statusId: [2]` (Processing), `projectId: [id]`, `count: 100`.
-4. Query recently completed (today/yesterday): `backlog_get_issues` with `statusId: [4]` (Closed), `updatedSince: "YYYY-MM-DD"` (yesterday).
+4. Query recently completed (today/yesterday): `backlog_get_issues` with `statusId: [3,4]`, `updatedSince: "YYYY-MM-DD"` (yesterday).
 5. Query newly created (today): `backlog_get_issues` with `createdSince: "YYYY-MM-DD"` (today).
 6. Group results by assignee.
 7. Format output:
@@ -84,7 +97,8 @@ Generate a structured report for a given date range.
 | Metric | Tool | Params |
 |--------|------|--------|
 | New issues count | `backlog_count_issues` | `createdSince`, `createdUntil`, `projectId` |
-| Closed issues count | `backlog_count_issues` | `statusId: [4]`, `updatedSince`, `updatedUntil`, `projectId` |
+| Business-done issues count | `backlog_count_issues` | `statusId: [3,4]`, `updatedSince`, `updatedUntil`, `projectId` |
+| Formally closed issues count | `backlog_count_issues` | `statusId: [4]`, `updatedSince`, `updatedUntil`, `projectId` |
 | Currently open | `backlog_count_issues` | `statusId: [1,2,3]`, `projectId` |
 | Overdue list | `backlog_get_issues` | `dueDateUntil: today`, `statusId: [1,2,3]`, `projectId`, `sort: dueDate`, `order: asc` |
 | High priority open | `backlog_count_issues` | `priorityId: [2]`, `statusId: [1,2,3]`, `projectId` |
@@ -103,7 +117,8 @@ Generate a structured report for a given date range.
 | Metric | Count |
 |--------|-------|
 | New issues | XX |
-| Closed issues | XX |
+| Business-done issues | XX |
+| Formally closed issues | XX |
 | Net change | +/-XX |
 | Currently open | XX |
 | Overdue | XX |
@@ -167,17 +182,6 @@ Comprehensive multi-dimensional analysis of project status.
 - [Note if high-priority issues lack assignees]
 ```
 
-## Date Calculation Reference
-
-When user says relative dates, resolve them:
-- "today" → current date
-- "this week" → Monday of current week to today
-- "last week" → previous Monday to previous Sunday
-- "this month" → 1st of current month to today
-- "this sprint" → look up current milestone dates via `backlog_get_version_milestone_list`
-
-All date params use `YYYY-MM-DD` format.
-
 ## Workflow 5: Sprint Review Report
 
 Generate a Sprint retrospective report and optionally save to Wiki.
@@ -185,7 +189,7 @@ Generate a Sprint retrospective report and optionally save to Wiki.
 ### Steps
 
 1. Call `backlog_get_version_milestone_list` with `projectKey` to find the target Sprint's `milestoneId`.
-2. Query completed issues: `backlog_get_issues` with `milestoneId: [sprintId]`, `statusId: [4]` (Closed), `count: 100`.
+2. Query completed issues: `backlog_get_issues` with `milestoneId: [sprintId]`, `statusId: [3,4]`, `count: 100`.
 3. Query incomplete issues: `backlog_get_issues` with `milestoneId: [sprintId]`, `statusId: [1,2,3]`, `count: 100`.
 4. Count by status: `backlog_count_issues` with `milestoneId: [sprintId]` for each status.
 5. **Work hours analysis**: From the issues retrieved in steps 2-3, aggregate `estimatedHours` and `actualHours` fields. Calculate:
@@ -233,5 +237,6 @@ Generate a Sprint retrospective report and optionally save to Wiki.
 
 ## Resources
 
-- `../_backlog-common/references/project-config.md` — Shared project configuration (project keys, team members, milestones, priorities, etc.). Read this first to skip runtime metadata queries.
+- `references/project-config.md` — Stable project, priority, and common team mappings for reporting workflows.
+- `references/policies.md` — Shared reporting semantics for status groups and relative date resolution.
 - `references/report-templates.md` — Customizable output format templates for standup, weekly, monthly, and health reports.

@@ -1,13 +1,12 @@
-palette = "catppuccin_latte"
+palette = "catppuccin_mocha"
 
 format = """
 $azure\
-$time\
 $kubernetes\
-$git_branch\
-$git_commit\
-$git_status\
 $directory\
+$git_branch\
+$git_status\
+$git_commit\
 $python\
 $nodejs\
 $rust\
@@ -15,114 +14,106 @@ $golang\
 $java\
 $line_break$character\
 """
-# format = """
-# [](color_orange)\
-# $os\
-# $time\
-# [](bg:color_yellow fg:color_orange)\
-# $directory\
-# [](fg:color_yellow bg:color_green)\
-# $git_branch\
-# [](fg:color_green bg:color_aqua)\
-# $git_commit\
-# $git_status\
-# $git_state\
-# $git_metrics\
-# [](fg:color_aqua bg:color_blue)\
-# $c\
-# $rust\
-# $golang\
-# $nodejs\
-# $java\
-# $kotlin\
-# $haskell\
-# $python\
-# [](fg:color_blue bg:color_bg3)\
-# $docker_context\
-# $conda\
-# [ ](fg:color_bg3)\
-# $azure\
-# $line_break $character"""
-
+right_format = """$time"""
 
 [line_break]
 disabled = false
 
 [character]
-success_symbol = "[󰀵](bold green)"
-error_symbol = "[](bold red)"
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
 
 [time]
-style = 'green'
-format = '[$time]($style) '
+style = 'fg:overlay1'
+format = '[ 󰥔 $time ]($style)'
 disabled = false
-time_format = "%y-%m-%d %a(W%U) %T"
+time_format = "%m-%d %H:%M"
 
 [directory]
-truncation_length = 2
-read_only = " 🔒"
-style = "flamingo"
+truncation_length = 3
+truncation_symbol = "…/"
+format = "[](peach)[󰝰](fg:#6b3510 bg:peach)[ $path]($style)[$read_only]($read_only_style)[ ](peach)"
+read_only = " "
+style = "bg:peach fg:#6b3510 bold"
+read_only_style = "bg:peach fg:#8a2020 bold"
 
 [git_branch]
 symbol = ""
-style = 'mauve'
-format = '[$symbol $branch]($style)'
+style = 'bg:mauve fg:#4a2080'
+format = '[](mauve)[](fg:#4a2080 bg:mauve)[ $branch]($style)[ ](mauve)'
 
 [git_status]
-style = "teal"
-conflicted = '🏳'
-ahead = '🏎💨'
-behind = '😰'
-diverged = '😵'
-up_to_date = '✓ '
-untracked = '🤷'
-stashed = '📦'
-modified = '📝'
-staged = '[++\($count\)](green)'
-renamed = '👅'
-deleted = '🗑'
+format = '[](teal)[$all_status$ahead_behind]($style)[ ](teal)'
+style = "bg:teal fg:#1a5c50"
+conflicted = '=${count}'
+ahead = '⇡${count}'
+behind = '⇣${count}'
+diverged = '⇕⇡${ahead_count}⇣${behind_count}'
+up_to_date = '✓'
+untracked = '?${count}'
+stashed = '*${count}'
+modified = '!${count}'
+staged = '+${count}'
+renamed = '»${count}'
+deleted = '✘${count}'
 
 [git_commit]
 only_detached = false
 disabled = false
-commit_hash_length = 8
-format = '[  $hash $tag]($style)'
+commit_hash_length = 7
+format = '[](yellow)[](fg:#6b4510 bg:yellow)[ $hash]($style)[$tag]($style)[ ](yellow)'
 tag_symbol = "🔖"
-style = "yellow"
+style = "bg:yellow fg:#6b4510"
 
 [kubernetes]
 disabled = false
-format = '[$symbol$context\[$namespace\]]($style) '
+format = '[](lavender)[󱃾](fg:#3b3d8a bg:lavender)[ $context]($style)[ ](lavender)'
 # format = 'via [$symbol $context\($namespace\)](bold purple) '
 symbol = "⎈ "
-style = "lavender"
+style = "bg:lavender fg:#3b3d8a"
 
+[[kubernetes.contexts]]
+context_pattern = "aks-gitlab-runner"
+context_alias = "gitlab-runner"
+
+[[kubernetes.contexts]]
+context_pattern = "aks-(?P<cluster>[\\w-]+)"
+context_alias = "$cluster"
 
 [azure]
 disabled = false
-format = "[$symbol($subscription)]($style) "
+format = "[](blue)[󰠅](fg:#1a4b8a bg:blue)[ $subscription]($style)[ ](blue)"
 symbol = "󰠅 "
-style = "blue italic"
+style = "bg:blue fg:#1a4b8a"
 
+[azure.subscription_aliases]
+"SUB22013162557" = "開発"
+"Azure subscription 1" = "本番"
+"SUB24092532288_20240930" = "gitlab"
 
 [python]
-format = "[$virtualenv( $version) ]($style)"
-style = "green"
+format = "[](surface1)[](fg:green bg:surface1)[$virtualenv( $version) ]($style)[ ](surface1)"
+style = "bg:surface1 fg:overlay1"
 
 [nodejs]
 symbol = ''
-format = "[$symbol( $version) ]($style)"
-style = "green"
+format = "[](surface1)[$symbol](fg:green bg:surface1)[( $version)]($style)[ ](surface1)"
+style = "bg:surface1 fg:overlay1"
 
 [rust]
 symbol = ""
-format = "[$symbol( $version) ]($style)"
-style = "rosewater"
+format = "[](surface1)[$symbol](fg:rosewater bg:surface1)[( $version)]($style)[ ](surface1)"
+style = "bg:surface1 fg:overlay1"
 
 [golang]
 symbol = ""
-format = "[$symbol( $version) ]($style)"
-style = "sky"
+format = "[](surface1)[$symbol](fg:sky bg:surface1)[( $version)]($style)[ ](surface1)"
+style = "bg:surface1 fg:overlay1"
+
+[java]
+symbol = ""
+format = "[](surface1)[$symbol](fg:peach bg:surface1)[( $version)]($style)[ ](surface1)"
+style = "bg:surface1 fg:overlay1"
 
 [palettes.catppuccin_latte]
 rosewater = "#dc8a78"
@@ -236,89 +227,9 @@ base = "#1e1e2e"
 mantle = "#181825"
 crust = "#11111b"
 # [palettes.tokyonight]
-# error = "#f7768e"
-# success = "#9ece6a"
-# directory = "#2ac3de"
-# commit = "#2ac3de"
-# branch = "#f7768e"
-# symbol = "#7dcfff"
-# status = "#9d7cd8"
-# python = "#565f89"
-# node = "#73daca"
-# rust = "#ff9e64"
-# go = "#7aa2f7"
-#
 # [palettes.gruvbox]
-# error = "#fb4934"
-# success = "#b8bb26"
-# directory = "#73daca"
-# commit = "#73daca"
-# branch = "#fabd2f"
-# symbol = "#83a598"
-# status = "#928374"
-# python = "#fabd2f"
-# node = "#83a598"
-# rust = "#fe8019"
-# go = "#83a598"
-#
 # [palettes.kanagawa]
-# error = "#E46876"
-# success = "#98BB6C"
-# directory = "#7FB4CA"
-# commit = "#7FB4CA"
-# branch = "#E46876"
-# symbol = "#7FB4CA"
-# status = "#54546D"
-# python = "#DCA561"
-# node = "#98BB6C"
-# rust = "#DCA561"
-# go = "#7FB4CA"
-#
 # [palettes.catppuccin_mocha]
-# error = "#F38BA8"
-# success = "#A6E3A1"
-# directory = "#89B4FA"
-# commit = "#89B4FA"
-# branch = "#F38BA8"
-# symbol = "#89B4FA"
-# status = "#9399B2"
-# python = "#F9E2AF"
-# node = "#A6E3A1"
-# rust = "F9E2AF"
-# go = "#89B4FA"
-
 # [palettes.darkplus]
-# error = "#ff1212"
-# success = "#4EC9B0"
-# directory = "#569CD6"
-# commit = "#569CD6"
-# branch = "#FF6B6B"
-# symbol = "#4EC9B0"
-# status = "#C586C0"
-# python = "#DCDCAA"
-# go = "#9CDCFE"
-# node = "#4EC9B0"
-# rust = "#4EC9B0"
-#
 # [palettes.ayumirage]
-# error = "#f28779"
-# success = "#D5FF80"
-# directory = "#FAD07B"
-# commit = "#FAD07B"
-# branch = "#f28779"
-# symbol = "#73D0FF"
-# status = "#DFBFFF"
-# python = "#DCDCAA"
-# go = "#9CDCFE"
-# node = "#4EC9B0"
-# rust = "#4EC9B0"
-#
 # [palettes.everforestdark]
-# error = "#E67E81"
-# success = "#7EB98C"
-# directory = "#DBBC7F"
-# commit = "#DBBC7F"
-# branch = "#E67E81"
-# symbol = "#7FBBB3"
-# status = "#D699B6"
-# python = "#DBBC7F"
