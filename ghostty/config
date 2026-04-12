@@ -39,7 +39,7 @@ background-blur-radius = 10
 
 background-opacity = 1
 window-colorspace = "display-p3"
-theme = catppuccin-mocha.conf
+theme = token-dark.conf
 # theme = Glacier.conf
 # theme = TokyoNight.conf
 # theme = aura.conf
@@ -48,7 +48,7 @@ theme = catppuccin-mocha.conf
 # theme = Breadog
 # Rosé Pine Dawn https://rosepinetheme.com/palette/ingredients
 # background = faf4ed
-background = #0d0d0d
+# background = #0d0d0d
 selection-invert-fg-bg = true
 
 keybind = ¥=text:\\

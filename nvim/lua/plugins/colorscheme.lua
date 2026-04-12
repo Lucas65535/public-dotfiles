@@ -1,17 +1,24 @@
+local theme = require("config.theme")
+
 return {
-  -- Configure Rose-pine
   {
     "rose-pine/neovim",
     name = "rose-pine",
     opts = {
-      variant = "main", -- dark theme (default). Other options: "moon" (softer dark)
+      variant = "main",
     },
+    lazy = false,
+    priority = 1000,
   },
-  -- Tell LazyVim to use it
+  {
+    "ThorstenRhau/token",
+    lazy = false,
+    priority = 1000,
+  },
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "rose-pine",
+      colorscheme = theme.get_colorscheme("token"),
     },
   },
 }

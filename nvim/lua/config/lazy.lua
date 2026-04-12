@@ -35,7 +35,7 @@ require("lazy").setup({
     version = false, -- always use the latest git commit
     -- version = "*", -- try installing the latest stable version for plugins that support semver
   },
-  install = { colorscheme = { "rose-pine", "habamax" } },
+  install = { colorscheme = { "token", "rose-pine", "habamax" } },
   checker = {
     enabled = true, -- automatically check for plugin updates
     notify = false, -- notify on update
