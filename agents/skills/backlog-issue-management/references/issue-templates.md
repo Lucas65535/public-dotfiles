@@ -1,6 +1,6 @@
 # Issue Description Templates
 
-Reusable **structural** templates for common issue types. These templates define the section layout — adapt the content language according to the Content Rules in SKILL.md (Summary in 日本語, Description body in 中文).
+Reusable **structural** templates for common issue types. These templates define the section layout — adapt the content language according to the Content Rules in SKILL.md (Summary and all section headers in 日本語, Description body in 中文).
 
 Use the appropriate template based on the issue type, and adapt content from user input.
 
@@ -39,10 +39,6 @@ Use the appropriate template based on the issue type, and adapt content from use
 ## Objective
 [What needs to be done and why]
 
-## Acceptance Criteria
-- [ ] [Criterion 1]
-- [ ] [Criterion 2]
-- [ ] [Criterion 3]
 
 ## Technical Notes
 [Implementation hints, related code, API endpoints, etc.]
@@ -57,9 +53,6 @@ Use the appropriate template based on the issue type, and adapt content from use
 ## User Story
 As a [role], I want to [action], so that [benefit].
 
-## Acceptance Criteria
-- [ ] Given [context], when [action], then [result]
-- [ ] Given [context], when [action], then [result]
 
 ## UI/UX Notes
 [Wireframes, mockups, design references]

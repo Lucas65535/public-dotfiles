@@ -251,6 +251,40 @@ Read `references/report-template.md` before drafting the final report.
 
 The report must answer the question directly and show enough evidence that another reader can verify it.
 
+### Report Placement and Filing (Required)
+
+After finishing the report content, do not stop at chat output. Save the report to a concrete file path in the user's workspace.
+
+Use this sequence:
+
+1. Inspect the workspace structure (top-level and relevant subfolders).
+2. Infer the report topic domain.
+3. Select the best matching report folder.
+4. Name the file using the folder's existing naming convention; if no convention is clear, use a date-stamped descriptive name.
+5. Tell the user the exact saved path in the final response.
+
+Rules:
+
+- Prefer existing domain folders over creating new top-level categories.
+- Prefer report/research folders over inbox or archive folders.
+- If a dedicated reports folder exists for the topic, use it.
+- If the best location is still ambiguous, pick the closest topical folder and state the assumption explicitly.
+
+#### Strong default for numbered knowledge-vault layouts
+
+If the workspace uses numbered domain folders (for example `10-...`, `40-...`, `50-...`, `70-...`), map by topic first, then by content type.
+
+Recommended mapping:
+
+- AI/LLM/agent/product research reports -> `50-ai-agent-engineering/52-llm-research/20-reports`
+- Cloud platform investigations -> `10-cloud-platform/<subdomain>/30-investigations`
+- Runtime/observability investigations -> `40-runtime-observability/<subdomain>/30-investigations`
+- Business/market/pricing analysis for management -> `70-management-reviews/72-business-analysis`
+
+For this `ob-docs` style vault, a deep web investigation about an AI or agent product should normally be filed under:
+
+- `50-ai-agent-engineering/52-llm-research/20-reports`
+
 ### What a good report must contain
 
 - a direct executive summary

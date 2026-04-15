@@ -9,10 +9,48 @@ Process notification and watching workflows through `bee`.
 
 ## Working Rules
 
-- Confirm authentication if needed with `bee auth status`.
+- In Codex sandboxed runs, treat `bee auth status` as a network-dependent check, not a definitive auth verdict.
+- If `bee auth status` reports `Authentication failed` inside the sandbox, treat that result as inconclusive because Bee validates credentials via the Backlog API and the sandbox may block outbound access.
+- Retry the same read-only Bee command outside the sandbox before concluding auth is broken.
+- Ask the user to run `bee auth login` only if the non-sandbox retry also fails or a non-sandbox read command shows the credentials are invalid.
 - Prefer `--json` for reads.
 - In non-interactive environments, pass all required flags explicitly and use `--yes` for write actions after user confirmation.
 - Use dedicated commands before considering `bee api`.
+
+## Project Setup & Identification
+
+### Use Full Project Keys
+
+Backlog projects are identified by their **full project key**, not a partial prefix.
+
+**Wrong:**
+```sh
+bee milestone list -p SC --json  # ❌ Fails
+```
+
+**Right:**
+```sh
+bee milestone list -p SC_DEVOPS --json  # ✅ Works
+bee milestone list -p SC_SAAS --json      # ✅ Works
+```
+
+### Preferred Project Mapping
+
+| Project Key | Project Name | Project ID |
+|-------------|--------------|------------|
+| SC_DEVOPS   | One人事 DevOps | 124287 |
+| SC_SAAS     | One人事 SaaS   | 87546 |
+| SC_QA       | Q&A・要望       | 115671 |
+
+⚠️ **Important:** The project **key** (e.g., `SC_DEVOPS`) is used with `-p` flag, NOT the project ID number.
+
+### Retrieving Project Information
+
+If unsure about the project key:
+
+```sh
+bee project list --json | jq '.[] | {key: .projectKey, name: .name}'
+```
 
 ## Scope
 
@@ -23,7 +61,7 @@ Use this skill when the task is primarily about attention management rather than
 
 ## Workflow 1: Notification Triage
 
-1. Count unread notifications:
+### Step 1: Count unread notifications
 
 ```sh
 bee notification count \
@@ -32,39 +70,87 @@ bee notification count \
   --json
 ```
 
-2. Fetch recent notifications:
+### Step 2: Fetch recent notifications with jq formatting
 
 ```sh
-bee notification list --count 100 --order desc --json
+# Get last 50 notifications with summary
+bee notification list --count 50 --order desc --json | \
+  jq -r '.[] | "\(.id): \(.reason) - \(.resource.summary // "no summary") [\(.createdUser.name)]"'
+
+# Get only unread notifications
+bee notification list --count 100 --json | \
+  jq -r '.[] | select(.lastRead == null) | "\(.id): \(.issue.key // .pullRequest.title) - \(.reason)"'
 ```
 
-3. Classify them into:
-   - Requires action: direct assignment, mention, review request
-   - Status updates: watched issues or PRs moving state
-   - FYI: comments and general activity
-4. Pull issue or PR context only when necessary:
-   - `bee issue view ISSUE --json`
-   - `bee issue comment ISSUE --list --json`
-   - `bee pr view ... --json` or `bee pr list ... --json`
-5. Present a concise grouped summary with issue key, reason, actor, and newest relevant comment or status.
+### Step 3: Pull context when needed
+
+```sh
+# View notification details (includes related issue)
+bee notification view NOTIFICATION_ID --json | jq '.resource'
+
+# Get issue details
+bee issue view PROJ-123 --json | jq '{key: .issueKey, summary: .summary, status: .status.name}'
+
+# Get recent comments on issue
+bee issue comment PROJ-123 --list --json | jq -r '.[] | "\(.createdUser.name): \(.content)"'
+```
+
+### Step 4: Categorize and summarize
+
+Use the Priority Classification order:
+1. Directly assigned
+2. Mention or review request
+3. High-impact status change on watched work
+4. General FYI activity
+
+### Sandbox Retry Pattern
+
+If notification reads fail in the Codex sandbox:
+
+```sh
+# First attempt (may fail due to network)
+bee notification list --count 10 --json
+
+# Retry outside sandbox (should succeed)
+# Ask user: "Please run this command in your terminal to verify connectivity"
+```
 
 ## Workflow 2: Mark Notifications as Read
 
 Preview what will be marked as read before writing.
 
-Single notification:
+### Single notification
 
 ```sh
+# Mark specific notification as read
 bee notification read NOTIFICATION_ID --yes
+
+# Or with preview
+bee notification read NOTIFICATION_ID
+# Confirm: "Mark notification NOTIFICATION_ID as read?"
 ```
 
-All notifications:
+### Bulk operations
 
 ```sh
+# Mark all notifications as read (use with caution)
 bee notification read-all --yes
+
+# Selective cleanup: list then mark specific ones
+bee notification list --json | jq -r '.[].id' > notification_ids.txt
+# Review file, then:
+xargs bee notification read < notification_ids.txt
 ```
 
-Clarify whether the user wants a targeted cleanup or a global reset.
+### Filtered marking
+
+```sh
+# Mark all from a specific project as read
+bee notification list --json | jq -r '.[] | select(.resource.project.key == "SC_DEVOPS") | .id' | \
+  xargs bee notification read
+```
+
+Clarify whether the user wants a **targeted cleanup** or a **global reset** before executing.
 
 ## Workflow 3: Watching Management
 
@@ -143,3 +229,49 @@ After the summary, ask whether the user wants any of these actions:
 - mark items as read
 - add or remove a watching item
 - switch to issue mutation
+
+## Troubleshooting
+
+### "Notification count command fails"
+
+**Symptom:** `bee notification count` returns an error.
+
+**Fix:**
+- Ensure you're using correct bee CLI version: `bee --version`
+- Check authentication: `bee auth status`
+- Use full project key if filtering by project (some subcommands support `-p`)
+
+### "Watching list empty or unexpected"
+
+**Symptom:** `bee watching list --json` returns empty or wrong items.
+
+**Fix:**
+- Check if you're in the correct Backlog space: `bee auth:whoami`
+- Verify permissions: you can only see your own watching items
+- Add explicit `--space` flag if using multiple spaces: `bee watching list --space nisshin30 --json`
+
+### JSON parsing yields null fields
+
+**Symptom:** Fields like `issue.summary` or `lastRead` return null.
+
+**Fix:** Ensure you're using `--json` flag and proper jq syntax:
+
+```sh
+# Get all fields
+bee notification list --count 10 --json | jq '.[0]'
+
+# Access nested fields safely
+bee notification list --count 10 --json | jq -r '.[] | "\(.resource.summary // "no summary")"'
+```
+
+### "Command not found: notification"
+
+**Symptom:** `bee notification` subcommand not recognized.
+
+**Cause:** Outdated bee CLI version.
+
+**Fix:** Update bee: `npm update -g @nulab/bee`
+
+## Resources
+
+- `references/policies.md`

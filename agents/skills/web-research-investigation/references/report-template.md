@@ -15,6 +15,7 @@ The point is not to sound polished. The point is to answer the question clearly,
 > Scope: [geography / time window / category]
 > Method: Firecrawl CLI for discovery, page reading, and site mapping
 > Source mix: [official pages / case studies / third-party comparisons / reports]
+> Saved path: [absolute or workspace-relative report file path]
 
 ## Executive Summary
 

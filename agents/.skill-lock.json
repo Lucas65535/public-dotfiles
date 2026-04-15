@@ -25,9 +25,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/obra/superpowers.git",
       "skillPath": "skills/writing-plans/SKILL.md",
-      "skillFolderHash": "be89d032af0d3621f689e8bd6083e4010971e5fa",
+      "skillFolderHash": "704e240d4b281baf8a339e1418baa249860197f7",
       "installedAt": "2026-01-30T01:57:45.718Z",
-      "updatedAt": "2026-03-23T05:15:35.116Z"
+      "updatedAt": "2026-04-10T05:51:18.935Z"
     },
     "xlsx": {
       "source": "anthropics/skills",
@@ -47,6 +47,16 @@
       "pluginName": "document-skills",
       "installedAt": "2026-03-02T01:42:10.338Z",
       "updatedAt": "2026-03-02T01:42:10.338Z"
+    },
+    "doc-coauthoring": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/anthropics/skills.git",
+      "skillPath": "skills/doc-coauthoring/SKILL.md",
+      "skillFolderHash": "d9df960e61fe2bafe9183e37de6f9f6b73b74087",
+      "pluginName": "example-skills",
+      "installedAt": "2026-04-10T05:50:59.568Z",
+      "updatedAt": "2026-04-10T05:50:59.568Z"
     }
   },
   "dismissed": {
@@ -59,6 +69,7 @@
     "codex",
     "cursor",
     "deepagents",
+    "firebender",
     "gemini-cli",
     "github-copilot",
     "kimi-cli",
