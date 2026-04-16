@@ -52,6 +52,7 @@ theme = light:claude-light.conf,dark:claude-dark.conf
 # Rosé Pine Dawn https://rosepinetheme.com/palette/ingredients
 # background = faf4ed
 # background = #0d0d0d
-selection-invert-fg-bg = true
+# Keep theme-defined selection colors visible after copying.
+selection-clear-on-copy = false
 
 keybind = ¥=text:\\

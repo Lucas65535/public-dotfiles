@@ -104,7 +104,7 @@
 | Token | Hex | Usage |
 |-------|-----|-------|
 | `cursor` | `#D4967E` | 光标 |
-| `selection` | `#4E3B33` | 选区 (accent@30% pre-blended over bg) |
+| `selection` | `#574238` | 选区 (accent@35% pre-blended over bg) |
 
 ---
 
@@ -188,4 +188,4 @@
 | `git_modified` | `#8A6220` |
 | `git_deleted` | `#A84B3A` |
 | `cursor` | `#CC785C` |
-| `selection` | `#F5E1D0` | (accent@15% pre-blended over bg)
+| `selection` | `#EDCEBC` | (accent@35% pre-blended over bg)

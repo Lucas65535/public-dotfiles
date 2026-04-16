@@ -459,6 +459,14 @@ set -ag status-format[0] "#[nolist align=right range=right #{status-right-style}
 set -ag status-format[0] "#[norange default]" #!important
 set -g status-right-length 80 #!important
 
+# Make mouse selections in tmux copy mode clearly visible on the warm palette.
+set -g mode-style "fg=#1A1917,bg=#EDCEBC"
+set -g copy-mode-selection-style "fg=#1A1917,bg=#EDCEBC"
+set -g copy-mode-position-style "fg=#FFFCF0,bg=#CC785C,bold"
+set -g copy-mode-match-style "fg=#1A1917,bg=#F2F0E6"
+set -g copy-mode-current-match-style "fg=#FFFCF0,bg=#CC785C,bold"
+set -g copy-mode-mark-style "fg=#1A1917,bg=#F2F0E6"
+
 # force Vi mode
 #   really you should export VISUAL or EDITOR environment variable, see manual
 #set -g status-keys vi

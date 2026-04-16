@@ -19,9 +19,10 @@ macOS development environment managed via symlinks. One clone, one `brew bundle`
 | Yazi (file manager) | `yazi/` | `~/.config/yazi` |
 | AI agent skills | `agents/skills/` | `~/.agents/skills`, `~/.gemini/antigravity/skills`, `~/.claude/skills`, `~/.codex/skills` |
 | AI agent instructions | `agents/GEMINI.md` | `~/.gemini/GEMINI.md`, `~/.claude/CLAUDE.md`, `~/.codex/instructions.md` |
+| Codex themes | `codex/themes/` | `~/.codex/themes` |
 | Homebrew packages | `Brewfile` | — |
 
-Theme: **Catppuccin Mocha** across all tools (fzf, bat, yazi, zsh highlighting, starship).
+Theme variants live in-repo. The unified Claude palette source of truth is [`claude-theme/palette.md`](claude-theme/palette.md), and Codex-specific TextMate themes live under `codex/themes/`.
 
 ## Fresh Machine Setup
 
@@ -62,9 +63,22 @@ ln -sf ~/code/public-dotfiles/agents/GEMINI.md ~/.gemini/GEMINI.md
 ln -sf ~/code/public-dotfiles/agents/GEMINI.md ~/.claude/CLAUDE.md
 ln -sf ~/code/public-dotfiles/agents/GEMINI.md ~/.codex/instructions.md
 
-# 8. Reload
+# 8. Symlinks — Codex custom themes
+mkdir -p ~/.codex
+ln -sfn ~/code/public-dotfiles/codex/themes ~/.codex/themes
+
+# 9. Reload
 exec $SHELL -l
 ```
+
+Optional `~/.codex/config.toml` snippet for light-by-default:
+
+```toml
+[tui]
+theme = "claude-code"
+```
+
+`claude-code` is a repo-level alias that points to `claude-code-light.tmTheme`. Switch to `claude-code-dark` in `~/.codex/config.toml` or from Codex `/theme` when you want the dark variant.
 
 ## Day-to-Day Usage
 
@@ -95,6 +109,18 @@ cd ~/.local/share/tmux/oh-my-tmux && git pull
 ```
 
 After editing `tmux.conf.local`, reload inside tmux with `<prefix>` + `r`.
+
+### Codex Themes
+
+Codex CLI picks up custom `.tmTheme` files from `~/.codex/themes`. This repo ships three entries:
+
+| Theme | File | Notes |
+|---|---|---|
+| `claude-code` | `codex/themes/claude-code.tmTheme` | default alias → light |
+| `claude-code-light` | `codex/themes/claude-code-light.tmTheme` | warm Kaku paper background |
+| `claude-code-dark` | `codex/themes/claude-code-dark.tmTheme` | warm Claude dark background |
+
+Use Codex `/theme` to preview and switch interactively, or set `tui.theme = "claude-code"` / `tui.theme = "claude-code-dark"` in `~/.codex/config.toml`.
 
 ### Saving Changes
 
