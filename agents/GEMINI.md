@@ -12,13 +12,6 @@
 - Use conventional commits format: `type(scope): description`
   - Types: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`
 
-## Tool Preferences
-
-- Use `rg` (ripgrep) instead of `grep`
-- Use `fd` instead of `find`
-- Use `bat` instead of `cat`
-- Use `lsd` instead of `ls`
-
 ## Communication
 
 - Be concise and direct

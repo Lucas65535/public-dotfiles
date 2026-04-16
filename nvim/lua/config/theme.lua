@@ -66,7 +66,7 @@ end
 function M.set_background(mode)
   vim.o.background = mode
 
-  local current = vim.g.colors_name or M.get_colorscheme("token")
+  local current = vim.g.colors_name or M.get_colorscheme("claude-code-dark")
   local ok, err = pcall(vim.cmd.colorscheme, current)
   if not ok then
     vim.notify("Failed to refresh colorscheme: " .. current .. "\n" .. err, vim.log.levels.ERROR)

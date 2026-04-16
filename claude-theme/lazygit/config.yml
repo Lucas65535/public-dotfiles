@@ -9,4 +9,3 @@
 # automatically selects the right one based on theme mode.
 # Make sure your lazygit alias uses it:
 #   alias lg='lazygit --use-config-file="$(dotfiles_lazygit_config)"'
-

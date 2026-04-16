@@ -55,3 +55,30 @@ azswitch() {
     fi
   fi
 }
+
+dotfiles_theme_mode() {
+  if [[ -n "${DOTFILES_THEME_MODE:-}" ]]; then
+    print -r -- "$DOTFILES_THEME_MODE"
+    return 0
+  fi
+
+  if [[ "$(uname -s)" == "Darwin" ]]; then
+    if ! defaults read -g AppleInterfaceStyle >/dev/null 2>&1; then
+      print -r -- "light"
+      return 0
+    fi
+  fi
+
+  print -r -- "dark"
+}
+
+dotfiles_lazygit_config() {
+  local config_home="${XDG_CONFIG_HOME:-$HOME/.config}"
+
+  if [[ "$(dotfiles_theme_mode)" == "light" ]]; then
+    print -r -- "${config_home}/lazygit/config-light.yml"
+    return 0
+  fi
+
+  print -r -- "${config_home}/lazygit/config-dark.yml"
+}

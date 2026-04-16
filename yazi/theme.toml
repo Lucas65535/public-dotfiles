@@ -1,6 +1,147 @@
 # [flavor]
-# dark = "catppuccin-mocha"
-# light = "catppuccin-mocha"
+# dark = "token-dark"
+# light = "token-light"
 
-[flavor]
-dark = "kanagawa"
+
+# Claude Code Theme — Yazi File Manager
+# Copy to ~/.config/yazi/theme.toml
+#
+# Dark mode palette from the unified Claude Code spec.
+# Yazi uses the [flavor] system; this is a standalone theme.toml.
+
+[manager]
+cwd = { fg = "#D4967E" }
+
+# Hovered item
+hovered = { fg = "#141413", bg = "#D4967E" }
+preview_hovered = { underline = true }
+
+# Find keyword highlighting
+find_keyword = { fg = "#F4DC90", bold = true, italic = true, underline = true }
+find_position = { fg = "#9B87F5", bg = "reset", italic = true }
+
+# Markers
+marker_copied = { fg = "#9ACA86", bg = "#9ACA86" }
+marker_cut = { fg = "#D47563", bg = "#D47563" }
+marker_marked = { fg = "#E8C96B", bg = "#E8C96B" }
+marker_selected = { fg = "#61AAF2", bg = "#61AAF2" }
+
+# Tabs
+tab_active = { fg = "#141413", bg = "#D4967E" }
+tab_inactive = { fg = "#A9A39A", bg = "#1A1917" }
+tab_width = 1
+
+# Count badge
+count_copied = { fg = "#141413", bg = "#9ACA86" }
+count_cut = { fg = "#141413", bg = "#D47563" }
+count_selected = { fg = "#141413", bg = "#61AAF2" }
+
+# Borders
+border_symbol = "│"
+border_style = { fg = "#4A473F" }
+
+[status]
+separator_open = ""
+separator_close = ""
+separator_style = { fg = "#1A1917", bg = "#1A1917" }
+
+# Mode indicator
+mode_normal = { fg = "#141413", bg = "#D4967E", bold = true }
+mode_select = { fg = "#141413", bg = "#9ACA86", bold = true }
+mode_unset = { fg = "#141413", bg = "#D47563", bold = true }
+
+# Progress bar
+progress_label = { fg = "#EAE7DF", bold = true }
+progress_normal = { fg = "#4A473F", bg = "#1A1917" }
+progress_error = { fg = "#D47563", bg = "#1A1917" }
+
+# Permissions
+permissions_t = { fg = "#61AAF2" }
+permissions_r = { fg = "#E8C96B" }
+permissions_w = { fg = "#D47563" }
+permissions_x = { fg = "#9ACA86" }
+permissions_s = { fg = "#6B665F" }
+
+[input]
+border = { fg = "#D4967E" }
+title = {}
+value = {}
+selected = { reversed = true }
+
+[pick]
+border = { fg = "#D4967E" }
+active = { fg = "#141413", bg = "#D4967E" }
+inactive = {}
+
+[confirm]
+border = { fg = "#D4967E" }
+title = {}
+content = {}
+list = {}
+button_active = { fg = "#141413", bg = "#D4967E", bold = true }
+button_inactive = { fg = "#A9A39A" }
+
+[completion]
+border = { fg = "#D4967E" }
+active = { fg = "#141413", bg = "#D4967E" }
+inactive = {}
+
+icon_file = ""
+icon_folder = ""
+icon_command = ""
+
+[tasks]
+border = { fg = "#D4967E" }
+title = {}
+hovered = { underline = true }
+
+[which]
+cols = 3
+mask = { bg = "#1A1917" }
+cand = { fg = "#D4967E" }
+rest = { fg = "#6B665F" }
+desc = { fg = "#A9A39A" }
+separator = " → "
+separator_style = { fg = "#4A473F" }
+
+[help]
+on = { fg = "#D4967E" }
+run = { fg = "#A9A39A" }
+desc = { fg = "#6B665F" }
+hovered = { bg = "#2B2A27", bold = true }
+footer = { fg = "#EAE7DF", bg = "#1A1917" }
+
+[notify]
+title_info = { fg = "#61AAF2" }
+title_warn = { fg = "#E8C96B" }
+title_error = { fg = "#D47563" }
+
+[filetype]
+
+rules = [
+  # Images
+  { mime = "image/*", fg = "#E8C96B" },
+
+  # Media
+  { mime = "video/*", fg = "#9B87F5" },
+  { mime = "audio/*", fg = "#9B87F5" },
+
+  # Archives
+  { mime = "application/zip", fg = "#D47563" },
+  { mime = "application/gzip", fg = "#D47563" },
+  { mime = "application/x-tar", fg = "#D47563" },
+  { mime = "application/x-bzip*", fg = "#D47563" },
+  { mime = "application/x-7z-compressed", fg = "#D47563" },
+  { mime = "application/x-rar", fg = "#D47563" },
+  { mime = "application/x-xz", fg = "#D47563" },
+
+  # Documents
+  { mime = "application/pdf", fg = "#D47563" },
+  { mime = "application/*doc*", fg = "#61AAF2" },
+  { mime = "application/*sheet*", fg = "#9ACA86" },
+  { mime = "application/*presentation*", fg = "#E8C96B" },
+
+  # Fallback
+  { name = "*", fg = "#EAE7DF" },
+  { name = "*/", fg = "#D4967E" },
+]

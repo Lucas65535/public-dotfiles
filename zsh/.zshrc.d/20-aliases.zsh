@@ -15,7 +15,6 @@ alias j='jobs -l'
 alias mv='mv -i'
 alias cp='cp -i'
 alias ln='ln -i'
-alias lg='lazygit'
 alias g=git
 alias vim=nvim
 alias v=nvim
@@ -30,6 +29,14 @@ alias gcamend='git commit --amend -m'
 alias gcamendnoedit='git commit --amend --no-edit'
 alias ga='git add .'
 alias gp='git push'
+
+lazygit() {
+  command lazygit --use-config-file="$(dotfiles_lazygit_config)" "$@"
+}
+
+lg() {
+  lazygit "$@"
+}
 
 alias p='pnpm'
 alias b='bun'

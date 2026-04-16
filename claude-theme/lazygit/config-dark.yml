@@ -1,0 +1,47 @@
+# Claude Code Theme — Lazygit Dark Configuration
+# Used by dotfiles_lazygit_config() when theme_mode == "dark"
+
+gui:
+  theme:
+    activeBorderColor:
+      - "#D4967E"  # accent terracotta
+      - bold
+    inactiveBorderColor:
+      - "#4A473F"  # border
+    searchingActiveBorderColor:
+      - "#E8C96B"  # warning yellow
+      - bold
+    optionsTextColor:
+      - "#61AAF2"  # info blue
+    selectedLineBgColor:
+      - "#2B2A27"  # bg_inset
+    inactiveViewSelectedLineBgColor:
+      - "#1F1D1A"  # bg_surface
+    selectedRangeBgColor:
+      - "#332F29"  # bg_highlight
+    cherryPickedCommitFgColor:
+      - "#61AAF2"  # blue
+    cherryPickedCommitBgColor:
+      - "#2B2A27"  # bg_inset
+    markedBaseCommitFgColor:
+      - "#C9BCFF"  # bright magenta
+    markedBaseCommitBgColor:
+      - "#2B2A27"  # bg_inset
+    unstagedChangesColor:
+      - "#D47563"  # red
+    defaultFgColor:
+      - "#EAE7DF"  # fg
+
+  nerdFontsVersion: "3"
+  showFileTree: true
+  showRandomTip: false
+  border: rounded
+  animateExplosion: false
+
+  authorColors:
+    "*": "#A9A39A"
+
+git:
+  paging:
+    colorArg: always
+    pager: "delta --dark --paging=never --minus-style='syntax #332220' --minus-emph-style='syntax #4D2F28' --plus-style='syntax #2B3325' --plus-emph-style='syntax #3A4A32' --hunk-header-style='syntax #2B2A27' --line-numbers-minus-style='#D47563' --line-numbers-plus-style='#9ACA86' --line-numbers-zero-style='#6B665F'"

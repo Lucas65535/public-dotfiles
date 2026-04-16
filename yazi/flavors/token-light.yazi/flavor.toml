@@ -1,0 +1,96 @@
+# Token light flavor for Yazi, derived from the upstream token terminal palette.
+
+[mgr]
+cwd = { fg = "#6389a8", bold = true }
+
+find_keyword = { fg = "#876032", bg = "#ecebe7", bold = true }
+find_position = { fg = "#9075b2", bg = "reset", bold = true }
+
+marker_copied = { fg = "#4d7b49", bg = "#4d7b49" }
+marker_cut = { fg = "#b05555", bg = "#b05555" }
+marker_marked = { fg = "#9075b2", bg = "#9075b2" }
+marker_selected = { fg = "#876032", bg = "#876032" }
+
+count_copied = { fg = "#faf9f5", bg = "#4d7b49" }
+count_cut = { fg = "#faf9f5", bg = "#b05555" }
+count_selected = { fg = "#faf9f5", bg = "#876032" }
+
+border_symbol = "│"
+border_style = { fg = "#dddcd6" }
+
+[tabs]
+active = { fg = "#faf9f5", bg = "#6389a8", bold = true }
+inactive = { fg = "#6389a8", bg = "#ecebe7" }
+
+[mode]
+normal_main = { fg = "#faf9f5", bg = "#6389a8", bold = true }
+normal_alt = { fg = "#6389a8", bg = "#ecebe7" }
+select_main = { fg = "#faf9f5", bg = "#9075b2", bold = true }
+select_alt = { fg = "#9075b2", bg = "#ecebe7" }
+unset_main = { fg = "#faf9f5", bg = "#876032", bold = true }
+unset_alt = { fg = "#876032", bg = "#ecebe7" }
+
+[status]
+overall = { fg = "#2a2920", bg = "#ecebe7" }
+
+perm_sep = { fg = "#6c675f" }
+perm_type = { fg = "#6389a8" }
+perm_read = { fg = "#876032" }
+perm_write = { fg = "#b05555" }
+perm_exec = { fg = "#4d7b49" }
+
+progress_label = { fg = "#2a2920", bold = true }
+progress_normal = { fg = "#4d7b49", bg = "#dddcd6" }
+progress_error = { fg = "#faf9f5", bg = "#b05555" }
+
+[pick]
+border = { fg = "#6389a8" }
+active = { fg = "#9075b2", bold = true }
+inactive = {}
+
+[input]
+border = { fg = "#6389a8" }
+title = {}
+value = {}
+selected = { reversed = true }
+
+[completion]
+border = { fg = "#6389a8" }
+active = { reversed = true }
+inactive = {}
+
+[tasks]
+border = { fg = "#6389a8" }
+title = {}
+hovered = { fg = "#9075b2", bold = true }
+
+[which]
+mask = { bg = "#ecebe7" }
+cand = { fg = "#3d8484" }
+rest = { fg = "#6c675f" }
+desc = { fg = "#9075b2" }
+separator = " - "
+separator_style = { fg = "#dddcd6" }
+
+[help]
+on = { fg = "#4d7b49" }
+run = { fg = "#9075b2" }
+hovered = { reversed = true, bold = true }
+footer = { fg = "#faf9f5", bg = "#6389a8" }
+
+[notify]
+title_info = { fg = "#4d7b49" }
+title_warn = { fg = "#876032" }
+title_error = { fg = "#b05555" }
+
+[filetype]
+rules = [
+  { mime = "image/*", fg = "#876032" },
+  { mime = "{audio,video}/*", fg = "#9075b2" },
+  { mime = "application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", fg = "#b05555" },
+  { mime = "application/{pdf,doc,rtf,vnd.*}", fg = "#3d8484" },
+  { url = "*", is = "orphan", fg = "#b05555" },
+  { url = "*", is = "exec", fg = "#4d7b49" },
+  { url = "*", fg = "#2a2920" },
+  { url = "*/", fg = "#6389a8" },
+]

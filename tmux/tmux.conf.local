@@ -118,36 +118,62 @@ tmux_conf_theme=enabled
 
 
 # ------------------------------------------------------------------------------
-# Rose-Pine (dark)
+# Rose-Pine (dark) — REPLACED BY Claude Code theme
 # ------------------------------------------------------------------------------
 
-tmux_conf_theme_colour_1="#191724"    # base
-tmux_conf_theme_colour_2="#1f1d2e"    # surface
-tmux_conf_theme_colour_3="#26233a"    # overlay
+# tmux_conf_theme_colour_1="#191724"    # base
+# tmux_conf_theme_colour_2="#1f1d2e"    # surface
+# tmux_conf_theme_colour_3="#26233a"    # overlay
+#
+# tmux_conf_theme_colour_4="#9ccfd8"    # foam
+# tmux_conf_theme_colour_5="#fe640b"    # gold
+# tmux_conf_theme_colour_6="#191724"    # base
+# tmux_conf_theme_colour_7="#e0def4"    # text
+# tmux_conf_theme_colour_8="#ebbcba"    # rose
+# tmux_conf_theme_colour_9="#f6c177"    # gold
+# tmux_conf_theme_colour_10="#eb6f92"   # love
+# tmux_conf_theme_colour_11="#31748f"   # pine
+# tmux_conf_theme_colour_12="#6e6a86"   # muted
+# tmux_conf_theme_colour_13="#e0def4"   # text
+# tmux_conf_theme_colour_14="#191724"   # base
+# tmux_conf_theme_colour_15="#191724"   # base
+# tmux_conf_theme_colour_16="#eb6f92"   # love
+# tmux_conf_theme_colour_17="#e0def4"   # text
+#
+# tmux_conf_theme_block_bg_1="#26233a"  # overlay
+# tmux_conf_theme_block_bg_2="#2a273f"  # overlay+
+# tmux_conf_theme_block_bg_3="#2f2c4a"  # overlay++
 
-tmux_conf_theme_colour_4="#9ccfd8"    # foam
-# tmux_conf_theme_colour_5="#f6c177"    # gold
-tmux_conf_theme_colour_5="#fe640b"    # gold
-tmux_conf_theme_colour_6="#191724"    # base
-tmux_conf_theme_colour_7="#e0def4"    # text
-tmux_conf_theme_colour_8="#ebbcba"    # rose
-tmux_conf_theme_colour_9="#f6c177"    # gold
-tmux_conf_theme_colour_10="#eb6f92"   # love
-tmux_conf_theme_colour_11="#31748f"   # pine
-tmux_conf_theme_colour_12="#6e6a86"   # muted
-tmux_conf_theme_colour_13="#e0def4"   # text
-tmux_conf_theme_colour_14="#191724"   # base
-tmux_conf_theme_colour_15="#191724"   # base
-tmux_conf_theme_colour_16="#eb6f92"   # love
-tmux_conf_theme_colour_17="#e0def4"   # text
+# ══════════════════════════════════════════════════════════════════════════════
+# Claude Code Theme — Light Palette (Kaku warm yellow)
+# Source: palette.md / nvim palette.lua (Single Source of Truth)
+# ══════════════════════════════════════════════════════════════════════════════
 
-# ------------------------------------------------------------------------------
-# Status block backgrounds (same hue, layered)
-# ------------------------------------------------------------------------------
+# --- Background & Surface (Kaku warm yellow) ---
+tmux_conf_theme_colour_1="#FFFCF0"     # bg          — main background
+tmux_conf_theme_colour_2="#F5F3EB"     # bg_surface  — floating panels
+tmux_conf_theme_colour_3="#E8E6DB"     # bg_inset    — embedded regions
 
-tmux_conf_theme_block_bg_1="#26233a"  # overlay
-tmux_conf_theme_block_bg_2="#2a273f"  # overlay+
-tmux_conf_theme_block_bg_3="#2f2c4a"  # overlay++
+# --- Functional Colors ---
+tmux_conf_theme_colour_4="#207FDE"     # blue/info   — secondary accent
+tmux_conf_theme_colour_5="#CC785C"     # accent      — primary terracotta
+tmux_conf_theme_colour_6="#FFFCF0"     # bg          — contrast text base
+tmux_conf_theme_colour_7="#1A1917"     # fg          — main text
+tmux_conf_theme_colour_8="#B85F3D"     # accent_hover — warm terracotta
+tmux_conf_theme_colour_9="#8A6220"     # yellow      — warning / mode indicator
+tmux_conf_theme_colour_10="#A84B3A"    # red         — error / danger
+tmux_conf_theme_colour_11="#2E7C4C"    # green       — success
+tmux_conf_theme_colour_12="#6B665F"    # fg_muted    — secondary text
+tmux_conf_theme_colour_13="#1A1917"    # fg          — text (alias)
+tmux_conf_theme_colour_14="#FFFCF0"    # bg          — base (alias)
+tmux_conf_theme_colour_15="#FFFCF0"    # bg          — base (alias)
+tmux_conf_theme_colour_16="#A84B3A"    # red         — danger / synchronized
+tmux_conf_theme_colour_17="#1A1917"    # fg          — text (alias)
+
+# --- Status Block Backgrounds (warm layered) ---
+tmux_conf_theme_block_bg_1="#F2F0E6"   # bg_alt      — status block L1
+tmux_conf_theme_block_bg_2="#E8E6DB"   # bg_inset    — status block L2
+tmux_conf_theme_block_bg_3="#ECE9DF"   # bg_highlight — status block L3
 
 
 # window style
@@ -168,14 +194,15 @@ tmux_conf_theme_focused_pane_bg="$tmux_conf_theme_colour_1"
 tmux_conf_theme_pane_border_style=thin
 
 # pane borders colours:
-tmux_conf_theme_pane_border="$tmux_conf_theme_block_bg_2"
+tmux_conf_theme_pane_border="$tmux_conf_theme_colour_3"                # bg_inset — subtle border
 # tmux_conf_theme_pane_active_border="$tmux_conf_theme_colour_5"
 
 # %if #{>=:#{version},3.2}
 # tmux_conf_theme_pane_active_border="#{?pane_in_mode,$tmux_conf_theme_colour_9,#{?synchronize-panes,$tmux_conf_theme_colour_16,$tmux_conf_theme_colour_4}}"
 # %endif
 
-tmux_conf_theme_pane_active_border="#{?pane_in_mode,$tmux_conf_theme_colour_9,#{?synchronize-panes,$tmux_conf_theme_colour_16,$tmux_conf_theme_colour_5}}"
+# Active pane border — original tangerine orange (金桔色), kept per preference
+tmux_conf_theme_pane_active_border="#{?pane_in_mode,$tmux_conf_theme_colour_9,#{?synchronize-panes,$tmux_conf_theme_colour_16,#fe640b}}"
 
 # pane indicator colours (when you hit <prefix> + q)
 tmux_conf_theme_pane_indicator="$tmux_conf_theme_colour_5"
@@ -241,10 +268,12 @@ tmux_conf_theme_window_status_format="#I #W"
 #     - #{hostname_full_ssh}
 #     - #{username}
 #     - #{username_ssh}
-tmux_conf_theme_window_status_current_fg="$tmux_conf_theme_colour_7"
-tmux_conf_theme_window_status_current_bg="$tmux_conf_theme_block_bg_2"
+# [Rose-Pine] tmux_conf_theme_window_status_current_fg="$tmux_conf_theme_colour_7"
+# [Rose-Pine] tmux_conf_theme_window_status_current_bg="$tmux_conf_theme_block_bg_2"
+tmux_conf_theme_window_status_current_fg="$tmux_conf_theme_colour_1"    # bg on accent — bold inverse
+tmux_conf_theme_window_status_current_bg="$tmux_conf_theme_colour_5"    # terracotta accent
 tmux_conf_theme_window_status_current_attr="bold"
-tmux_conf_theme_window_status_current_format="#I #W"
+tmux_conf_theme_window_status_current_format="#I #W#{?window_zoomed_flag, 🔍,}"
 # tmux_conf_theme_window_status_current_fg="$tmux_conf_theme_colour_1"
 # tmux_conf_theme_window_status_current_bg="$tmux_conf_theme_colour_4"
 # tmux_conf_theme_window_status_current_attr="bold"
@@ -264,11 +293,10 @@ tmux_conf_theme_window_status_bell_attr="bold"
 # tmux_conf_theme_window_status_bell_attr="blink,bold"
 
 # window last status style
-# tmux_conf_theme_window_status_last_fg="$tmux_conf_theme_colour_4"
-# tmux_conf_theme_window_status_last_bg="$tmux_conf_theme_colour_2"
-# tmux_conf_theme_window_status_last_attr="none"
-tmux_conf_theme_window_status_last_fg="$tmux_conf_theme_colour_4"
-tmux_conf_theme_window_status_last_bg="$tmux_conf_theme_block_bg_1"
+# [Rose-Pine] tmux_conf_theme_window_status_last_fg="$tmux_conf_theme_colour_4"
+# [Rose-Pine] tmux_conf_theme_window_status_last_bg="$tmux_conf_theme_block_bg_1"
+tmux_conf_theme_window_status_last_fg="$tmux_conf_theme_colour_5"      # terracotta accent
+tmux_conf_theme_window_status_last_bg="default"
 tmux_conf_theme_window_status_last_attr="none"
 
 # status left/right sections separators
@@ -293,28 +321,22 @@ tmux_conf_theme_right_separator_sub='\uE0B3'  #   PowerlineSymbols.otf font, see
 #     - #{hostname_full_ssh}
 #     - #{username}
 #     - #{username_ssh}
-# tmux_conf_theme_status_left=" ❐ #S | ↑#{?uptime_y, #{uptime_y}y,}#{?uptime_d, #{uptime_d}d,}#{?uptime_h, #{uptime_h}h,}#{?uptime_m, #{uptime_m}m,} "
-# tmux_conf_theme_status_left=" ❐ #S | ↑#{?uptime_y, #{uptime_y}y,}#{?uptime_d, #{uptime_d}d,}#{?uptime_h, #{uptime_h}h,}#{?uptime_m, #{uptime_m}m,} | #{pretty_pane_current_path} "
-# tmux_conf_theme_status_right=" #{prefix}#{mouse}#{pairing}#{synchronized}#{?battery_status,#{battery_status},}#{?battery_bar, #{battery_bar},}#{?battery_percentage, #{battery_percentage},} , %R , %d %b | #{username}#{root} | #{hostname} "
-tmux_conf_theme_status_left=" ❐ #S |↑ #{uptime_h}h #{uptime_m}m #{prefix}"
-# tmux_conf_theme_status_right=" #{mouse}#{pairing}#{synchronized} #{battery_bar} #{battery_percentage} | %R | %d %b | #{username}@#{hostname} "
-tmux_conf_theme_status_right=" #{prefix}#{mouse}#{pairing}#{synchronized} #{battery_bar} #{battery_percentage} %R  %d %b"
+tmux_conf_theme_status_left=" ❐ #S | ↑#{?uptime_y, #{uptime_y}y,}#{?uptime_d, #{uptime_d}d,}#{?uptime_h, #{uptime_h}h,}#{?uptime_m, #{uptime_m}m,} "
+tmux_conf_theme_status_right=" #{prefix}#{mouse}#{pairing}#{synchronized}#{?battery_status, #{battery_status},}#{?battery_bar, #{battery_bar},}#{?battery_percentage, #{battery_percentage},} | %R | %d %b "
 
-# status left style
-tmux_conf_theme_status_left_fg="$tmux_conf_theme_colour_7,$tmux_conf_theme_colour_7,$tmux_conf_theme_colour_7"
-tmux_conf_theme_status_left_bg="$tmux_conf_theme_block_bg_1,$tmux_conf_theme_block_bg_2,$tmux_conf_theme_block_bg_3"
+# status left style — Claude light: accent bg for session name, layered for rest
+# [Rose-Pine] tmux_conf_theme_status_left_fg="$tmux_conf_theme_colour_7,$tmux_conf_theme_colour_7,$tmux_conf_theme_colour_7"
+# [Rose-Pine] tmux_conf_theme_status_left_bg="$tmux_conf_theme_block_bg_1,$tmux_conf_theme_block_bg_2,$tmux_conf_theme_block_bg_3"
+tmux_conf_theme_status_left_fg="$tmux_conf_theme_colour_1,$tmux_conf_theme_colour_7,$tmux_conf_theme_colour_7"
+tmux_conf_theme_status_left_bg="$tmux_conf_theme_colour_5,$tmux_conf_theme_block_bg_2,$tmux_conf_theme_block_bg_1"
 tmux_conf_theme_status_left_attr="bold,none,none"
-# tmux_conf_theme_status_left_fg="$tmux_conf_theme_colour_6,$tmux_conf_theme_colour_7,$tmux_conf_theme_colour_8"
-# tmux_conf_theme_status_left_bg="$tmux_conf_theme_colour_9,$tmux_conf_theme_colour_10,$tmux_conf_theme_colour_11"
-# tmux_conf_theme_status_left_attr="bold,none,none"
 
-# status right style
-tmux_conf_theme_status_right_fg="$tmux_conf_theme_colour_12,$tmux_conf_theme_colour_13,$tmux_conf_theme_colour_12"
-tmux_conf_theme_status_right_bg="$tmux_conf_theme_block_bg_1,$tmux_conf_theme_block_bg_1,$tmux_conf_theme_block_bg_1"
-tmux_conf_theme_status_right_attr="none,none,none"
-# tmux_conf_theme_status_right_fg="$tmux_conf_theme_colour_17,$tmux_conf_theme_colour_13,$tmux_conf_theme_colour_14"
-# tmux_conf_theme_status_right_bg="$tmux_conf_theme_colour_15,$tmux_conf_theme_colour_16,$tmux_conf_theme_colour_17"
-# tmux_conf_theme_status_right_attr="none,none,bold"
+# status right style — Claude light: single block with muted text
+# [Rose-Pine] tmux_conf_theme_status_right_fg="$tmux_conf_theme_colour_12,$tmux_conf_theme_colour_13,$tmux_conf_theme_colour_12"
+# [Rose-Pine] tmux_conf_theme_status_right_bg="$tmux_conf_theme_block_bg_1,$tmux_conf_theme_block_bg_1,$tmux_conf_theme_block_bg_1"
+tmux_conf_theme_status_right_fg="$tmux_conf_theme_colour_12,$tmux_conf_theme_colour_7,$tmux_conf_theme_colour_1"
+tmux_conf_theme_status_right_bg="$tmux_conf_theme_block_bg_1,$tmux_conf_theme_block_bg_1,$tmux_conf_theme_colour_5"
+tmux_conf_theme_status_right_attr="none,none,bold"
 
 # pairing indicator
 tmux_conf_theme_pairing="⚇"                 # U+2687
@@ -430,6 +452,13 @@ set -g status-interval 5
 # enable focus events (for Neovim autoread etc.)
 set -g focus-events on
 
+# Keep tmux's default one-line layout explicit so status-right remains right-aligned.
+set -g status-format[0] "#[align=left range=left #{status-left-style}]#{T;=/#{status-left-length}:status-left}#[norange default]" #!important
+set -ag status-format[0] "#[list=on align=#{status-justify}]#[list=left-marker]<#[list=right-marker]>#[list=on]#{W:#[range=window|#{window_index} #{window-status-style}#{?#{&&:#{window_last_flag},#{!=:#{window-status-last-style},default}}, #{window-status-last-style},}#{?#{&&:#{window_bell_flag},#{!=:#{window-status-bell-style},default}}, #{window-status-bell-style},#{?#{&&:#{||:#{window_activity_flag},#{window_silence_flag}},#{!=:#{window-status-activity-style},default}}, #{window-status-activity-style},}}]#{T:window-status-format}#[norange default]#{?window_end_flag,,#{window-status-separator}},#[range=window|#{window_index} list=focus #{?#{!=:#{window-status-current-style},default},#{window-status-current-style},#{window-status-style}}#{?#{&&:#{window_last_flag},#{!=:#{window-status-last-style},default}}, #{window-status-last-style},}#{?#{&&:#{window_bell_flag},#{!=:#{window-status-bell-style},default}}, #{window-status-bell-style},#{?#{&&:#{||:#{window_activity_flag},#{window_silence_flag}},#{!=:#{window-status-activity-style},default}}, #{window-status-activity-style},}}]#{T:window-status-current-format}#[norange list=on default]#{?window_end_flag,,#{window-status-separator}}}" #!important
+set -ag status-format[0] "#[nolist align=right range=right #{status-right-style}]#{T;=/#{status-right-length}:status-right}" #!important
+set -ag status-format[0] "#[norange default]" #!important
+set -g status-right-length 80 #!important
+
 # force Vi mode
 #   really you should export VISUAL or EDITOR environment variable, see manual
 #set -g status-keys vi
@@ -508,8 +537,9 @@ set -g @plugin 'tmux-plugins/tmux-yank'
 set -g @plugin 'tmux-plugins/tmux-open'
 set -g @plugin 'tmux-plugins/tmux-logging'
 
-# sesh popup session picker
-bind-key T run-shell "sesh connect \"$(sesh list -t --icons | fzf-tmux -p 80%,70% --no-sort --ansi --border-label ' sesh ' --prompt 'tmux> ' --header ' ctrl-a all ctrl-t tmux ctrl-g configs ctrl-x zoxide ctrl-f find ctrl-d kill ' --bind 'tab:down,btab:up' --bind 'ctrl-a:change-prompt(sesh> )+reload(sesh list --icons)' --bind 'ctrl-t:change-prompt(tmux> )+reload(sesh list -t --icons)' --bind 'ctrl-g:change-prompt(cfg> )+reload(sesh list -c --icons)' --bind 'ctrl-x:change-prompt(zoxide> )+reload(sesh list -z --icons)' --bind 'ctrl-f:change-prompt(find> )+reload(fd -H -d 2 -t d -E .Trash . ~)' --bind 'ctrl-d:execute(tmux kill-session -t {2..})+change-prompt(tmux> )+reload(sesh list -t --icons)' --preview-window 'right:55%' --preview 'sesh preview {}')\""
+# sesh popup session picker — themed with Claude Code light palette
+# NOTE: fzf --color uses FZF_DEFAULT_OPTS set in shell; explicit colors applied via env override
+bind-key T run-shell "FZF_DEFAULT_OPTS=\"\$FZF_DEFAULT_OPTS --color=bg:\#F5F3EB,fg:\#1A1917,hl:\#CC785C,fg+:\#1A1917,bg+:\#E8E6DB,hl+:\#B85F3D,border:\#D9D5CC,header:\#207FDE,prompt:\#CC785C,pointer:\#CC785C,marker:\#2E7C4C,spinner:\#6A5BCC,info:\#6B665F,label:\#CC785C\" sesh connect \"$(sesh list -t --icons | fzf-tmux -p 80%,70% --no-sort --ansi --border-label ' sesh ' --prompt 'tmux> ' --header ' ctrl-a all ctrl-t tmux ctrl-g configs ctrl-x zoxide ctrl-f find ctrl-d kill ' --bind 'tab:down,btab:up' --bind 'ctrl-a:change-prompt(sesh> )+reload(sesh list --icons)' --bind 'ctrl-t:change-prompt(tmux> )+reload(sesh list -t --icons)' --bind 'ctrl-g:change-prompt(cfg> )+reload(sesh list -c --icons)' --bind 'ctrl-x:change-prompt(zoxide> )+reload(sesh list -z --icons)' --bind 'ctrl-f:change-prompt(find> )+reload(fd -H -d 2 -t d -E .Trash . ~)' --bind 'ctrl-d:execute(tmux kill-session -t {2..})+change-prompt(tmux> )+reload(sesh list -t --icons)' --preview-window 'right:55%' --preview 'sesh preview {}')\""
 
 
 # -- custom variables ----------------------------------------------------------

@@ -2,11 +2,11 @@
 # font-family = TX-02-Data
 font-family = "Maple Mono NF CN"
 # font-family = "Ioskeley Mono"
-font-size = 13.2
+font-size = 12.4
 font-thicken = true
 cursor-style = block
 cursor-style-blink = true
-adjust-cell-height = 0
+adjust-cell-height = 1
 
 macos-option-as-alt = true
 
@@ -29,17 +29,20 @@ shell-integration-features = no-cursor
 # ssh接続先での$TERM対策
 term = xterm-256color
 
-# 减少滚动历史，节省内存
-scrollback-limit = 50000
 # 减少水平边距，节省屏幕空间
 window-padding-x = 3
 window-padding-y = 2
 window-save-state = "always"
-background-blur-radius = 10
+# Full opacity makes blur effectively useless, and a light theme benefits from a cleaner backdrop.
+background-blur-radius = 0
 
 background-opacity = 1
 window-colorspace = "display-p3"
-theme = token-dark.conf
+# Follow the macOS appearance setting.
+theme = light:claude-light.conf,dark:claude-dark.conf
+# theme = light:token-light.conf,dark:token-dark.conf
+# theme = token-light.conf
+# theme = token-dark.conf
 # theme = Glacier.conf
 # theme = TokyoNight.conf
 # theme = aura.conf

@@ -1,29 +1,41 @@
-# A theme for the lsd utility. Based on the Solarized color theme.
-# LIGHT VERSION
-user: 140
-group: 136
+# Claude-inspired light theme for lsd.
+# Source of truth: claude-theme/palette.md (Light Palette)
+# lsd only themes metadata/status columns; file type colors still come from LS_COLORS.
+user: 173      # accent / terracotta
+group: 94      # warm yellow-brown
 permission:
-  read: 166
-  write: 64
-  exec: 160
-  exec-sticky: 125
-  no-access: 234
-  octal: 37
-  acl: 37
-  context: 235
+  read: 29         # success green
+  write: 94        # warning yellow
+  exec: 173        # accent terracotta
+  exec-sticky: 62  # decorator purple
+  no-access: 131   # error red
+  octal: 32        # info blue
+  acl: 62          # decorator purple
+  context: 24      # muted cyan-blue
 date:
-  hour-old: 64
-  day-old: 136
-  older: 240
+  hour-old: 29
+  day-old: 94
+  older: 241
 size:
-  none: 160
-  small: 61
-  medium: 37
-  large: 33
+  none: 241
+  small: 29
+  medium: 94
+  large: 131
 inode:
-  valid: 61
-  invalid: 160
+  valid: 62
+  invalid: 241
 links:
-  valid: 61
-  invalid: 235
-tree-edge: 235
+  valid: 32
+  invalid: 241
+tree-edge: 252
+git-status:
+  default: 241
+  unmodified: 241
+  ignored: 247
+  new-in-index: 29
+  new-in-workdir: 29
+  typechange: 94
+  deleted: 131
+  renamed: 32
+  modified: 94
+  conflicted: 131

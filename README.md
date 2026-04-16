@@ -10,7 +10,7 @@ macOS development environment managed via symlinks. One clone, one `brew bundle`
 | Starship prompt | `starship/starship.toml` | `~/.config/starship.toml` |
 | Neovim (LazyVim) | `nvim/` | `~/.config/nvim` |
 | Ghostty terminal | `ghostty/` | `~/.config/ghostty` |
-| lazygit | `lazygit/config.yml` | `~/Library/Application Support/lazygit/config.yml` |
+| lazygit | `lazygit/` | `~/.config/lazygit` |
 | tmux (oh-my-tmux) | `tmux/tmux.conf.local` | `~/.config/tmux/tmux.conf.local` |
 | Atuin (shell history) | `atuin/` | `~/.config/atuin` |
 | bat | `bat/` | `~/.config/bat` |
@@ -21,7 +21,7 @@ macOS development environment managed via symlinks. One clone, one `brew bundle`
 | AI agent instructions | `agents/GEMINI.md` | `~/.gemini/GEMINI.md`, `~/.claude/CLAUDE.md`, `~/.codex/instructions.md` |
 | Homebrew packages | `Brewfile` | — |
 
-Theme: **Catppuccin Mocha** across all tools (fzf, bat, yazi, zsh highlighting).
+Theme: **Catppuccin Mocha** across all tools (fzf, bat, yazi, zsh highlighting, starship).
 
 ## Fresh Machine Setup
 
@@ -36,15 +36,13 @@ brew bundle --file=~/code/public-dotfiles/Brewfile
 ln -sf ~/code/public-dotfiles/zsh/.zshrc ~/.zshrc
 
 # 4. Symlinks — ~/.config (directory-level)
-for dir in nvim ghostty atuin bat btop lsd yazi; do
+for dir in nvim ghostty lazygit atuin bat btop lsd yazi; do
   rm -rf ~/.config/$dir
   ln -sf ~/code/public-dotfiles/$dir ~/.config/$dir
 done
 
 # 5. Symlinks — file-level (target dir has other content)
 ln -sf ~/code/public-dotfiles/starship/starship.toml ~/.config/starship.toml
-mkdir -p "$HOME/Library/Application Support/lazygit"
-ln -sf ~/code/public-dotfiles/lazygit/config.yml "$HOME/Library/Application Support/lazygit/config.yml"
 
 # 6. tmux — install oh-my-tmux framework + link config
 git clone https://github.com/gpakosz/.tmux.git ~/.local/share/tmux/oh-my-tmux
@@ -135,7 +133,7 @@ ln -sf ~/code/public-dotfiles/newapp ~/.config/newapp
 # 4. Commit
 ```
 
-For configs where the parent directory contains other non-config files (databases, plugins managed externally), use **file-level** symlinks instead of linking the whole directory. This also applies when an app stores config outside `~/.config`, like lazygit on macOS, where `config.yml` should be linked but `state.yml` should stay local.
+For configs where the parent directory contains other non-config files (databases, plugins managed externally), use **file-level** symlinks instead of linking the whole directory. For config-only directories, keep using directory symlinks under `~/.config/`.
 
 ## Migrating to Another Mac
 
@@ -169,7 +167,7 @@ Two patterns, chosen based on directory content:
 | Pattern | When to Use | Example |
 |---|---|---|
 | **Directory symlink** | Entire dir is config-only | `~/.config/ghostty → dotfiles/ghostty` |
-| **File symlink** | Dir has mixed content or config lives outside `~/.config` | `~/Library/Application Support/lazygit/config.yml → dotfiles/lazygit/config.yml` |
+| **File symlink** | Parent dir has mixed content | `~/.config/starship.toml → dotfiles/starship/starship.toml` |
 
 ## Key Shell Aliases
 

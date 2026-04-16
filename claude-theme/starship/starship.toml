@@ -1,0 +1,73 @@
+# ══════════════════════════════════════════════════════════════
+# Dark Palette — catppuccin_mocha warm-shifted toward Claude Code
+# Changes from catppuccin_mocha:
+#   peach:      #fab387 → #E0AB96 (Claude terracotta tint)
+#   yellow:     #f9e2af → #F2D98F (Claude warm yellow)
+#   green:      #a6e3a1 → #B6E0A5 (Claude success green)
+#   blue:       #89b4fa → #A2D2FF (Claude bright blue)
+#   lavender:   #b4befe → #C9BCFF (Claude bright magenta)
+#   neutrals:   cool grey → warm grey (Claude bg/fg system)
+# ══════════════════════════════════════════════════════════════
+[palettes.claude_dark]
+rosewater = "#F5DED5"
+flamingo = "#F0C8C0"
+pink = "#F5C2E7"
+mauve = "#CBA6F7"
+red = "#F09884"
+maroon = "#EBA0AC"
+peach = "#E0AB96"
+yellow = "#F2D98F"
+green = "#B6E0A5"
+teal = "#94E2D5"
+sky = "#89DCEB"
+sapphire = "#74C7EC"
+blue = "#A2D2FF"
+lavender = "#C9BCFF"
+text = "#EAE7DF"
+subtext1 = "#D9D5CC"
+subtext0 = "#A9A39A"
+overlay2 = "#8D877D"
+overlay1 = "#6B665F"
+overlay0 = "#4A473F"
+surface2 = "#3A3835"
+surface1 = "#2B2A27"
+surface0 = "#1F1D1A"
+base = "#141413"
+mantle = "#1A1917"
+crust = "#110F0E"
+
+# ══════════════════════════════════════════════════════════════
+# Light Palette — catppuccin_latte warm-shifted toward Kaku yellow
+# Changes from catppuccin_latte:
+#   peach:    #fe640b → #E8A57A (softer, warmer terracotta)
+#   yellow:   #df8e1d → #D4A24A (warmer gold)
+#   green:    #40a02b → #4E9A5D (softer green)
+#   neutrals: cool grey → warm beige (Kaku bg system)
+# ══════════════════════════════════════════════════════════════
+[palettes.claude_light]
+rosewater = "#D4967E"
+flamingo = "#DD7878"
+pink = "#EA76CB"
+mauve = "#8839EF"
+red = "#C45040"
+maroon = "#E64553"
+peach = "#E8A57A"
+yellow = "#D4A24A"
+green = "#4E9A5D"
+teal = "#179299"
+sky = "#04A5E5"
+sapphire = "#209FB5"
+blue = "#1E66F5"
+lavender = "#7287FD"
+text = "#1A1917"
+subtext1 = "#4A473F"
+subtext0 = "#6B665F"
+overlay2 = "#877C70"
+overlay1 = "#8D877D"
+overlay0 = "#A9A39A"
+surface2 = "#D9D5CC"
+surface1 = "#E8E6DB"
+surface0 = "#ECE9DF"
+base = "#FFFCF0"
+mantle = "#F2F0E6"
+crust = "#E8E6DB"

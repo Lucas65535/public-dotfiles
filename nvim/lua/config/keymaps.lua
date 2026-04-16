@@ -11,13 +11,26 @@ require("which-key").add({
   { "<leader>uC", group = "Colorscheme" },
 })
 
-vim.keymap.set("n", "<leader>uCt", function()
-  theme.set_colorscheme("token")
-end, { desc = "Use Token theme", silent = true })
+-- ── Colorscheme switching ───────────────────────────────────
 
-vim.keymap.set("n", "<leader>uCr", function()
-  theme.set_colorscheme("rose-pine")
-end, { desc = "Use Rose Pine theme", silent = true })
+vim.keymap.set("n", "<leader>uCd", function()
+  theme.set_colorscheme("claude-code-dark")
+end, { desc = "Claude Code Dark", silent = true })
+
+vim.keymap.set("n", "<leader>uCl", function()
+  theme.set_colorscheme("claude-code-light")
+end, { desc = "Claude Code Light", silent = true })
+
+-- -- Previous themes (disabled)
+-- vim.keymap.set("n", "<leader>uCt", function()
+--   theme.set_colorscheme("token")
+-- end, { desc = "Use Token theme", silent = true })
+--
+-- vim.keymap.set("n", "<leader>uCr", function()
+--   theme.set_colorscheme("rose-pine")
+-- end, { desc = "Use Rose Pine theme", silent = true })
+
+-- ── Background switching ────────────────────────────────────
 
 vim.keymap.set("n", "<leader>uBd", function()
   theme.set_background("dark")
