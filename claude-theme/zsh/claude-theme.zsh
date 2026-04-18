@@ -57,7 +57,7 @@ if [[ "$CLAUDE_THEME" == "light" ]]; then
   export FZF_DEFAULT_OPTS="
     --color=bg:#FFFCF0,bg+:#E8E6DB,fg:#1A1917,fg+:#1A1917
     --color=hl:#CC785C,hl+:#B85F3D,info:#8A6220,marker:#2E7C4C
-    --color=prompt:#CC785C,spinner:#6A5BCC,pointer:#CC785C,header:#207FDE
+    --color=prompt:#CC785C,spinner:#6A5BCC,pointer:#CC785C,header:#386290
     --color=border:#D9D5CC,separator:#D9D5CC,scrollbar:#A9A39A
     --color=label:#6B665F,query:#1A1917
     --border=rounded --separator='─'

@@ -57,11 +57,11 @@ brandTokens:
     light: "#2E7C4C"
     dark: "#9ACA86"
   info:
-    light: "#207FDE"
+    light: "#386290"
     dark: "#61AAF2"
   highlights:
     violet: "#9B87F5"
-    blue: "#207FDE"
+    blue: "#386290"
     blueSoft: "#61AAF2"
     terracottaStrong: "#BF4D43"
 ```

@@ -150,7 +150,7 @@
 | 1/9 | Red | `#A84B3A` | `#C45F4A` |
 | 2/10 | Green | `#2E7C4C` | `#5E8F6D` |
 | 3/11 | Yellow | `#8A6220` | `#9C7A39` |
-| 4/12 | Blue | `#207FDE` | `#4F79A8` |
+| 4/12 | Blue | `#386290` | `#4F79A8` |
 | 5/13 | Magenta | `#6A5BCC` | `#6D5DBD` |
 | 6/14 | Cyan | `#2E5F99` | `#45809E` |
 | 7/15 | White | `#746E64` | `#4A473F` |
@@ -174,7 +174,7 @@
 | `syn_tag` | `#CC5E54` | HTML 标签 |
 | `syn_attribute` | `#B46344` | HTML 属性 |
 | `syn_regexp` | `#B07C26` | 正则 |
-| `syn_namespace` | `#207FDE` | 命名空间 |
+| `syn_namespace` | `#386290` | 命名空间 |
 
 ### Status / Git / Cursor
 
@@ -183,7 +183,7 @@
 | `error` | `#A84B3A` |
 | `warning` | `#8A6220` |
 | `success` | `#2E7C4C` |
-| `info` | `#207FDE` |
+| `info` | `#386290` |
 | `git_added` | `#2E7C4C` |
 | `git_modified` | `#8A6220` |
 | `git_deleted` | `#A84B3A` |

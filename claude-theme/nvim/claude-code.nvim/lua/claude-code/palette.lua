@@ -109,7 +109,7 @@ M.light = {
   red = "#A84B3A",
   green = "#2E7C4C",
   yellow = "#8A6220",
-  blue = "#207FDE",
+  blue = "#386290",
   magenta = "#6A5BCC",
   cyan = "#2E5F99",
   white = "#746E64",
@@ -138,13 +138,13 @@ M.light = {
   syn_tag = "#CC5E54",
   syn_attribute = "#B46344",
   syn_regexp = "#B07C26",
-  syn_namespace = "#207FDE",
+  syn_namespace = "#386290",
 
   -- Status
   error = "#A84B3A",
   warning = "#8A6220",
   success = "#2E7C4C",
-  info = "#207FDE",
+  info = "#386290",
 
   -- Git
   git_added = "#2E7C4C",

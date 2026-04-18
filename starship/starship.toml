@@ -1,4 +1,4 @@
-palette = "catppuccin_mocha"
+palette = "claude_dark"
 
 format = """
 $azure\
@@ -249,7 +249,8 @@ overlay2 = "#8D877D"
 overlay1 = "#6B665F"
 overlay0 = "#4A473F"
 surface2 = "#3A3835"
-surface1 = "#2B2A27"
+# surface1 = "#2B2A27"
+surface1 = "#A9A39A"
 surface0 = "#1F1D1A"
 base = "#141413"
 mantle = "#1A1917"

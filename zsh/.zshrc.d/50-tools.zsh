@@ -7,7 +7,7 @@ if [[ "$_theme_mode" == "light" ]]; then
   export FZF_DEFAULT_OPTS="\
   --height=40% --layout=reverse --border=rounded --margin=0,1 \
   --color=bg+:#E8E6DB,bg:#FFFCF0,spinner:#6A5BCC,hl:#CC785C \
-  --color=fg:#1A1917,header:#207FDE,info:#8A6220,pointer:#CC785C \
+  --color=fg:#1A1917,header:#386290,info:#8A6220,pointer:#CC785C \
   --color=marker:#2E7C4C,fg+:#1A1917,prompt:#CC785C,hl+:#B85F3D \
   --color=selected-bg:#ECE9DF \
   --prompt='❯ ' --pointer='▶' --marker='✓' \
@@ -57,8 +57,8 @@ if [[ "$_theme_mode" == "light" ]]; then
   ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#8D877D"
   ZSH_HIGHLIGHT_STYLES[default]='fg=#1A1917'
   ZSH_HIGHLIGHT_STYLES[comment]='fg=#6B665F,italic'
-  ZSH_HIGHLIGHT_STYLES[pipeline]='fg=#207FDE,bold'
-  ZSH_HIGHLIGHT_STYLES[command]='fg=#207FDE,bold'
+  ZSH_HIGHLIGHT_STYLES[pipeline]='fg=#386290,bold'
+  ZSH_HIGHLIGHT_STYLES[command]='fg=#386290,bold'
   ZSH_HIGHLIGHT_STYLES[alias]='fg=#6A5BCC,bold'
   ZSH_HIGHLIGHT_STYLES[function]='fg=#179299,bold'
   ZSH_HIGHLIGHT_STYLES[builtin]='fg=#CC785C,bold'

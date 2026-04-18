@@ -30,8 +30,8 @@ shell-integration-features = no-cursor
 term = xterm-256color
 
 # 减少水平边距，节省屏幕空间
-window-padding-x = 3
-window-padding-y = 2
+window-padding-x = 6
+window-padding-y = 6
 window-save-state = "always"
 # Full opacity makes blur effectively useless, and a light theme benefits from a cleaner backdrop.
 background-blur-radius = 0
