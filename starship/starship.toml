@@ -32,19 +32,19 @@ time_format = "%m-%d %H:%M"
 [directory]
 truncation_length = 3
 truncation_symbol = "…/"
-format = "[](peach)[󰝰](fg:#6b3510 bg:peach)[ $path]($style)[$read_only]($read_only_style)[ ](peach)"
+format = "[](peach)[󰝰](fg:#69493B bg:peach)[ $path]($style)[$read_only]($read_only_style)[ ](peach)"
 read_only = " "
-style = "bg:peach fg:#6b3510 bold"
-read_only_style = "bg:peach fg:#8a2020 bold"
+style = "bg:peach fg:#69493B bold"
+read_only_style = "bg:peach fg:#87584E bold"
 
 [git_branch]
 symbol = ""
-style = 'bg:mauve fg:#4a2080'
-format = '[](mauve)[](fg:#4a2080 bg:mauve)[ $branch]($style)[ ](mauve)'
+style = 'bg:mauve fg:#5B536F'
+format = '[](mauve)[](fg:#5B536F bg:mauve)[ $branch]($style)[ ](mauve)'
 
 [git_status]
 format = '[](teal)[$all_status$ahead_behind]($style)[ ](teal)'
-style = "bg:teal fg:#1a5c50"
+style = "bg:teal fg:#48615D"
 conflicted = '=${count}'
 ahead = '⇡${count}'
 behind = '⇣${count}'
@@ -61,16 +61,16 @@ deleted = '✘${count}'
 only_detached = false
 disabled = false
 commit_hash_length = 7
-format = '[](yellow)[](fg:#6b4510 bg:yellow)[ $hash]($style)[$tag]($style)[ ](yellow)'
+format = '[](yellow)[](fg:#6E5734 bg:yellow)[ $hash]($style)[$tag]($style)[ ](yellow)'
 tag_symbol = "🔖"
-style = "bg:yellow fg:#6b4510"
+style = "bg:yellow fg:#6E5734"
 
 [kubernetes]
 disabled = false
-format = '[](lavender)[󱃾](fg:#3b3d8a bg:lavender)[ $context]($style)[ ](lavender)'
+format = '[](lavender)[󱃾](fg:#595D7A bg:lavender)[ $context]($style)[ ](lavender)'
 # format = 'via [$symbol $context\($namespace\)](bold purple) '
 symbol = "⎈ "
-style = "bg:lavender fg:#3b3d8a"
+style = "bg:lavender fg:#595D7A"
 
 [[kubernetes.contexts]]
 context_pattern = "aks-gitlab-runner"
@@ -82,9 +82,9 @@ context_alias = "$cluster"
 
 [azure]
 disabled = false
-format = "[](blue)[󰠅](fg:#1a4b8a bg:blue)[ $subscription]($style)[ ](blue)"
+format = "[](blue)[󰠅](fg:#506273 bg:blue)[ $subscription]($style)[ ](blue)"
 symbol = "󰠅 "
-style = "bg:blue fg:#1a4b8a"
+style = "bg:blue fg:#506273"
 
 [azure.subscription_aliases]
 "SUB22013162557" = "開発"
@@ -228,58 +228,57 @@ mantle = "#181825"
 crust = "#11111b"
 
 [palettes.claude_dark]
-rosewater = "#F5DED5"
-flamingo = "#F0C8C0"
-pink = "#F5C2E7"
-mauve = "#CBA6F7"
-red = "#F09884"
-maroon = "#EBA0AC"
-peach = "#E0AB96"
-yellow = "#F2D98F"
-green = "#B6E0A5"
-teal = "#94E2D5"
-sky = "#89DCEB"
-sapphire = "#74C7EC"
-blue = "#A2D2FF"
-lavender = "#C9BCFF"
-text = "#EAE7DF"
-subtext1 = "#D9D5CC"
-subtext0 = "#A9A39A"
-overlay2 = "#8D877D"
-overlay1 = "#6B665F"
-overlay0 = "#4A473F"
-surface2 = "#3A3835"
-# surface1 = "#2B2A27"
-surface1 = "#A9A39A"
-surface0 = "#1F1D1A"
+rosewater = "#EED9CF"
+flamingo = "#E7BFB3"
+pink = "#DEBED0"
+mauve = "#BDA8CF"
+red = "#E4957E"
+maroon = "#D5A39A"
+peach = "#E0AC93"
+yellow = "#E3CA8E"
+green = "#AEC9A2"
+teal = "#90BDB5"
+sky = "#96C4CD"
+sapphire = "#86B0C4"
+blue = "#A5C0D2"
+lavender = "#C0B7DD"
+text = "#EEE7DB"
+subtext1 = "#DED4C6"
+subtext0 = "#B0A597"
+overlay2 = "#978F83"
+overlay1 = "#746C62"
+overlay0 = "#575149"
+surface2 = "#48443E"
+surface1 = "#36322D"
+surface0 = "#272421"
 base = "#141413"
 mantle = "#1A1917"
-crust = "#110F0E"
+crust = "#100F0D"
 
 [palettes.claude_light]
-rosewater = "#D4967E"
-flamingo = "#DD7878"
-pink = "#EA76CB"
-mauve = "#8839EF"
-red = "#C45040"
-maroon = "#E64553"
-peach = "#E8A57A"
-yellow = "#D4A24A"
-green = "#4E9A5D"
-teal = "#179299"
-sky = "#04A5E5"
-sapphire = "#209FB5"
-blue = "#1E66F5"
-lavender = "#7287FD"
-text = "#1A1917"
-subtext1 = "#4A473F"
-subtext0 = "#6B665F"
-overlay2 = "#877C70"
-overlay1 = "#8D877D"
-overlay0 = "#A9A39A"
-surface2 = "#D9D5CC"
-surface1 = "#E8E6DB"
-surface0 = "#ECE9DF"
+rosewater = "#D8A894"
+flamingo = "#D8A093"
+pink = "#CDA6B9"
+mauve = "#9B82B8"
+red = "#C9755F"
+maroon = "#C88D82"
+peach = "#D9A081"
+yellow = "#D2B06B"
+green = "#73977A"
+teal = "#6E9E98"
+sky = "#7AA8B4"
+sapphire = "#6D96A8"
+blue = "#7E9CB9"
+lavender = "#A195C8"
+text = "#2B2622"
+subtext1 = "#544C45"
+subtext0 = "#766D64"
+overlay2 = "#93887E"
+overlay1 = "#ABA094"
+overlay0 = "#C5BCB1"
+surface2 = "#E0D7CB"
+surface1 = "#EEE6DA"
+surface0 = "#F6EFE4"
 base = "#FFFCF0"
 mantle = "#F2F0E6"
-crust = "#E8E6DB"
+crust = "#E9E2D6"
