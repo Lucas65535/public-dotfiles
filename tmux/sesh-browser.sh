@@ -40,47 +40,119 @@ format_title() {
 }
 
 source_sessions() {
-  tmux list-sessions -F '#{session_name}	#{session_windows}	#{session_attached}	#{session_path}	#{pane_current_command}' |
-    while IFS=$'\t' read -r name windows attached path cmd; do
-      local attached_flag=""
-      local display_path
+  local -a rows=()
+  local max_name=0
+  local max_windows=0
+  local max_status=0
+  local max_cmd=0
 
-      [[ "$attached" != "0" ]] && attached_flag='  [attached]'
-      display_path="$(short_path "$path")"
+  while IFS=$'\t' read -r name windows attached path cmd; do
+    local attached_flag=""
+    local display_path
 
-      printf 'session\t%s  [%sw]%s  %s  %s\t%s\n' \
-        "$name" "$windows" "$attached_flag" "$cmd" "$display_path" "$name"
-    done
+    [[ "$attached" != "0" ]] && attached_flag='[attached]'
+    display_path="$(short_path "$path")"
+
+    (( ${#name} > max_name )) && max_name=${#name}
+    (( ${#windows} > max_windows )) && max_windows=${#windows}
+    (( ${#attached_flag} > max_status )) && max_status=${#attached_flag}
+    (( ${#cmd} > max_cmd )) && max_cmd=${#cmd}
+
+    rows+=("$name"$'\t'"$windows"$'\t'"$attached_flag"$'\t'"$cmd"$'\t'"$display_path")
+  done < <(tmux list-sessions -F '#{session_name}	#{session_windows}	#{session_attached}	#{session_path}	#{pane_current_command}')
+
+  for row in "${rows[@]}"; do
+    local name windows attached_flag cmd display_path
+
+    IFS=$'\t' read -r name windows attached_flag cmd display_path <<<"$row"
+
+    printf 'session\t%-*s  [%*s w]  %-*s  %-*s  %s\t%s\n' \
+      "$max_name" "$name" \
+      "$max_windows" "$windows" \
+      "$max_status" "$attached_flag" \
+      "$max_cmd" "$cmd" \
+      "$display_path" "$name"
+  done
 }
 
 source_windows() {
-  tmux list-windows -a -F '#{session_name}	#{window_index}	#{window_name}	#{window_panes}	#{window_active}	#{window_last_flag}	#{pane_current_command}	#{pane_current_path}	#{pane_title}' |
-    while IFS=$'\t' read -r session index name panes active last cmd path title; do
-      local flags=""
-      local display_path
+  local -a rows=()
+  local max_label=0
+  local max_name=0
+  local max_panes=0
+  local max_status=0
 
-      [[ "$active" == "1" ]] && flags+=' [active]'
-      [[ "$last" == "1" ]] && flags+=' [last]'
-      display_path="$(short_path "$path")"
+  while IFS=$'\t' read -r session index name panes active last cmd path title; do
+    local flags=""
+    local display_path
+    local label
 
-      printf 'window\t%s:%s  %s  [%s panes]%s  %s  %s%s\t%s\t%s\n' \
-        "$session" "$index" "$name" "$panes" "$flags" "$cmd" "$display_path" "$(format_title "$title" "$cmd")" "$session" "$index"
-    done
+    [[ "$active" == "1" ]] && flags+='active'
+    [[ "$last" == "1" ]] && flags+="${flags:+,}last"
+    display_path="$(short_path "$path")"
+    label="$session:$index"
+
+    (( ${#label} > max_label )) && max_label=${#label}
+    (( ${#name} > max_name )) && max_name=${#name}
+    (( ${#panes} > max_panes )) && max_panes=${#panes}
+    (( ${#flags} > max_status )) && max_status=${#flags}
+
+    rows+=("$label"$'\t'"$name"$'\t'"$panes"$'\t'"$flags"$'\t'"$display_path"$'\t'"$title"$'\t'"$session"$'\t'"$index")
+  done < <(tmux list-windows -a -F '#{session_name}	#{window_index}	#{window_name}	#{window_panes}	#{window_active}	#{window_last_flag}	#{pane_current_command}	#{pane_current_path}	#{pane_title}')
+
+  for row in "${rows[@]}"; do
+    local label name panes flags display_path title session index
+
+    IFS=$'\t' read -r label name panes flags display_path title session index <<<"$row"
+
+    printf 'window\t%-*s  %-*s  [%*s panes]  %-*s  %s%s\t%s\t%s\n' \
+      "$max_label" "$label" \
+      "$max_name" "$name" \
+      "$max_panes" "$panes" \
+      "$max_status" "$flags" \
+      "$display_path" "$(format_title "$title" "")" \
+      "$session" "$index"
+  done
 }
 
 source_panes() {
-  tmux list-panes -a -F '#{session_name}	#{window_index}	#{pane_index}	#{window_name}	#{pane_current_command}	#{pane_current_path}	#{pane_title}	#{pane_width}x#{pane_height}	#{pane_active}	#{pane_dead}	#{pane_id}' |
-    while IFS=$'\t' read -r session window pane name cmd path title size active dead pane_id; do
-      local flags=""
-      local display_path
+  local -a rows=()
+  local max_label=0
+  local max_name=0
+  local max_status=0
+  local max_cmd=0
 
-      [[ "$active" == "1" ]] && flags+=' [active]'
-      [[ "$dead" == "1" ]] && flags+=' [dead]'
-      display_path="$(short_path "$path")"
+  while IFS=$'\t' read -r session window pane name cmd path title size active dead pane_id; do
+    local flags=""
+    local display_path
+    local label
 
-      printf 'pane\t%s:%s.%s  %s  %s%s  %s%s\t%s\t%s\t%s\n' \
-        "$session" "$window" "$pane" "$name" "$cmd" "$flags" "$display_path" "$(format_title "$title" "$cmd")" "$session" "$window" "$pane_id"
-    done
+    [[ "$active" == "1" ]] && flags+='[active]'
+    [[ "$dead" == "1" ]] && flags+="${flags:+ }[dead]"
+    display_path="$(short_path "$path")"
+    label="$session:$window.$pane"
+
+    (( ${#label} > max_label )) && max_label=${#label}
+    (( ${#name} > max_name )) && max_name=${#name}
+    (( ${#flags} > max_status )) && max_status=${#flags}
+    (( ${#cmd} > max_cmd )) && max_cmd=${#cmd}
+
+    rows+=("$label"$'\t'"$name"$'\t'"$cmd"$'\t'"$flags"$'\t'"$display_path"$'\t'"$title"$'\t'"$session"$'\t'"$window"$'\t'"$pane_id")
+  done < <(tmux list-panes -a -F '#{session_name}	#{window_index}	#{pane_index}	#{window_name}	#{pane_current_command}	#{pane_current_path}	#{pane_title}	#{pane_width}x#{pane_height}	#{pane_active}	#{pane_dead}	#{pane_id}')
+
+  for row in "${rows[@]}"; do
+    local label name cmd flags display_path title session window pane_id
+
+    IFS=$'\t' read -r label name cmd flags display_path title session window pane_id <<<"$row"
+
+    printf 'pane\t%-*s  %-*s  %-*s  %-*s  %s%s\t%s\t%s\t%s\n' \
+      "$max_label" "$label" \
+      "$max_name" "$name" \
+      "$max_cmd" "$cmd" \
+      "$max_status" "$flags" \
+      "$display_path" "$(format_title "$title" "$cmd")" \
+      "$session" "$window" "$pane_id"
+  done
 }
 
 preview_session() {
