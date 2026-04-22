@@ -20,6 +20,7 @@ agents/skills/**/*.pyc
 
 # agents: OpenAI Codex CLI system skills (auto-managed)
 agents/skills/.system/
+agents/skills/codex-primary-runtime/
 
 # agents: sensitive project configs (internal team info, user IDs)
 project-config.md

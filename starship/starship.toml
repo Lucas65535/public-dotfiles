@@ -2,6 +2,7 @@ palette = "claude_dark"
 
 format = """
 $azure\
+$time\
 $kubernetes\
 $directory\
 $git_branch\
@@ -14,7 +15,6 @@ $golang\
 $java\
 $line_break$character\
 """
-right_format = """$time"""
 
 [line_break]
 disabled = false
@@ -24,9 +24,9 @@ success_symbol = "[❯](bold green)"
 error_symbol = "[❯](bold red)"
 
 [time]
-style = 'fg:overlay1'
-format = '[ 󰥔 $time ]($style)'
 disabled = false
+style = 'bg:blue fg:#506273'
+format = '[](blue)[󰥔](fg:#506273 bg:blue)[ $time]($style)[ ](blue)'
 time_format = "%m-%d %H:%M"
 
 [directory]
@@ -82,9 +82,9 @@ context_alias = "$cluster"
 
 [azure]
 disabled = false
-format = "[](blue)[󰠅](fg:#506273 bg:blue)[ $subscription]($style)[ ](blue)"
+format = "[](sapphire)[󰠅](fg:#3E5B6B bg:sapphire)[ $subscription]($style)[ ](sapphire)"
 symbol = "󰠅 "
-style = "bg:blue fg:#506273"
+style = "bg:sapphire fg:#3E5B6B"
 
 [azure.subscription_aliases]
 "SUB22013162557" = "開発"
@@ -92,28 +92,28 @@ style = "bg:blue fg:#506273"
 "SUB24092532288_20240930" = "gitlab"
 
 [python]
-format = "[](surface1)[](fg:green bg:surface1)[$virtualenv( $version) ]($style)[ ](surface1)"
-style = "bg:surface1 fg:overlay1"
+format = "[](#C4AD7C)[](fg:#4A4328 bg:#C4AD7C)[$virtualenv( $version) ](bg:#C4AD7C fg:#4A4328)[ ](#C4AD7C)"
+style = "bg:#C4AD7C fg:#4A4328"
 
 [nodejs]
 symbol = ''
-format = "[](surface1)[$symbol](fg:green bg:surface1)[( $version)]($style)[ ](surface1)"
-style = "bg:surface1 fg:overlay1"
+format = "[](#8BA77B)[$symbol](fg:#344029 bg:#8BA77B)[( $version)](bg:#8BA77B fg:#344029)[ ](#8BA77B)"
+style = "bg:#8BA77B fg:#344029"
 
 [rust]
 symbol = ""
-format = "[](surface1)[$symbol](fg:rosewater bg:surface1)[( $version)]($style)[ ](surface1)"
-style = "bg:surface1 fg:overlay1"
+format = "[](#BF8A7A)[$symbol](fg:#4A2E24 bg:#BF8A7A)[( $version)](bg:#BF8A7A fg:#4A2E24)[ ](#BF8A7A)"
+style = "bg:#BF8A7A fg:#4A2E24"
 
 [golang]
 symbol = ""
-format = "[](surface1)[$symbol](fg:sky bg:surface1)[( $version)]($style)[ ](surface1)"
-style = "bg:surface1 fg:overlay1"
+format = "[](#7BBAC8)[$symbol](fg:#2C4E56 bg:#7BBAC8)[( $version)](bg:#7BBAC8 fg:#2C4E56)[ ](#7BBAC8)"
+style = "bg:#7BBAC8 fg:#2C4E56"
 
 [java]
 symbol = ""
-format = "[](surface1)[$symbol](fg:peach bg:surface1)[( $version)]($style)[ ](surface1)"
-style = "bg:surface1 fg:overlay1"
+format = "[](#C48E8E)[$symbol](fg:#4A2F2F bg:#C48E8E)[( $version)](bg:#C48E8E fg:#4A2F2F)[ ](#C48E8E)"
+style = "bg:#C48E8E fg:#4A2F2F"
 
 [palettes.catppuccin_latte]
 rosewater = "#dc8a78"

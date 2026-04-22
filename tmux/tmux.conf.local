@@ -541,9 +541,18 @@ set -g @plugin 'tmux-plugins/tmux-yank'
 set -g @plugin 'tmux-plugins/tmux-open'
 set -g @plugin 'tmux-plugins/tmux-logging'
 
-# sesh popup session picker — themed with Claude Code light palette
+# sesh popup pickers — themed with Claude Code light palette
 # NOTE: fzf --color uses FZF_DEFAULT_OPTS set in shell; explicit colors applied via env override
 bind-key T run-shell "FZF_DEFAULT_OPTS=\"\$FZF_DEFAULT_OPTS --color=bg:\#F5F3EB,fg:\#1A1917,hl:\#CC785C,fg+:\#1A1917,bg+:\#E8E6DB,hl+:\#B85F3D,border:\#D9D5CC,header:\#207FDE,prompt:\#CC785C,pointer:\#CC785C,marker:\#2E7C4C,spinner:\#6A5BCC,info:\#6B665F,label:\#CC785C\" sesh connect \"$(sesh list --icons | fzf-tmux -p 80%,70% --no-sort --ansi --border-label ' sesh ' --prompt 'tmux> ' --header ' ctrl-a all ctrl-t tmux ctrl-g configs ctrl-x zoxide ctrl-f find ctrl-d kill ' --bind 'tab:down,btab:up' --bind 'ctrl-a:change-prompt(sesh> )+reload(sesh list --icons)' --bind 'ctrl-t:change-prompt(tmux> )+reload(sesh list -t --icons)' --bind 'ctrl-g:change-prompt(cfg> )+reload(sesh list -c --icons)' --bind 'ctrl-x:change-prompt(zoxide> )+reload(sesh list -z --icons)' --bind 'ctrl-f:change-prompt(find> )+reload(fd -H -d 2 -t d -E .Trash . ~)' --bind 'ctrl-d:execute(tmux kill-session -t {2..})+change-prompt(tmux> )+reload(sesh list -t --icons)' --preview-window 'right:55%' --preview 'sesh preview {}')\""
+
+# unified tmux browser: panes across all sessions by default, with mode switches for windows and sessions
+bind-key w display-popup -E -w 82% -h 76% -d "#{pane_current_path}" "$HOME/code/public-dotfiles/tmux/sesh-browser.sh browse panes"
+
+# direct pane browser with the same unified popup
+bind-key P display-popup -E -w 82% -h 76% -d "#{pane_current_path}" "$HOME/code/public-dotfiles/tmux/sesh-browser.sh browse panes"
+
+# keep the original tmux window tree available on an alternate key
+bind-key W choose-tree -Zw
 
 
 # -- custom variables ----------------------------------------------------------
