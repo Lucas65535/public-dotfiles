@@ -34,6 +34,38 @@ y() {
   rm -f -- "$tmp"
 }
 
+wiki() {
+  local session_name="wiki"
+  local session_dir="$HOME/workspace/ob-docs"
+  local cols lines
+
+  command -v tmux >/dev/null 2>&1 || {
+    echo 'tmux not found.'
+    return 1
+  }
+  command -v sesh >/dev/null 2>&1 || {
+    echo 'sesh not found.'
+    return 1
+  }
+  [[ -d "$session_dir" ]] || {
+    echo "wiki: directory not found: $session_dir"
+    return 1
+  }
+
+  if ! tmux has-session -t "$session_name" 2>/dev/null; then
+    cols="${COLUMNS:-$(tput cols 2>/dev/null)}"
+    lines="${LINES:-$(tput lines 2>/dev/null)}"
+
+    if [[ "$cols" =~ '^[0-9]+$' && "$lines" =~ '^[0-9]+$' ]]; then
+      tmux new-session -d -s "$session_name" -c "$session_dir" -x "$cols" -y "$lines"
+    else
+      tmux new-session -d -s "$session_name" -c "$session_dir"
+    fi
+  fi
+
+  sesh connect "$session_name"
+}
+
 azswitch() {
   command -v az >/dev/null 2>&1 || {
     echo 'Azure CLI not found.'

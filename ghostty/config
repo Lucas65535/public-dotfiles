@@ -19,6 +19,7 @@ keybind = global:cmd+shift+space=toggle_quick_terminal
 
 # タイピング中はカーソルを非表示
 mouse-hide-while-typing = true
+mouse-shift-capture = never
 
 # titlebarをtab形式に
 macos-titlebar-style = hidden
