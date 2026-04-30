@@ -439,6 +439,12 @@ set -g history-limit 50000
 # start with mouse mode enabled
 set -g mouse on
 
+# Make wheel scrolling use tmux history in regular panes. Mouse-aware TUIs
+# still receive wheel events, but shell/psql/codex inline output enters
+# copy-mode instead of sending Up/Down into the foreground program.
+bind -n WheelUpPane if -Ft= "#{mouse_any_flag}" "send-keys -M" "if -Ft= '#{pane_in_mode}' 'send-keys -M' 'select-pane -t=; copy-mode -e; send-keys -M'"
+bind -n WheelDownPane select-pane -t= \; send-keys -M
+
 # reduce escape delay (important for Neovim)
 set -sg escape-time 10
 

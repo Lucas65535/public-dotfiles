@@ -13,17 +13,6 @@ btop/btop.log
 # atuin: db files if any end up here
 atuin/*.db
 
-# agents: caches and runtime artifacts
-agents/skills/**/node_modules/
-agents/skills/**/__pycache__/
-agents/skills/**/*.pyc
-
-# agents: OpenAI Codex CLI system skills (auto-managed)
-agents/skills/.system/
-agents/skills/codex-primary-runtime/
-
-# agents: sensitive project configs (internal team info, user IDs)
-project-config.md
 # Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,macos
 # Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,macos
 

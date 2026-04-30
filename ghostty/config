@@ -21,6 +21,12 @@ keybind = global:cmd+shift+space=toggle_quick_terminal
 mouse-hide-while-typing = true
 mouse-shift-capture = never
 
+# Keep enough terminal-side history for non-tmux shells, and keep wheel
+# scrolling predictable after interrupting commands that used mouse reporting.
+scrollback-limit = 100000000
+scroll-to-bottom = keystroke,no-output
+mouse-scroll-multiplier = precision:1,discrete:3
+
 # titlebarをtab形式に
 macos-titlebar-style = hidden
 

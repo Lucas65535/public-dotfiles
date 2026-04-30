@@ -17,10 +17,10 @@ macOS development environment managed via symlinks. One clone, one `brew bundle`
 | btop | `btop/` | `~/.config/btop` |
 | lsd | `lsd/` | `~/.config/lsd` |
 | Yazi (file manager) | `yazi/` | `~/.config/yazi` |
-| AI agent skills | `agents/skills/` | `~/.agents/skills`, `~/.gemini/antigravity/skills`, `~/.claude/skills`, `~/.codex/skills` |
-| AI agent instructions | `agents/GEMINI.md` | `~/.gemini/GEMINI.md`, `~/.claude/CLAUDE.md`, `~/.codex/instructions.md` |
 | Codex themes | `codex/themes/` | `~/.codex/themes` |
 | Homebrew packages | `Brewfile` | — |
+
+AI agent skills and instructions are managed in a separate **private** repository. See that repo's README for setup.
 
 Theme variants live in-repo. The unified Claude palette source of truth is [`claude-theme/palette.md`](claude-theme/palette.md), and Codex-specific TextMate themes live under `codex/themes/`.
 
@@ -51,17 +51,8 @@ mkdir -p ~/.config/tmux
 ln -sf ~/.local/share/tmux/oh-my-tmux/.tmux.conf ~/.config/tmux/tmux.conf
 ln -sf ~/code/public-dotfiles/tmux/tmux.conf.local ~/.config/tmux/tmux.conf.local
 
-# 7. Symlinks — AI agent configs (skills shared across all agents)
-mkdir -p ~/.agents ~/.claude ~/.codex
-rm -rf ~/.agents/skills ~/.gemini/antigravity/skills ~/.claude/skills ~/.codex/skills
-ln -sf ~/code/public-dotfiles/agents/skills ~/.agents/skills
-ln -sf ~/code/public-dotfiles/agents/skills ~/.gemini/antigravity/skills
-ln -sf ~/code/public-dotfiles/agents/skills ~/.claude/skills
-ln -sf ~/code/public-dotfiles/agents/skills ~/.codex/skills
-ln -sf ~/code/public-dotfiles/agents/.skill-lock.json ~/.agents/.skill-lock.json
-ln -sf ~/code/public-dotfiles/agents/GEMINI.md ~/.gemini/GEMINI.md
-ln -sf ~/code/public-dotfiles/agents/GEMINI.md ~/.claude/CLAUDE.md
-ln -sf ~/code/public-dotfiles/agents/GEMINI.md ~/.codex/instructions.md
+# 7. Symlinks — AI agent configs (from private-agents repo)
+# See: ~/code/private-agents/README.md for setup instructions
 
 # 8. Symlinks — Codex custom themes
 mkdir -p ~/.codex

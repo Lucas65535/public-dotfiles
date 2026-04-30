@@ -23,4 +23,5 @@ path=(
 export BUN_INSTALL="$HOME/.bun"
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 export LS_COLORS="${LS_COLORS:+$LS_COLORS:}di=38;2;56;98;144"
+export PSQL_PAGER="${PSQL_PAGER:-less -RSX}"
 export PATH

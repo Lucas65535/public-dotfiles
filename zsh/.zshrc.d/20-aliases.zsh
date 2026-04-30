@@ -43,7 +43,12 @@ alias b='bun'
 alias nn='/opt/homebrew/bin/n'
 alias n='npm'
 alias t='tmux -f ~/.config/tmux/tmux.conf'
-alias cx='codex'
+if [[ -n "${TMUX:-}" ]]; then
+  alias codex='codex --no-alt-screen'
+  alias cx='codex --no-alt-screen'
+else
+  alias cx='codex'
+fi
 alias cc='claude'
 alias oc='opencode'
 alias og='gemini'
