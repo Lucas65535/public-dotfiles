@@ -45,9 +45,12 @@ alias n='npm'
 alias t='tmux -f ~/.config/tmux/tmux.conf'
 if [[ -n "${TMUX:-}" ]]; then
   alias codex='codex --no-alt-screen'
-  alias cx='codex --no-alt-screen'
-else
   alias cx='codex'
+  alias cxm='codex -c mcp_servers.datadog.enabled=true -c mcp_servers.ms_graph.enabled=true'
+else
+  alias codex='codex --no-alt-screen'
+  alias cx='codex'
+  alias cxm='codex -c mcp_servers.datadog.enabled=true -c mcp_servers.ms_graph.enabled=true'
 fi
 alias cc='claude'
 alias oc='opencode'
