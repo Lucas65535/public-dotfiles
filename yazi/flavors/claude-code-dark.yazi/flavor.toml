@@ -1,0 +1,105 @@
+# Claude Code dark flavor for Yazi.
+
+[mgr]
+cwd = { fg = "#D4967E" }
+find_keyword = { fg = "#F4DC90", bold = true, italic = true, underline = true }
+find_position = { fg = "#9B87F5", bg = "reset", italic = true }
+marker_copied = { fg = "#9ACA86", bg = "#9ACA86" }
+marker_cut = { fg = "#D47563", bg = "#D47563" }
+marker_marked = { fg = "#E8C96B", bg = "#E8C96B" }
+marker_selected = { fg = "#61AAF2", bg = "#61AAF2" }
+count_copied = { fg = "#141413", bg = "#9ACA86" }
+count_cut = { fg = "#141413", bg = "#D47563" }
+count_selected = { fg = "#141413", bg = "#61AAF2" }
+border_symbol = "│"
+border_style = { fg = "#4A473F" }
+
+[indicator]
+current = { fg = "#141413", bg = "#D4967E" }
+preview = { underline = true }
+
+[tabs]
+active = { fg = "#141413", bg = "#D4967E" }
+inactive = { fg = "#A9A39A", bg = "#1A1917" }
+
+[mode]
+normal_main = { fg = "#141413", bg = "#D4967E", bold = true }
+normal_alt = { fg = "#D4967E", bg = "#1A1917" }
+select_main = { fg = "#141413", bg = "#9ACA86", bold = true }
+select_alt = { fg = "#9ACA86", bg = "#1A1917" }
+unset_main = { fg = "#141413", bg = "#D47563", bold = true }
+unset_alt = { fg = "#D47563", bg = "#1A1917" }
+
+[status]
+overall = { fg = "#EAE7DF", bg = "#1A1917" }
+perm_sep = { fg = "#6B665F" }
+perm_type = { fg = "#61AAF2" }
+perm_read = { fg = "#E8C96B" }
+perm_write = { fg = "#D47563" }
+perm_exec = { fg = "#9ACA86" }
+progress_label = { fg = "#EAE7DF", bold = true }
+progress_normal = { fg = "#4A473F", bg = "#1A1917" }
+progress_error = { fg = "#D47563", bg = "#1A1917" }
+
+[pick]
+border = { fg = "#D4967E" }
+active = { fg = "#141413", bg = "#D4967E" }
+inactive = {}
+
+[input]
+border = { fg = "#D4967E" }
+title = {}
+value = {}
+selected = { reversed = true }
+
+[cmp]
+border = { fg = "#D4967E" }
+active = { reversed = true }
+inactive = {}
+icon_file = ""
+icon_folder = ""
+icon_command = ""
+
+[tasks]
+border = { fg = "#D4967E" }
+title = {}
+hovered = { underline = true }
+
+[which]
+mask = { bg = "#1A1917" }
+cand = { fg = "#D4967E" }
+rest = { fg = "#6B665F" }
+desc = { fg = "#A9A39A" }
+separator = " → "
+separator_style = { fg = "#4A473F" }
+
+[help]
+on = { fg = "#D4967E" }
+run = { fg = "#A9A39A" }
+hovered = { bg = "#2B2A27", bold = true }
+footer = { fg = "#EAE7DF", bg = "#1A1917" }
+
+[notify]
+title_info = { fg = "#61AAF2" }
+title_warn = { fg = "#E8C96B" }
+title_error = { fg = "#D47563" }
+
+[filetype]
+rules = [
+  { mime = "image/*", fg = "#E8C96B" },
+  { mime = "video/*", fg = "#9B87F5" },
+  { mime = "audio/*", fg = "#9B87F5" },
+  { mime = "application/zip", fg = "#D47563" },
+  { mime = "application/gzip", fg = "#D47563" },
+  { mime = "application/x-tar", fg = "#D47563" },
+  { mime = "application/x-bzip*", fg = "#D47563" },
+  { mime = "application/x-7z-compressed", fg = "#D47563" },
+  { mime = "application/x-rar", fg = "#D47563" },
+  { mime = "application/x-xz", fg = "#D47563" },
+  { mime = "application/pdf", fg = "#D47563" },
+  { mime = "application/*doc*", fg = "#61AAF2" },
+  { mime = "application/*sheet*", fg = "#9ACA86" },
+  { mime = "application/*presentation*", fg = "#E8C96B" },
+  { url = "*", fg = "#EAE7DF" },
+  { url = "*/", fg = "#D4967E" },
+]
