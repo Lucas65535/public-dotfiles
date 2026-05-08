@@ -375,6 +375,72 @@
           <string>#D47563</string>
         </dict>
       </dict>
+      <dict>
+        <key>name</key>
+        <string>Status Line Text</string>
+        <key>scope</key>
+        <string>comment</string>
+        <key>settings</key>
+        <dict>
+          <key>foreground</key>
+          <string>#A9A39A</string>
+        </dict>
+      </dict>
+      <dict>
+        <key>name</key>
+        <string>Status Line Primary Accent</string>
+        <key>scope</key>
+        <string>markup.underline.link, keyword.control, keyword</string>
+        <key>settings</key>
+        <dict>
+          <key>foreground</key>
+          <string>#E0AB96</string>
+        </dict>
+      </dict>
+      <dict>
+        <key>name</key>
+        <string>Status Line Secondary Accent</string>
+        <key>scope</key>
+        <string>entity.name.function, storage.type</string>
+        <key>settings</key>
+        <dict>
+          <key>foreground</key>
+          <string>#F0CDBA</string>
+        </dict>
+      </dict>
+      <dict>
+        <key>name</key>
+        <string>Status Line Info Accent</string>
+        <key>scope</key>
+        <string>support.type, markup.heading, entity.name.section</string>
+        <key>settings</key>
+        <dict>
+          <key>foreground</key>
+          <string>#8CC4FF</string>
+        </dict>
+      </dict>
+      <dict>
+        <key>name</key>
+        <string>Status Line State Accent</string>
+        <key>scope</key>
+        <string>constant.language, constant.other, entity.name.tag</string>
+        <key>settings</key>
+        <dict>
+          <key>foreground</key>
+          <string>#F2D98F</string>
+        </dict>
+      </dict>
+      <dict>
+        <key>name</key>
+        <string>Status Line Success Accent</string>
+        <key>scope</key>
+        <string>markup.inserted</string>
+        <key>settings</key>
+        <dict>
+          <key>foreground</key>
+          <string>#B6E0A5</string>
+        </dict>
+      </dict>
     </array>
     <key>uuid</key>
     <string>69FC9A70-2FC1-49D2-953E-CB15791C9B67</string>

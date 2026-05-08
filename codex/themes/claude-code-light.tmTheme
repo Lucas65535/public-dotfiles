@@ -50,7 +50,7 @@
           <key>fontStyle</key>
           <string>bold</string>
           <key>foreground</key>
-          <string>#B84A2A</string>
+          <string>#A94B2D</string>
         </dict>
       </dict>
       <dict>
@@ -72,7 +72,7 @@
         <key>settings</key>
         <dict>
           <key>foreground</key>
-          <string>#1A1917</string>
+          <string>#255E8F</string>
         </dict>
       </dict>
       <dict>
@@ -94,7 +94,7 @@
         <key>settings</key>
         <dict>
           <key>foreground</key>
-          <string>#BD5341</string>
+          <string>#9B5F18</string>
         </dict>
       </dict>
       <dict>
@@ -105,7 +105,7 @@
         <key>settings</key>
         <dict>
           <key>foreground</key>
-          <string>#2D7F4D</string>
+          <string>#1F7A4A</string>
         </dict>
       </dict>
       <dict>
@@ -127,7 +127,7 @@
         <key>settings</key>
         <dict>
           <key>foreground</key>
-          <string>#946A1E</string>
+          <string>#B06A16</string>
         </dict>
       </dict>
       <dict>
@@ -138,7 +138,7 @@
         <key>settings</key>
         <dict>
           <key>foreground</key>
-          <string>#AE4E30</string>
+          <string>#B65A38</string>
         </dict>
       </dict>
       <dict>
@@ -149,7 +149,7 @@
         <key>settings</key>
         <dict>
           <key>foreground</key>
-          <string>#386290</string>
+          <string>#1F6FB2</string>
         </dict>
       </dict>
       <dict>
@@ -160,7 +160,7 @@
         <key>settings</key>
         <dict>
           <key>foreground</key>
-          <string>#207FDE</string>
+          <string>#0B75D1</string>
         </dict>
       </dict>
       <dict>
@@ -373,6 +373,72 @@
           <string>underline</string>
           <key>foreground</key>
           <string>#A84B3A</string>
+        </dict>
+      </dict>
+      <dict>
+        <key>name</key>
+        <string>Status Line Text</string>
+        <key>scope</key>
+        <string>comment</string>
+        <key>settings</key>
+        <dict>
+          <key>foreground</key>
+          <string>#6B665F</string>
+        </dict>
+      </dict>
+      <dict>
+        <key>name</key>
+        <string>Status Line Primary Accent</string>
+        <key>scope</key>
+        <string>markup.underline.link, keyword.control, keyword</string>
+        <key>settings</key>
+        <dict>
+          <key>foreground</key>
+          <string>#B85F3D</string>
+        </dict>
+      </dict>
+      <dict>
+        <key>name</key>
+        <string>Status Line Secondary Accent</string>
+        <key>scope</key>
+        <string>entity.name.function, storage.type</string>
+        <key>settings</key>
+        <dict>
+          <key>foreground</key>
+          <string>#9E563E</string>
+        </dict>
+      </dict>
+      <dict>
+        <key>name</key>
+        <string>Status Line Info Accent</string>
+        <key>scope</key>
+        <string>support.type, markup.heading, entity.name.section</string>
+        <key>settings</key>
+        <dict>
+          <key>foreground</key>
+          <string>#386290</string>
+        </dict>
+      </dict>
+      <dict>
+        <key>name</key>
+        <string>Status Line State Accent</string>
+        <key>scope</key>
+        <string>constant.language, constant.other, entity.name.tag</string>
+        <key>settings</key>
+        <dict>
+          <key>foreground</key>
+          <string>#8A6220</string>
+        </dict>
+      </dict>
+      <dict>
+        <key>name</key>
+        <string>Status Line Success Accent</string>
+        <key>scope</key>
+        <string>markup.inserted</string>
+        <key>settings</key>
+        <dict>
+          <key>foreground</key>
+          <string>#2E7C4C</string>
         </dict>
       </dict>
     </array>
