@@ -16,6 +16,7 @@ esac
 path=(
   "$HOME/.local/bin"
   "$HOME/.bun/bin"
+  "$HOME/.cargo/bin"
   "$HOME/.antigravity/antigravity/bin"
   $path
 )

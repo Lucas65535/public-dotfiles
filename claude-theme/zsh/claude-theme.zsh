@@ -1,5 +1,5 @@
 # Claude Code Theme — ZSH Configuration
-# Source this file from .zshrc:  source ~/code/public-dotfiles/claude-theme/zsh/claude-theme.zsh
+# Source this file from .zshrc:  source "$DOTFILES_HOME/claude-theme/zsh/claude-theme.zsh"
 #
 # Requires: zsh-syntax-highlighting, zsh-autosuggestions, fzf
 

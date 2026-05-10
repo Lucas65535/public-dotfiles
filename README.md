@@ -1,6 +1,6 @@
 # Dotfiles
 
-macOS development environment managed via symlinks. One clone, one `brew bundle`, a few `ln -s` — done.
+macOS development environment managed via symlinks. One clone, one bootstrap script — done.
 
 ## What's Inside
 
@@ -20,45 +20,18 @@ macOS development environment managed via symlinks. One clone, one `brew bundle`
 | Codex themes | `codex/themes/` | `~/.codex/themes` |
 | Homebrew packages | `Brewfile` | — |
 
-AI agent skills and instructions are managed in a separate **private** repository. See that repo's README for setup.
-
 Theme variants live in-repo. The unified Claude palette source of truth is [`claude-theme/palette.md`](claude-theme/palette.md), and Codex-specific TextMate themes live under `codex/themes/`.
 
 ## Fresh Machine Setup
 
 ```bash
 # 1. Clone
-git clone https://github.com/<USER>/public-dotfiles.git ~/code/public-dotfiles
+git clone https://github.com/<USER>/dotfiles.git ~/infra/dotfiles
 
-# 2. Install everything
-brew bundle --file=~/code/public-dotfiles/Brewfile
+# 2. Install packages, tmux framework, and symlinks
+~/infra/dotfiles/scripts/bootstrap-macos.zsh
 
-# 3. Symlinks — shell
-ln -sf ~/code/public-dotfiles/zsh/.zshrc ~/.zshrc
-
-# 4. Symlinks — ~/.config (directory-level)
-for dir in nvim ghostty lazygit atuin bat btop lsd yazi; do
-  rm -rf ~/.config/$dir
-  ln -sf ~/code/public-dotfiles/$dir ~/.config/$dir
-done
-
-# 5. Symlinks — file-level (target dir has other content)
-ln -sf ~/code/public-dotfiles/starship/starship.toml ~/.config/starship.toml
-
-# 6. tmux — install oh-my-tmux framework + link config
-git clone https://github.com/gpakosz/.tmux.git ~/.local/share/tmux/oh-my-tmux
-mkdir -p ~/.config/tmux
-ln -sf ~/.local/share/tmux/oh-my-tmux/.tmux.conf ~/.config/tmux/tmux.conf
-ln -sf ~/code/public-dotfiles/tmux/tmux.conf.local ~/.config/tmux/tmux.conf.local
-
-# 7. Symlinks — AI agent configs (from private-agents repo)
-# See: ~/code/private-agents/README.md for setup instructions
-
-# 8. Symlinks — Codex custom themes
-mkdir -p ~/.codex
-ln -sfn ~/code/public-dotfiles/codex/themes ~/.codex/themes
-
-# 9. Reload
+# 3. Reload
 exec $SHELL -l
 ```
 
@@ -75,11 +48,11 @@ theme = "claude-code"
 
 ### Editing Configs
 
-All configs live in `~/code/public-dotfiles/`. Edit them there — changes take effect immediately via symlinks. No copy/sync steps needed.
+All configs live in this repository. Edit them here — changes take effect immediately via symlinks. No copy/sync steps needed.
 
 ```bash
 # Example: tweak Ghostty config
-nvim ~/code/public-dotfiles/ghostty/config  # edit in repo, live immediately
+nvim ghostty/config
 ```
 
 ### tmux (oh-my-tmux)
@@ -96,7 +69,7 @@ This repo manages only `tmux/tmux.conf.local` — the user customization layer. 
 To update oh-my-tmux to the latest version:
 
 ```bash
-cd ~/.local/share/tmux/oh-my-tmux && git pull
+scripts/update.zsh
 ```
 
 After editing `tmux.conf.local`, reload inside tmux with `<prefix>` + `r`.
@@ -116,35 +89,34 @@ Use Codex `/theme` to preview and switch interactively, or set `tui.theme = "cla
 ### Saving Changes
 
 ```bash
-cd ~/code/public-dotfiles
 git add -A && git commit -m "tweak: ghostty font size"
 git push
 ```
 
-### Updating Brewfile
+### Updating This Repo From the Current Mac
 
-When you install or uninstall software, re-dump to keep the Brewfile in sync:
+After installing or uninstalling software, update `Brewfile`, refresh oh-my-tmux, and rebuild symlinks:
 
 ```bash
-brew bundle dump --force --file=~/code/public-dotfiles/Brewfile
+scripts/update.zsh
 ```
 
-To check what's missing vs. what's installed:
+To only check/install Brewfile contents manually:
 
 ```bash
-brew bundle check --file=~/code/public-dotfiles/Brewfile          # quick check
-brew bundle --file=~/code/public-dotfiles/Brewfile --no-upgrade   # install missing only
+brew bundle check --file=Brewfile          # quick check
+brew bundle --file=Brewfile --no-upgrade   # install missing only
 ```
 
 ### Adding a New Config
 
 ```bash
 # 1. Copy config into repo
-cp -r ~/.config/newapp ~/code/public-dotfiles/newapp
+cp -r ~/.config/newapp newapp
 
 # 2. Replace original with symlink
 rm -rf ~/.config/newapp
-ln -sf ~/code/public-dotfiles/newapp ~/.config/newapp
+ln -sf "$PWD/newapp" ~/.config/newapp
 
 # 3. Update .gitignore if needed (logs, caches, etc.)
 # 4. Commit
@@ -157,13 +129,17 @@ For configs where the parent directory contains other non-config files (database
 On the **old** machine — make sure everything is committed and pushed:
 
 ```bash
-cd ~/code/public-dotfiles
-brew bundle dump --force --file=Brewfile
+scripts/update.zsh
 git add -A && git commit -m "chore: sync before migration"
 git push
 ```
 
-On the **new** machine — run the [Fresh Machine Setup](#fresh-machine-setup) steps above.
+On the **new** machine — clone the repo and run:
+
+```bash
+scripts/bootstrap-macos.zsh
+exec $SHELL -l
+```
 
 ### What This Repo Does NOT Manage
 
@@ -185,6 +161,14 @@ Two patterns, chosen based on directory content:
 |---|---|---|
 | **Directory symlink** | Entire dir is config-only | `~/.config/ghostty → dotfiles/ghostty` |
 | **File symlink** | Parent dir has mixed content | `~/.config/starship.toml → dotfiles/starship/starship.toml` |
+
+## Scripts
+
+| Script | Purpose |
+|---|---|
+| `scripts/relink.zsh` | Rebuild symlinks from the current repo location. |
+| `scripts/update.zsh` | Dump the current Homebrew state into `Brewfile`, update oh-my-tmux, and relink. |
+| `scripts/bootstrap-macos.zsh` | Install Homebrew if needed, install `Brewfile`, install/update oh-my-tmux, and relink. |
 
 ## Key Shell Aliases
 

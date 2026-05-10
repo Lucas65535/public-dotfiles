@@ -3,6 +3,7 @@
 
 # Resolve this file's directory robustly.
 _ZSHRC_DIR="${${(%):-%N}:A:h}"
+export DOTFILES_HOME="${DOTFILES_HOME:-${_ZSHRC_DIR:h}}"
 
 # Always load environment + history for shell consistency.
 [[ -f "${_ZSHRC_DIR}/.zshrc.d/00-env.zsh" ]] && source "${_ZSHRC_DIR}/.zshrc.d/00-env.zsh"

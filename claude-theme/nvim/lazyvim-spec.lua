@@ -4,10 +4,14 @@
 -- This loads the colorscheme from the local directory and sets it as default.
 -- Supports both dark and light variants.
 
+local uv = vim.uv or vim.loop
+local nvim_config = uv.fs_realpath(vim.fn.stdpath("config")) or vim.fn.stdpath("config")
+local dotfiles_root = vim.fn.fnamemodify(nvim_config, ":h")
+
 return {
   {
     -- Load from local directory
-    dir = "~/code/public-dotfiles/claude-theme/nvim/claude-code.nvim",
+    dir = dotfiles_root .. "/claude-theme/nvim/claude-code.nvim",
     name = "claude-code",
     lazy = false,
     priority = 1000,  -- load before other plugins
