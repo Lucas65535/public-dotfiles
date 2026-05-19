@@ -5,6 +5,10 @@ set -uo pipefail
 SELF_PATH="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)/$(basename -- "${BASH_SOURCE[0]}")"
 FZF_COLOR_OPTS='--color=bg:#F5F3EB,fg:#1A1917,hl:#CC785C,fg+:#1A1917,bg+:#E8E6DB,hl+:#B85F3D,border:#D9D5CC,header:#207FDE,prompt:#CC785C,pointer:#CC785C,marker:#2E7C4C,spinner:#6A5BCC,info:#6B665F,label:#CC785C'
 ROW_SEP=$'\x1f'
+LABEL_WIDTH=28
+COMMAND_WIDTH=10
+PATH_WIDTH=14
+STATUS_WIDTH=18
 
 sanitize_text() {
   local text="${1//$'\t'/ }"
@@ -13,6 +17,44 @@ sanitize_text() {
   text="${text//$'\n'/ }"
 
   printf '%s' "$text"
+}
+
+strip_ansi() {
+  perl -CS -pe 's/\e\[[0-9;?]*[ -\/]*[@-~]//g; s/\e\][^\a]*(?:\a|\e\\)//g'
+}
+
+fit_field() {
+  local text="$1"
+  local width="$2"
+
+  if (( ${#text} > width )); then
+    printf '%s~' "${text:0:width-1}"
+  else
+    printf '%s' "$text"
+  fi
+}
+
+sesh_tmux_target() {
+  local line="$1"
+  local plain
+
+  plain="$(printf '%s' "$line" | strip_ansi)"
+  set -- $plain
+  shift || true
+  printf '%s' "$*"
+}
+
+current_dir_name() {
+  local path="$1"
+
+  path="${path%/}"
+
+  if [[ -z "$path" || "$path" == "$HOME" ]]; then
+    printf '~'
+    return
+  fi
+
+  printf '%s' "${path##*/}"
 }
 
 short_path() {
@@ -102,7 +144,7 @@ source_sessions() {
     cmd="$(sanitize_text "$cmd")"
     path="$(sanitize_text "$path")"
     [[ "$attached" != "0" ]] && attached_flag='[attached]'
-    display_path="$(short_path "$path")"
+    display_path="$(current_dir_name "$path")"
     icon="$(icon_for session "$cmd" "$path" "$name")"
     status="[$windows w]${attached_flag:+ $attached_flag}"
 
@@ -121,12 +163,12 @@ source_sessions() {
     IFS="$ROW_SEP" read -r icon name cmd display_path windows attached_flag <<<"$row"
     status="[$windows w]${attached_flag:+ $attached_flag}"
 
-    printf 'session\t%-*s  %-*s  %-*s  %-*s  %-*s\t%s\n' \
-      "$max_icon" "$icon" \
-      "$max_name" "$name" \
-      "$max_cmd" "$cmd" \
-      "$max_path" "$display_path" \
-      "$max_status" "$status" \
+    printf 'session\t%-2s %-*s  %-*s  %-*s  %-*s\t%s\n' \
+      "$icon" \
+      "$LABEL_WIDTH" "$(fit_field "$name" "$LABEL_WIDTH")" \
+      "$COMMAND_WIDTH" "$(fit_field "$cmd" "$COMMAND_WIDTH")" \
+      "$PATH_WIDTH" "$(fit_field "$display_path" "$PATH_WIDTH")" \
+      "$STATUS_WIDTH" "$(fit_field "$status" "$STATUS_WIDTH")" \
       "$name"
   done
 }
@@ -153,7 +195,7 @@ source_windows() {
     title="$(sanitize_text "$title")"
     [[ "$active" == "1" ]] && flags+='active'
     [[ "$last" == "1" ]] && flags+="${flags:+,}last"
-    display_path="$(short_path "$path")"
+    display_path="$(current_dir_name "$path")"
     label="$session:$index"
     icon="$(icon_for window "$cmd" "$path" "$name")"
 
@@ -173,12 +215,12 @@ source_windows() {
     IFS="$ROW_SEP" read -r icon label name display_path panes flags title session index <<<"$row"
     status="[$panes p]${flags:+ [$flags]}"
 
-    printf 'window\t%-*s  %-*s  %-*s  %-*s  %-*s%s\t%s\t%s\n' \
-      "$max_icon" "$icon" \
-      "$max_label" "$label" \
-      "$max_name" "$name" \
-      "$max_path" "$display_path" \
-      "$max_status" "$status" \
+    printf 'window\t%-2s %-*s  %-*s  %-*s  %-*s%s\t%s\t%s\n' \
+      "$icon" \
+      "$LABEL_WIDTH" "$(fit_field "$label" "$LABEL_WIDTH")" \
+      "$COMMAND_WIDTH" "$(fit_field "$name" "$COMMAND_WIDTH")" \
+      "$PATH_WIDTH" "$(fit_field "$display_path" "$PATH_WIDTH")" \
+      "$STATUS_WIDTH" "$(fit_field "$status" "$STATUS_WIDTH")" \
       "$(format_title "$title" "")" \
       "$session" "$index"
   done
@@ -205,7 +247,7 @@ source_panes() {
     title="$(sanitize_text "$title")"
     [[ "$active" == "1" ]] && flags+='[active]'
     [[ "$dead" == "1" ]] && flags+="${flags:+ }[dead]"
-    display_path="$(short_path "$path")"
+    display_path="$(current_dir_name "$path")"
     label="$session:$window.$pane"
     icon="$(icon_for pane "$cmd" "$path" "$name")"
 
@@ -223,15 +265,99 @@ source_panes() {
 
     IFS="$ROW_SEP" read -r icon label cmd display_path flags title session pane_id <<<"$row"
 
-    printf 'pane\t%-*s  %-*s  %-*s  %-*s  %-*s%s\t%s\t%s\n' \
-      "$max_icon" "$icon" \
-      "$max_label" "$label" \
-      "$max_cmd" "$cmd" \
-      "$max_path" "$display_path" \
-      "$max_status" "$flags" \
+    printf 'pane\t%-2s %-*s  %-*s  %-*s  %-*s%s\t%s\t%s\n' \
+      "$icon" \
+      "$LABEL_WIDTH" "$(fit_field "$label" "$LABEL_WIDTH")" \
+      "$COMMAND_WIDTH" "$(fit_field "$cmd" "$COMMAND_WIDTH")" \
+      "$PATH_WIDTH" "$(fit_field "$display_path" "$PATH_WIDTH")" \
+      "$STATUS_WIDTH" "$(fit_field "$flags" "$STATUS_WIDTH")" \
       "$(format_title "$title" "$cmd")" \
       "$session" "$pane_id"
   done
+}
+
+source_dirs() {
+  local -a rows=()
+  local max_icon=0
+  local max_path=0
+
+  command -v fd >/dev/null 2>&1 || return 0
+
+  while IFS= read -r path; do
+    local display_path
+    local icon=''
+
+    path="$(sanitize_text "$path")"
+    display_path="$(short_path "$path")"
+
+    (( ${#icon} > max_icon )) && max_icon=${#icon}
+    (( ${#display_path} > max_path )) && max_path=${#display_path}
+
+    rows+=("$icon${ROW_SEP}$display_path${ROW_SEP}$path")
+  done < <(fd -H -d 2 -t d -E .Trash . "$HOME")
+
+  for row in "${rows[@]}"; do
+    local icon display_path path
+
+    IFS="$ROW_SEP" read -r icon display_path path <<<"$row"
+
+    printf 'dir\t%-*s  %-*s\t%s\n' \
+      "$max_icon" "$icon" \
+      "$max_path" "$display_path" \
+      "$path"
+  done
+}
+
+source_sesh() {
+  local mode="${1:-all}"
+  local line
+  local target=""
+  local output
+
+  case "$mode" in
+    all)
+      output="$(sesh list --icons 2>/dev/null || true)"
+      if [[ -n "$output" ]]; then
+        while IFS= read -r line; do
+          line="$(sanitize_text "$line")"
+          [[ -n "$line" ]] && printf 'sesh\t%s\t%s\n' "$line" "$line"
+        done <<<"$output"
+      else
+        source_sesh tmux
+        source_sesh configs
+        source_sesh zoxide
+      fi
+      ;;
+    tmux)
+      while IFS= read -r line; do
+        line="$(sanitize_text "$line")"
+        [[ -z "$line" ]] && continue
+        target="$(sesh_tmux_target "$line")"
+        printf 'sesh_tmux\t%s\t%s\t%s\n' "$line" "$line" "$target"
+      done < <(sesh list -t --icons 2>/dev/null)
+      ;;
+    configs)
+      while IFS= read -r line; do
+        line="$(sanitize_text "$line")"
+        [[ -n "$line" ]] && printf 'sesh\t%s\t%s\n' "$line" "$line"
+      done < <(sesh list -c --icons 2>/dev/null)
+      ;;
+    zoxide)
+      while IFS= read -r line; do
+        line="$(sanitize_text "$line")"
+        [[ -n "$line" ]] && printf 'sesh\t%s\t%s\n' "$line" "$line"
+      done < <(sesh list -z --icons 2>/dev/null)
+      ;;
+    *)
+      return 1
+      ;;
+  esac
+}
+
+source_all() {
+  source_sessions
+  source_windows
+  source_panes
 }
 
 preview_session() {
@@ -270,6 +396,29 @@ preview_pane() {
   capture_target "$1"
 }
 
+preview_dir() {
+  sesh preview "$1"
+}
+
+preview_sesh() {
+  sesh preview "$1"
+}
+
+preview_any() {
+  local kind="$1"
+  local arg1="$2"
+  local arg2="${3:-}"
+
+  case "$kind" in
+    session) preview_session "$arg1" ;;
+    window) preview_window "$arg1" "$arg2" ;;
+    pane) preview_pane "$arg2" ;;
+    dir) preview_dir "$arg1" ;;
+    sesh|sesh_tmux) preview_sesh "$arg1" ;;
+    *) return 1 ;;
+  esac
+}
+
 open_session() {
   sesh connect "$1"
 }
@@ -283,27 +432,65 @@ open_pane() {
   tmux select-pane -t "$2"
 }
 
+open_dir() {
+  sesh connect "$1"
+}
+
+open_sesh() {
+  sesh connect "$1"
+}
+
+kill_selection() {
+  local kind="$1"
+  local arg1="$2"
+  local arg2="${3:-}"
+
+  case "$kind" in
+    session) tmux kill-session -t "$arg1" ;;
+    sesh_tmux) [[ -n "$arg2" ]] && tmux kill-session -t "$arg2" ;;
+    *) return 0 ;;
+  esac
+}
+
 mode_prompt() {
   case "$1" in
+    all) printf 'tmux> ' ;;
+    sesh) printf 'sesh> ' ;;
+    tmux) printf 'tmux> ' ;;
+    configs) printf 'cfg> ' ;;
+    zoxide) printf 'zoxide> ' ;;
     sessions) printf 'sesh> ' ;;
     windows) printf 'win> ' ;;
     panes) printf 'pane> ' ;;
+    dirs) printf 'find> ' ;;
   esac
 }
 
 mode_header() {
   case "$1" in
-    sessions) printf ' enter connect  ctrl-p panes  ctrl-w windows  ctrl-s sessions ' ;;
-    windows) printf ' enter switch window  ctrl-p panes  ctrl-w windows  ctrl-s sessions ' ;;
-    panes) printf ' enter switch pane  ctrl-p panes  ctrl-w windows  ctrl-s sessions ' ;;
+    all) printf ' ↵ enter open      󰐊 ctrl-a unified  󱂬 ctrl-s sessions  󰖲 ctrl-w windows\n 󰆍 ctrl-p panes    󰲋 ctrl-o sesh      ctrl-t tmux       ctrl-g configs\n 󰁔 ctrl-x zoxide   󰈞 ctrl-f find     󰆴 ctrl-d kill ' ;;
+    sesh) printf ' ↵ enter connect   󰐊 ctrl-a unified  󰲋 ctrl-o sesh       ctrl-t tmux\n  ctrl-g configs  󰁔 ctrl-x zoxide   󰈞 ctrl-f find      󰆴 ctrl-d kill ' ;;
+    tmux) printf ' ↵ enter connect   󰐊 ctrl-a unified  󰲋 ctrl-o sesh       ctrl-t tmux\n  ctrl-g configs  󰁔 ctrl-x zoxide   󰈞 ctrl-f find      󰆴 ctrl-d kill ' ;;
+    configs) printf ' ↵ connect config  󰐊 ctrl-a unified  󰲋 ctrl-o sesh       ctrl-t tmux\n  ctrl-g configs  󰁔 ctrl-x zoxide   󰈞 ctrl-f find ' ;;
+    zoxide) printf ' ↵ connect zoxide  󰐊 ctrl-a unified  󰲋 ctrl-o sesh       ctrl-t tmux\n  ctrl-g configs  󰁔 ctrl-x zoxide   󰈞 ctrl-f find ' ;;
+    sessions) printf ' ↵ enter connect   󰐊 ctrl-a unified  󱂬 ctrl-s sessions  󰖲 ctrl-w windows\n 󰆍 ctrl-p panes    󰲋 ctrl-o sesh      ctrl-t tmux      󰆴 ctrl-d kill ' ;;
+    windows) printf ' ↵ switch window   󰐊 ctrl-a unified  󱂬 ctrl-s sessions  󰖲 ctrl-w windows\n 󰆍 ctrl-p panes    󰲋 ctrl-o sesh      ctrl-t tmux      󰈞 ctrl-f find ' ;;
+    panes) printf ' ↵ switch pane     󰐊 ctrl-a unified  󱂬 ctrl-s sessions  󰖲 ctrl-w windows\n 󰆍 ctrl-p panes    󰲋 ctrl-o sesh      ctrl-t tmux      󰈞 ctrl-f find ' ;;
+    dirs) printf ' ↵ connect dir     󰐊 ctrl-a unified  󰲋 ctrl-o sesh       ctrl-t tmux\n  ctrl-g configs  󰁔 ctrl-x zoxide   󰈞 ctrl-f find ' ;;
   esac
 }
 
 mode_preview() {
   case "$1" in
+    all) printf "%s preview any {1} {3} {4}" "$SELF_PATH" ;;
+    sesh) printf "%s preview sesh {3}" "$SELF_PATH" ;;
+    tmux) printf "%s preview sesh {3}" "$SELF_PATH" ;;
+    configs) printf "%s preview sesh {3}" "$SELF_PATH" ;;
+    zoxide) printf "%s preview sesh {3}" "$SELF_PATH" ;;
     sessions) printf "%s preview session {3}" "$SELF_PATH" ;;
     windows) printf "%s preview window {3} {4}" "$SELF_PATH" ;;
     panes) printf "%s preview pane {4}" "$SELF_PATH" ;;
+    dirs) printf "%s preview dir {3}" "$SELF_PATH" ;;
   esac
 }
 
@@ -316,6 +503,7 @@ browse() {
       "$SELF_PATH" source "$initial_mode" |
       fzf \
         --ansi \
+        --no-sort \
         --border=rounded \
         --delimiter=$'\t' \
         --layout=reverse \
@@ -327,9 +515,16 @@ browse() {
         --preview-wrap-sign '' \
         --preview-window 'right:55%,border-left,wrap' \
         --bind "esc:abort" \
+        --bind "ctrl-a:change-prompt($(mode_prompt all))+change-header($(mode_header all))+change-preview($(mode_preview all))+reload($SELF_PATH source all)" \
+        --bind "ctrl-o:change-prompt($(mode_prompt sesh))+change-header($(mode_header sesh))+change-preview($(mode_preview sesh))+reload($SELF_PATH source sesh)" \
+        --bind "ctrl-t:change-prompt($(mode_prompt tmux))+change-header($(mode_header tmux))+change-preview($(mode_preview tmux))+reload($SELF_PATH source tmux)" \
+        --bind "ctrl-g:change-prompt($(mode_prompt configs))+change-header($(mode_header configs))+change-preview($(mode_preview configs))+reload($SELF_PATH source configs)" \
+        --bind "ctrl-x:change-prompt($(mode_prompt zoxide))+change-header($(mode_header zoxide))+change-preview($(mode_preview zoxide))+reload($SELF_PATH source zoxide)" \
         --bind "ctrl-s:change-prompt($(mode_prompt sessions))+change-header($(mode_header sessions))+change-preview($(mode_preview sessions))+reload($SELF_PATH source sessions)" \
         --bind "ctrl-w:change-prompt($(mode_prompt windows))+change-header($(mode_header windows))+change-preview($(mode_preview windows))+reload($SELF_PATH source windows)" \
-        --bind "ctrl-p:change-prompt($(mode_prompt panes))+change-header($(mode_header panes))+change-preview($(mode_preview panes))+reload($SELF_PATH source panes)"
+        --bind "ctrl-p:change-prompt($(mode_prompt panes))+change-header($(mode_header panes))+change-preview($(mode_preview panes))+reload($SELF_PATH source panes)" \
+        --bind "ctrl-f:change-prompt($(mode_prompt dirs))+change-header($(mode_header dirs))+change-preview($(mode_preview dirs))+reload($SELF_PATH source dirs)" \
+        --bind "ctrl-d:execute-silent($SELF_PATH kill {1} {3} {4})+change-prompt($(mode_prompt tmux))+change-header($(mode_header tmux))+change-preview($(mode_preview tmux))+reload($SELF_PATH source tmux)"
   )"
 
   [[ -z "${selection}" ]] && return 0
@@ -340,6 +535,8 @@ browse() {
     session) open_session "$arg1" ;;
     window) open_window "$arg1" "$arg2" ;;
     pane) open_pane "$arg1" "$arg2" ;;
+    dir) open_dir "$arg1" ;;
+    sesh|sesh_tmux) open_sesh "$arg1" ;;
     *) return 1 ;;
   esac
 }
@@ -351,19 +548,33 @@ case "${1:-browse}" in
     ;;
   source)
     case "${2:-}" in
+      all) source_all ;;
+      sesh) source_sesh all ;;
+      tmux) source_sesh tmux ;;
+      configs) source_sesh configs ;;
+      zoxide) source_sesh zoxide ;;
       sessions) source_sessions ;;
       windows) source_windows ;;
       panes) source_panes ;;
+      dirs) source_dirs ;;
       *) exit 1 ;;
     esac
     ;;
   preview)
     case "${2:-}" in
+      any) preview_any "${3:-}" "${4:-}" "${5:-}" ;;
       session) shift 2; preview_session "$*" ;;
       window) preview_window "${3:-}" "${4:-}" ;;
       pane) preview_pane "${3:-}" ;;
+      dir) shift 2; preview_dir "$*" ;;
+      sesh) shift 2; preview_sesh "$*" ;;
+      sesh_tmux) shift 2; preview_sesh "$*" ;;
       *) exit 1 ;;
     esac
+    ;;
+  kill)
+    shift || true
+    kill_selection "${1:-}" "${2:-}" "${3:-}"
     ;;
   *)
     exit 1
