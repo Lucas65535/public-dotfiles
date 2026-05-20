@@ -38,4 +38,21 @@ return {
       },
     },
   },
+
+  -- Browser-based Markdown preview styled with Claude Code palette
+  {
+    "iamcco/markdown-preview.nvim",
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    build = function()
+      vim.fn["mkdp#util#install"]()
+    end,
+    keys = {
+      { "<leader>cp", "<cmd>MarkdownPreviewToggle<cr>", desc = "Markdown Preview" },
+    },
+    ft = { "markdown" },
+    init = function()
+      vim.g.mkdp_markdown_css = vim.fn.stdpath("config") .. "/static/markdown-preview.css"
+    end,
+  },
 }
+

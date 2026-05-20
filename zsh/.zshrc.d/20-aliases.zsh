@@ -53,6 +53,7 @@ else
   alias cxm='codex -c mcp_servers.datadog.enabled=true -c mcp_servers.ms_graph.enabled=true'
 fi
 alias cc='claude'
+alias ca='agy'
 alias oc='opencode'
 alias og='gemini'
 
@@ -165,8 +166,7 @@ alias cdwork='cd "$HOME/workspace"'
 
 # Keep original commands intact; use explicit "dot" helpers for cwd-open behaviors.
 alias c.='code .'
-alias k.='kiro .'
-alias a.='agy .'
+alias a.='antigravity-ide .'
 alias o.='open .'
 
 alias reload='exec "$SHELL" -l'

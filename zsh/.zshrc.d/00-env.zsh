@@ -17,7 +17,7 @@ path=(
   "$HOME/.local/bin"
   "$HOME/.bun/bin"
   "$HOME/.cargo/bin"
-  "$HOME/.antigravity/antigravity/bin"
+  "$HOME/.antigravity-ide/antigravity-ide/bin"
   $path
 )
 

@@ -1,0 +1,346 @@
+/* Claude Code Theme for markdown-preview.nvim */
+
+:root {
+  /* Claude Code Light Theme Variables */
+  --bg: #FFFCF0;
+  --bg-alt: #F2F0E6;
+  --bg-surface: #F5F3EB;
+  --bg-inset: #E8E6DB;
+  --bg-highlight: #ECE9DF;
+  --fg: #1A1917;
+  --fg-muted: #6B665F;
+  --fg-subtle: #8D877D;
+  --border: #D9D5CC;
+  --border-strong: #A9A39A;
+  --accent: #CC785C;
+  --accent-hover: #B85F3D;
+  --selection: #EDCEBC;
+
+  /* Syntax colors for code highlighting (Light) */
+  --syn-keyword: #B84A2A;
+  --syn-string: #2D7F4D;
+  --syn-function: #AE4E30;
+  --syn-type: #386290;
+  --syn-number: #946A1E;
+  --syn-comment: #6C655D;
+  --syn-constant: #BD5341;
+  --syn-decorator: #6A5BCC;
+  --syn-property: #3A6594;
+  --syn-parameter: #AE6D53;
+  --syn-operator: #6A645C;
+  --syn-punctuation: #877C70;
+  --syn-tag: #CC5E54;
+  --syn-attribute: #B46344;
+  --syn-regexp: #B07C26;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Claude Code Dark Theme Variables */
+    --bg: #141413;
+    --bg-alt: #1A1917;
+    --bg-surface: #1F1D1A;
+    --bg-inset: #2B2A27;
+    --bg-highlight: #332F29;
+    --fg: #EAE7DF;
+    --fg-muted: #A9A39A;
+    --fg-subtle: #6B665F;
+    --border: #4A473F;
+    --border-strong: #6B665F;
+    --accent: #D4967E;
+    --accent-hover: #E0AB96;
+    --selection: #574238;
+
+    /* Syntax colors for code highlighting (Dark) */
+    --syn-keyword: #E2A48B;
+    --syn-string: #B5E6A0;
+    --syn-function: #FFC1A6;
+    --syn-type: #AFCCF8;
+    --syn-number: #F4DC90;
+    --syn-comment: #B8AFA3;
+    --syn-constant: #FFB19D;
+    --syn-decorator: #9B87F5;
+    --syn-property: #F6DDCD;
+    --syn-parameter: #F0CDBA;
+    --syn-operator: #E2D8CC;
+    --syn-punctuation: #C6BDB2;
+    --syn-tag: #D9645B;
+    --syn-attribute: #F6DFC7;
+    --syn-regexp: #FBE7AA;
+  }
+}
+
+/* Apply CSS Variables to body, main and container */
+html, body, #__next, main {
+  background-color: var(--bg) !important;
+  color: var(--fg) !important;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#page-header {
+  background-color: var(--bg-alt) !important;
+  border-color: var(--border) !important;
+  color: var(--fg-muted) !important;
+  font-family: 'Outfit', sans-serif !important;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+#page-header h3 {
+  color: var(--fg) !important;
+  font-weight: 500 !important;
+}
+
+#page-header svg {
+  fill: var(--accent) !important;
+}
+
+
+.markdown-body {
+  background-color: var(--bg) !important;
+  color: var(--fg) !important;
+  font-family: Charter, 'Bitstream Charter', Georgia, 'Times New Roman', serif;
+  font-size: 16.5px;
+  line-height: 1.75;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 45px 30px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Headings with editorial Serif style */
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  font-family: Charter, 'Bitstream Charter', Georgia, 'Times New Roman', serif;
+  color: var(--fg);
+  font-weight: 700;
+  margin-top: 28px;
+  margin-bottom: 16px;
+  line-height: 1.25;
+  border-bottom: none; /* remove default lines */
+  transition: color 0.3s ease;
+}
+
+.markdown-body h1 {
+  font-size: 2.25em;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid var(--border);
+}
+
+.markdown-body h2 {
+  font-size: 1.65em;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid var(--border);
+}
+
+.markdown-body h3 { font-size: 1.35em; }
+.markdown-body h4 { font-size: 1.15em; }
+
+/* Links */
+.markdown-body a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px dashed var(--accent);
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.markdown-body a:hover {
+  color: var(--accent-hover);
+  border-bottom-style: solid;
+}
+
+/* Blockquotes - Elegant Claude styling */
+.markdown-body blockquote {
+  border-left: 4px solid var(--accent);
+  background-color: var(--bg-alt);
+  color: var(--fg-muted);
+  padding: 12px 20px;
+  margin: 20px 0;
+  border-radius: 4px;
+}
+
+/* Lists */
+.markdown-body ul,
+.markdown-body ol {
+  padding-left: 2em;
+}
+
+.markdown-body li + li {
+  margin-top: 0.3em;
+}
+
+/* Inline Code */
+.markdown-body code {
+  font-family: ui-monospace, 'SF Mono', Menlo, Monaco, Consolas, monospace;
+  background-color: var(--bg-inset);
+  color: var(--accent);
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  font-size: 85%;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Code Blocks */
+.markdown-body pre {
+  font-family: ui-monospace, 'SF Mono', Menlo, Monaco, Consolas, monospace;
+  background-color: var(--bg-alt) !important;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  overflow: auto;
+  line-height: 1.55;
+  margin: 20px 0;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.markdown-body pre code {
+  background-color: transparent !important;
+  color: var(--fg) !important;
+  font-size: 90%;
+  padding: 0;
+  border-radius: 0;
+}
+
+
+/* Tables */
+.markdown-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 24px 0;
+  transition: border-color 0.3s ease;
+}
+
+.markdown-body table th,
+.markdown-body table td {
+  padding: 12px 15px;
+  border: 1px solid var(--border);
+  text-align: left;
+  transition: border-color 0.3s ease;
+}
+
+.markdown-body table th {
+  background-color: var(--bg-alt);
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.markdown-body table tr:nth-child(even) {
+  background-color: var(--bg-surface);
+}
+
+/* Horizontal Rules */
+.markdown-body hr {
+  height: 1px;
+  background-color: var(--border);
+  border: none;
+  margin: 32px 0;
+  transition: background-color 0.3s ease;
+}
+
+/* Selection */
+::selection {
+  background-color: var(--selection) !important;
+}
+
+/* Task lists (Checkboxes) */
+.markdown-body input[type="checkbox"] {
+  accent-color: var(--accent);
+  margin-right: 8px;
+  transform: translateY(1px);
+}
+
+/* Syntax Highlighting overrides for Highlight.js / Prism */
+.hljs-comment,
+.hljs-quote,
+.token.comment,
+.token.block-comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: var(--syn-comment) !important;
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-addition,
+.token.keyword,
+.token.boolean,
+.token.number,
+.token.selector {
+  color: var(--syn-keyword) !important;
+  font-weight: 500;
+}
+
+.hljs-number,
+.hljs-string,
+.hljs-meta .hljs-meta-string,
+.hljs-literal,
+.hljs-doctag,
+.hljs-regexp,
+.token.string,
+.token.char,
+.token.regex,
+.token.variable {
+  color: var(--syn-string) !important;
+}
+
+.hljs-title,
+.hljs-section,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.token.function,
+.token.class-name {
+  color: var(--syn-function) !important;
+  font-weight: 500;
+}
+
+.hljs-variable,
+.hljs-template-variable,
+.hljs-type,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-built_in,
+.hljs-class,
+.hljs-template-tag,
+.token.type,
+.token.builtin,
+.token.tag {
+  color: var(--syn-type) !important;
+}
+
+.hljs-attr,
+.hljs-attribute,
+.hljs-builtin-name,
+.token.attr-name,
+.token.property,
+.token.constant {
+  color: var(--syn-attribute) !important;
+}
+
+.hljs-symbol,
+.hljs-bullet,
+.hljs-link,
+.hljs-meta,
+.hljs-subst,
+.token.symbol,
+.token.deleted,
+.token.important {
+  color: var(--syn-constant) !important;
+}
+
+.hljs-deletion {
+  color: var(--syn-tag) !important;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
