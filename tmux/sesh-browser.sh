@@ -494,9 +494,16 @@ mode_preview() {
   esac
 }
 
+fzf_preview_window() {
+  printf 'right,55%%,border-left,wrap,<140(down,55%%,border-top,wrap)'
+}
+
 browse() {
   local initial_mode="${1:-panes}"
+  local preview_window
   local selection
+
+  preview_window="$(fzf_preview_window)"
 
   selection="$(
     FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:-} ${FZF_COLOR_OPTS}" \
@@ -513,7 +520,7 @@ browse() {
         --with-nth=2 \
         --preview "$(mode_preview "$initial_mode")" \
         --preview-wrap-sign '' \
-        --preview-window 'right:55%,border-left,wrap' \
+        --preview-window "$preview_window" \
         --bind "esc:abort" \
         --bind "ctrl-a:change-prompt($(mode_prompt all))+change-header($(mode_header all))+change-preview($(mode_preview all))+reload($SELF_PATH source all)" \
         --bind "ctrl-o:change-prompt($(mode_prompt sesh))+change-header($(mode_header sesh))+change-preview($(mode_preview sesh))+reload($SELF_PATH source sesh)" \
@@ -575,6 +582,9 @@ case "${1:-browse}" in
   kill)
     shift || true
     kill_selection "${1:-}" "${2:-}" "${3:-}"
+    ;;
+  preview-window)
+    fzf_preview_window
     ;;
   *)
     exit 1

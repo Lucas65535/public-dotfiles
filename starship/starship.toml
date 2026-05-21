@@ -31,7 +31,7 @@ time_format = "%m-%d %H:%M"
 
 [directory]
 truncation_length = 3
-truncation_symbol = "…/"
+# truncation_symbol = "…/"
 format = "[](peach)[󰝰](fg:#69493B bg:peach)[ $path]($style)[$read_only]($read_only_style)[ ](peach)"
 read_only = " "
 style = "bg:peach fg:#69493B bold"
