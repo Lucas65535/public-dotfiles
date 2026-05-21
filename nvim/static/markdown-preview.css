@@ -32,6 +32,10 @@
   --syn-tag: #CC5E54;
   --syn-attribute: #B46344;
   --syn-regexp: #B07C26;
+
+  --markdown-serif: "Noto Serif SC", "Noto Serif CJK SC", "Source Han Serif SC", "Source Han Serif CN", "Noto Serif", "Hiragino Mincho ProN", serif;
+  --markdown-sans: "Outfit", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --markdown-mono: ui-monospace, "SF Mono", Menlo, Monaco, Consolas, monospace;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -81,7 +85,7 @@ html, body, #__next, main {
   background-color: var(--bg-alt) !important;
   border-color: var(--border) !important;
   color: var(--fg-muted) !important;
-  font-family: 'Outfit', sans-serif !important;
+  font-family: var(--markdown-sans) !important;
   transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
 
@@ -98,12 +102,14 @@ html, body, #__next, main {
 .markdown-body {
   background-color: var(--bg) !important;
   color: var(--fg) !important;
-  font-family: Charter, 'Bitstream Charter', Georgia, 'Times New Roman', serif;
+  font-family: var(--markdown-serif);
   font-size: 16.5px;
+  font-weight: 450;
   line-height: 1.75;
   max-width: 880px;
   margin: 0 auto;
   padding: 45px 30px;
+  font-kerning: normal;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
@@ -114,7 +120,7 @@ html, body, #__next, main {
 .markdown-body h4,
 .markdown-body h5,
 .markdown-body h6 {
-  font-family: Charter, 'Bitstream Charter', Georgia, 'Times New Roman', serif;
+  font-family: var(--markdown-serif);
   color: var(--fg);
   font-weight: 700;
   margin-top: 28px;
@@ -138,6 +144,24 @@ html, body, #__next, main {
 
 .markdown-body h3 { font-size: 1.35em; }
 .markdown-body h4 { font-size: 1.15em; }
+
+.markdown-body h1 a,
+.markdown-body h2 a,
+.markdown-body h3 a,
+.markdown-body h4 a,
+.markdown-body h5 a,
+.markdown-body h6 a {
+  vertical-align: baseline;
+}
+
+.markdown-body h1 svg,
+.markdown-body h2 svg,
+.markdown-body h3 svg,
+.markdown-body h4 svg,
+.markdown-body h5 svg,
+.markdown-body h6 svg {
+  vertical-align: -0.08em;
+}
 
 /* Links */
 .markdown-body a {
@@ -174,18 +198,20 @@ html, body, #__next, main {
 
 /* Inline Code */
 .markdown-body code {
-  font-family: ui-monospace, 'SF Mono', Menlo, Monaco, Consolas, monospace;
+  font-family: var(--markdown-mono);
   background-color: var(--bg-inset);
   color: var(--accent);
   padding: 0.2em 0.4em;
   border-radius: 4px;
   font-size: 85%;
+  line-height: 1;
+  vertical-align: 0.08em;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Code Blocks */
 .markdown-body pre {
-  font-family: ui-monospace, 'SF Mono', Menlo, Monaco, Consolas, monospace;
+  font-family: var(--markdown-mono);
   background-color: var(--bg-alt) !important;
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -202,6 +228,8 @@ html, body, #__next, main {
   font-size: 90%;
   padding: 0;
   border-radius: 0;
+  line-height: inherit;
+  vertical-align: baseline;
 }
 
 
@@ -249,7 +277,7 @@ html, body, #__next, main {
 .markdown-body input[type="checkbox"] {
   accent-color: var(--accent);
   margin-right: 8px;
-  transform: translateY(1px);
+  vertical-align: -0.1em;
 }
 
 /* Syntax Highlighting overrides for Highlight.js / Prism */
