@@ -5,7 +5,7 @@ font-family = "Maple Mono NF CN"
 
 font-codepoint-map = U+0080-U+10FFFF="Maple Mono NF CN"
 
-font-size = 12.4
+font-size = 13.6
 font-thicken = true
 cursor-style = block
 cursor-style-blink = true
