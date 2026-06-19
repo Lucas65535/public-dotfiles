@@ -142,7 +142,12 @@ fi
 [[ -s "$HOME/.bun/_bun" ]] && source "$HOME/.bun/_bun"
 
 command -v atuin >/dev/null 2>&1 && eval "$(atuin init zsh)"
-command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init zsh)"
+if command -v zoxide >/dev/null 2>&1; then
+  # Kaku may load zsh-z before this file and leave a `z` alias behind.
+  # zsh expands aliases before functions, so clear it before zoxide installs `z`.
+  unalias z zi 2>/dev/null || true
+  eval "$(zoxide init zsh)"
+fi
 if command -v starship >/dev/null 2>&1; then
   export STARSHIP_CONFIG="${HOME}/.config/starship.toml"
   eval "$(starship init zsh)"
