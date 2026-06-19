@@ -12,6 +12,10 @@ export DOTFILES_HOME="${DOTFILES_HOME:-${_ZSHRC_DIR:h}}"
 # Heavy logic only for interactive shells.
 [[ $- != *i* ]] && return
 
+# Load Kaku before local aliases so dotfiles aliases remain authoritative.
+[[ ":$PATH:" != *":$HOME/.config/kaku/zsh/bin:"* ]] && export PATH="$HOME/.config/kaku/zsh/bin:$PATH" # Kaku PATH Integration
+[[ -f "$HOME/.config/kaku/zsh/kaku.zsh" ]] && source "$HOME/.config/kaku/zsh/kaku.zsh" # Kaku Shell Integration
+
 for _file in \
   "${_ZSHRC_DIR}/.zshrc.d/20-aliases.zsh" \
   "${_ZSHRC_DIR}/.zshrc.d/30-functions.zsh" \
@@ -23,4 +27,3 @@ do
 done
 
 unset _ZSHRC_DIR _file
-

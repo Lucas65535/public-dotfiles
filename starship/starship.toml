@@ -25,26 +25,38 @@ error_symbol = "[❯](bold red)"
 
 [time]
 disabled = false
-style = 'bg:blue fg:#506273'
-format = '[](blue)[󰥔](fg:#506273 bg:blue)[ $time]($style)[ ](blue)'
+# Light-era hardcoded colors:
+# style = 'bg:blue fg:#506273'
+# format = '[](blue)[󰥔](fg:#506273 bg:blue)[ $time]($style)[ ](blue)'
+style = "bg:blue fg:base"
+format = "[](blue)[󰥔](fg:base bg:blue)[ $time]($style)[ ](blue)"
 time_format = "%m-%d %H:%M"
 
 [directory]
 truncation_length = 3
 # truncation_symbol = "…/"
-format = "[](peach)[󰝰](fg:#69493B bg:peach)[ $path]($style)[$read_only]($read_only_style)[ ](peach)"
 read_only = " "
-style = "bg:peach fg:#69493B bold"
-read_only_style = "bg:peach fg:#87584E bold"
+# Light-era hardcoded colors:
+# format = "[](peach)[󰝰](fg:#69493B bg:peach)[ $path]($style)[$read_only]($read_only_style)[ ](peach)"
+# style = "bg:peach fg:#69493B bold"
+# read_only_style = "bg:peach fg:#87584E bold"
+format = "[](peach)[󰝰](fg:base bg:peach)[ $path]($style)[$read_only]($read_only_style)[ ](peach)"
+style = "bg:peach fg:base bold"
+read_only_style = "bg:peach fg:surface1 bold"
 
 [git_branch]
 symbol = ""
-style = 'bg:mauve fg:#5B536F'
-format = '[](mauve)[](fg:#5B536F bg:mauve)[ $branch]($style)[ ](mauve)'
+# Light-era hardcoded colors:
+# style = 'bg:mauve fg:#5B536F'
+# format = '[](mauve)[](fg:#5B536F bg:mauve)[ $branch]($style)[ ](mauve)'
+style = "bg:mauve fg:base"
+format = "[](mauve)[](fg:base bg:mauve)[ $branch]($style)[ ](mauve)"
 
 [git_status]
 format = '[](teal)[$all_status$ahead_behind]($style)[ ](teal)'
-style = "bg:teal fg:#48615D"
+# Light-era hardcoded color:
+# style = "bg:teal fg:#48615D"
+style = "bg:teal fg:base"
 conflicted = '=${count}'
 ahead = '⇡${count}'
 behind = '⇣${count}'
@@ -61,16 +73,21 @@ deleted = '✘${count}'
 only_detached = false
 disabled = false
 commit_hash_length = 7
-format = '[](yellow)[](fg:#6E5734 bg:yellow)[ $hash]($style)[$tag]($style)[ ](yellow)'
 tag_symbol = "🔖"
-style = "bg:yellow fg:#6E5734"
+# Light-era hardcoded colors:
+# format = '[](yellow)[](fg:#6E5734 bg:yellow)[ $hash]($style)[$tag]($style)[ ](yellow)'
+# style = "bg:yellow fg:#6E5734"
+format = "[](yellow)[](fg:base bg:yellow)[ $hash]($style)[$tag]($style)[ ](yellow)"
+style = "bg:yellow fg:base"
 
 [kubernetes]
 disabled = false
-format = '[](lavender)[󱃾](fg:#595D7A bg:lavender)[ $context]($style)[ ](lavender)'
+# Light-era hardcoded colors:
+# format = '[](lavender)[󱃾](fg:#595D7A bg:lavender)[ $context]($style)[ ](lavender)'
+format = "[](lavender)[󱃾](fg:base bg:lavender)[ $context]($style)[ ](lavender)"
 # format = 'via [$symbol $context\($namespace\)](bold purple) '
 symbol = "⎈ "
-style = "bg:lavender fg:#595D7A"
+style = "bg:lavender fg:base"
 
 [[kubernetes.contexts]]
 context_pattern = "aks-gitlab-runner"
@@ -82,9 +99,12 @@ context_alias = "$cluster"
 
 [azure]
 disabled = false
-format = "[](sapphire)[󰠅](fg:#3E5B6B bg:sapphire)[ $subscription]($style)[ ](sapphire)"
 symbol = "󰠅 "
-style = "bg:sapphire fg:#3E5B6B"
+# Light-era hardcoded colors:
+# format = "[](sapphire)[󰠅](fg:#3E5B6B bg:sapphire)[ $subscription]($style)[ ](sapphire)"
+# style = "bg:sapphire fg:#3E5B6B"
+format = "[](sapphire)[󰠅](fg:base bg:sapphire)[ $subscription]($style)[ ](sapphire)"
+style = "bg:sapphire fg:base"
 
 [azure.subscription_aliases]
 "SUB22013162557" = "開発"
@@ -92,28 +112,43 @@ style = "bg:sapphire fg:#3E5B6B"
 "SUB24092532288_20240930" = "gitlab"
 
 [python]
-format = "[](#C4AD7C)[](fg:#4A4328 bg:#C4AD7C)[$virtualenv( $version) ](bg:#C4AD7C fg:#4A4328)[ ](#C4AD7C)"
-style = "bg:#C4AD7C fg:#4A4328"
+# Light-era hardcoded colors:
+# format = "[](#C4AD7C)[](fg:#4A4328 bg:#C4AD7C)[$virtualenv( $version) ](bg:#C4AD7C fg:#4A4328)[ ](#C4AD7C)"
+# style = "bg:#C4AD7C fg:#4A4328"
+format = "[](yellow)[](fg:base bg:yellow)[$virtualenv( $version) ](bg:yellow fg:base)[ ](yellow)"
+style = "bg:yellow fg:base"
 
 [nodejs]
 symbol = ''
-format = "[](#8BA77B)[$symbol](fg:#344029 bg:#8BA77B)[( $version)](bg:#8BA77B fg:#344029)[ ](#8BA77B)"
-style = "bg:#8BA77B fg:#344029"
+# Light-era hardcoded colors:
+# format = "[](#8BA77B)[$symbol](fg:#344029 bg:#8BA77B)[( $version)](bg:#8BA77B fg:#344029)[ ](#8BA77B)"
+# style = "bg:#8BA77B fg:#344029"
+format = "[](green)[$symbol](fg:base bg:green)[( $version)](bg:green fg:base)[ ](green)"
+style = "bg:green fg:base"
 
 [rust]
 symbol = ""
-format = "[](#BF8A7A)[$symbol](fg:#4A2E24 bg:#BF8A7A)[( $version)](bg:#BF8A7A fg:#4A2E24)[ ](#BF8A7A)"
-style = "bg:#BF8A7A fg:#4A2E24"
+# Light-era hardcoded colors:
+# format = "[](#BF8A7A)[$symbol](fg:#4A2E24 bg:#BF8A7A)[( $version)](bg:#BF8A7A fg:#4A2E24)[ ](#BF8A7A)"
+# style = "bg:#BF8A7A fg:#4A2E24"
+format = "[](peach)[$symbol](fg:base bg:peach)[( $version)](bg:peach fg:base)[ ](peach)"
+style = "bg:peach fg:base"
 
 [golang]
 symbol = ""
-format = "[](#7BBAC8)[$symbol](fg:#2C4E56 bg:#7BBAC8)[( $version)](bg:#7BBAC8 fg:#2C4E56)[ ](#7BBAC8)"
-style = "bg:#7BBAC8 fg:#2C4E56"
+# Light-era hardcoded colors:
+# format = "[](#7BBAC8)[$symbol](fg:#2C4E56 bg:#7BBAC8)[( $version)](bg:#7BBAC8 fg:#2C4E56)[ ](#7BBAC8)"
+# style = "bg:#7BBAC8 fg:#2C4E56"
+format = "[](sapphire)[$symbol](fg:base bg:sapphire)[( $version)](bg:sapphire fg:base)[ ](sapphire)"
+style = "bg:sapphire fg:base"
 
 [java]
 symbol = ""
-format = "[](#C48E8E)[$symbol](fg:#4A2F2F bg:#C48E8E)[( $version)](bg:#C48E8E fg:#4A2F2F)[ ](#C48E8E)"
-style = "bg:#C48E8E fg:#4A2F2F"
+# Light-era hardcoded colors:
+# format = "[](#C48E8E)[$symbol](fg:#4A2F2F bg:#C48E8E)[( $version)](bg:#C48E8E fg:#4A2F2F)[ ](#C48E8E)"
+# style = "bg:#C48E8E fg:#4A2F2F"
+format = "[](red)[$symbol](fg:base bg:red)[( $version)](bg:red fg:base)[ ](red)"
+style = "bg:red fg:base"
 
 [palettes.catppuccin_latte]
 rosewater = "#dc8a78"

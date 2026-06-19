@@ -13,7 +13,7 @@ link_path() {
 link_path "$repo_root/zsh/.zshrc" "$HOME/.zshrc"
 link_path "$repo_root/starship/starship.toml" "$config_home/starship.toml"
 
-for dir in nvim ghostty lazygit atuin bat btop lsd yazi; do
+for dir in nvim ghostty lazygit atuin bat btop lsd yazi k9s; do
   link_path "$repo_root/$dir" "$config_home/$dir"
 done
 

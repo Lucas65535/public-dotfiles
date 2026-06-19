@@ -1,77 +1,43 @@
 /* Claude Code Theme for markdown-preview.nvim */
 
 :root {
-  /* Claude Code Light Theme Variables */
-  --bg: #FFFCF0;
-  --bg-alt: #F2F0E6;
-  --bg-surface: #F5F3EB;
-  --bg-inset: #E8E6DB;
-  --bg-highlight: #ECE9DF;
-  --fg: #1A1917;
-  --fg-muted: #6B665F;
-  --fg-subtle: #8D877D;
-  --border: #D9D5CC;
-  --border-strong: #A9A39A;
-  --accent: #CC785C;
-  --accent-hover: #B85F3D;
-  --selection: #EDCEBC;
+  color-scheme: dark;
 
-  /* Syntax colors for code highlighting (Light) */
-  --syn-keyword: #B84A2A;
-  --syn-string: #2D7F4D;
-  --syn-function: #AE4E30;
-  --syn-type: #386290;
-  --syn-number: #946A1E;
-  --syn-comment: #6C655D;
-  --syn-constant: #BD5341;
-  --syn-decorator: #6A5BCC;
-  --syn-property: #3A6594;
-  --syn-parameter: #AE6D53;
-  --syn-operator: #6A645C;
-  --syn-punctuation: #877C70;
-  --syn-tag: #CC5E54;
-  --syn-attribute: #B46344;
-  --syn-regexp: #B07C26;
+  /* Claude Code Dark Theme Variables */
+  --bg: #141413;
+  --bg-alt: #1A1917;
+  --bg-surface: #1F1D1A;
+  --bg-inset: #2B2A27;
+  --bg-highlight: #332F29;
+  --fg: #EAE7DF;
+  --fg-muted: #A9A39A;
+  --fg-subtle: #6B665F;
+  --border: #4A473F;
+  --border-strong: #6B665F;
+  --accent: #D4967E;
+  --accent-hover: #E0AB96;
+  --selection: #574238;
+
+  /* Syntax colors for code highlighting (Dark) */
+  --syn-keyword: #E2A48B;
+  --syn-string: #B5E6A0;
+  --syn-function: #FFC1A6;
+  --syn-type: #AFCCF8;
+  --syn-number: #F4DC90;
+  --syn-comment: #B8AFA3;
+  --syn-constant: #FFB19D;
+  --syn-decorator: #9B87F5;
+  --syn-property: #F6DDCD;
+  --syn-parameter: #F0CDBA;
+  --syn-operator: #E2D8CC;
+  --syn-punctuation: #C6BDB2;
+  --syn-tag: #D9645B;
+  --syn-attribute: #F6DFC7;
+  --syn-regexp: #FBE7AA;
 
   --markdown-serif: "Noto Serif SC", "Noto Serif CJK SC", "Source Han Serif SC", "Source Han Serif CN", "Noto Serif", "Hiragino Mincho ProN", serif;
   --markdown-sans: "Outfit", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --markdown-mono: ui-monospace, "SF Mono", Menlo, Monaco, Consolas, monospace;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    /* Claude Code Dark Theme Variables */
-    --bg: #141413;
-    --bg-alt: #1A1917;
-    --bg-surface: #1F1D1A;
-    --bg-inset: #2B2A27;
-    --bg-highlight: #332F29;
-    --fg: #EAE7DF;
-    --fg-muted: #A9A39A;
-    --fg-subtle: #6B665F;
-    --border: #4A473F;
-    --border-strong: #6B665F;
-    --accent: #D4967E;
-    --accent-hover: #E0AB96;
-    --selection: #574238;
-
-    /* Syntax colors for code highlighting (Dark) */
-    --syn-keyword: #E2A48B;
-    --syn-string: #B5E6A0;
-    --syn-function: #FFC1A6;
-    --syn-type: #AFCCF8;
-    --syn-number: #F4DC90;
-    --syn-comment: #B8AFA3;
-    --syn-constant: #FFB19D;
-    --syn-decorator: #9B87F5;
-    --syn-property: #F6DDCD;
-    --syn-parameter: #F0CDBA;
-    --syn-operator: #E2D8CC;
-    --syn-punctuation: #C6BDB2;
-    --syn-tag: #D9645B;
-    --syn-attribute: #F6DFC7;
-    --syn-regexp: #FBE7AA;
-  }
 }
 
 /* Apply CSS Variables to body, main and container */

@@ -1,41 +1,41 @@
-# Claude-inspired light theme for lsd.
-# Source of truth: claude-theme/palette.md (Light Palette)
+# Claude-inspired dark theme for lsd.
+# Source of truth: claude-theme/palette.md (Dark Palette)
 # lsd only themes metadata/status columns; file type colors still come from LS_COLORS.
-user: 173      # accent / terracotta
-group: 94      # warm yellow-brown
+user: 180      # accent / terracotta
+group: 222     # warm yellow
 permission:
-  read: 29         # success green
-  write: 94        # warning yellow
-  exec: 173        # accent terracotta
-  exec-sticky: 62  # decorator purple
-  no-access: 131   # error red
-  octal: 32        # info blue
-  acl: 62          # decorator purple
-  context: 24      # muted cyan-blue
+  read: 150        # success green
+  write: 222       # warning yellow
+  exec: 180        # accent terracotta
+  exec-sticky: 141 # decorator purple
+  no-access: 174   # error red
+  octal: 75        # info blue
+  acl: 141         # decorator purple
+  context: 109     # muted cyan-blue
 date:
-  hour-old: 29
-  day-old: 94
-  older: 241
+  hour-old: 150
+  day-old: 222
+  older: 245
 size:
-  none: 241
-  small: 29
-  medium: 94
-  large: 131
+  none: 245
+  small: 150
+  medium: 222
+  large: 174
 inode:
-  valid: 62
-  invalid: 241
+  valid: 141
+  invalid: 245
 links:
-  valid: 32
-  invalid: 241
-tree-edge: 252
+  valid: 75
+  invalid: 245
+tree-edge: 245
 git-status:
-  default: 241
-  unmodified: 241
-  ignored: 247
-  new-in-index: 29
-  new-in-workdir: 29
-  typechange: 94
-  deleted: 131
-  renamed: 32
-  modified: 94
-  conflicted: 131
+  default: 245
+  unmodified: 245
+  ignored: 242
+  new-in-index: 150
+  new-in-workdir: 150
+  typechange: 222
+  deleted: 174
+  renamed: 75
+  modified: 222
+  conflicted: 174

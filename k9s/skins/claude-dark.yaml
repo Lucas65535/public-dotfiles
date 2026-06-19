@@ -1,0 +1,100 @@
+# Claude Code dark skin
+
+foreground: &foreground "#eae7df"
+background: &background "#141413"
+surface: &surface "#1f1d1a"
+inset: &inset "#2b2a27"
+highlight: &highlight "#332f29"
+muted: &muted "#a9a39a"
+subtle: &subtle "#6b665f"
+border: &border "#4a473f"
+accent: &accent "#d4967e"
+accent_hover: &accent_hover "#e0ab96"
+red: &red "#d47563"
+green: &green "#9aca86"
+yellow: &yellow "#e8c96b"
+blue: &blue "#61aaf2"
+magenta: &magenta "#9b87f5"
+cyan: &cyan "#8cc4ff"
+
+k9s:
+  body:
+    fgColor: *foreground
+    bgColor: *background
+    logoColor: *accent
+  prompt:
+    fgColor: *foreground
+    bgColor: *background
+    suggestColor: *accent_hover
+  info:
+    fgColor: *accent
+    sectionColor: *foreground
+  dialog:
+    fgColor: *foreground
+    bgColor: *surface
+    buttonFgColor: *background
+    buttonBgColor: *accent
+    buttonFocusFgColor: *background
+    buttonFocusBgColor: *accent_hover
+    labelFgColor: *yellow
+    fieldFgColor: *foreground
+  frame:
+    border:
+      fgColor: *border
+      focusColor: *accent
+    menu:
+      fgColor: *foreground
+      keyColor: *accent
+      numKeyColor: *yellow
+    crumbs:
+      fgColor: *foreground
+      bgColor: *inset
+      activeColor: *accent
+    status:
+      newColor: *cyan
+      modifyColor: *yellow
+      addColor: *green
+      errorColor: *red
+      highlightColor: *accent
+      killColor: *subtle
+      completedColor: *muted
+    title:
+      fgColor: *foreground
+      bgColor: *highlight
+      highlightColor: *accent
+      counterColor: *magenta
+      filterColor: *blue
+  views:
+    charts:
+      bgColor: default
+      defaultDialColors:
+        - *accent
+        - *red
+      defaultChartColors:
+        - *blue
+        - *green
+    table:
+      fgColor: *foreground
+      bgColor: *background
+      header:
+        fgColor: *foreground
+        bgColor: *background
+        sorterColor: *accent
+    xray:
+      fgColor: *foreground
+      bgColor: *background
+      cursorColor: *highlight
+      graphicColor: *accent
+      showIcons: false
+    yaml:
+      keyColor: *blue
+      colonColor: *subtle
+      valueColor: *foreground
+    logs:
+      fgColor: *foreground
+      bgColor: *background
+      indicator:
+        fgColor: *background
+        bgColor: *accent
+        toggleOnColor: *green
+        toggleOffColor: *subtle

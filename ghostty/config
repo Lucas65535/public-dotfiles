@@ -5,7 +5,7 @@ font-family = "Maple Mono NF CN"
 
 font-codepoint-map = U+0080-U+10FFFF="Maple Mono NF CN"
 
-font-size = 13.6
+font-size = 12
 font-thicken = true
 cursor-style = block
 cursor-style-blink = true
@@ -43,13 +43,13 @@ term = xterm-256color
 window-padding-x = 6
 window-padding-y = 6
 window-save-state = "always"
-# Full opacity makes blur effectively useless, and a light theme benefits from a cleaner backdrop.
+# Full opacity keeps the warm dark palette crisp.
 background-blur-radius = 0
 
 background-opacity = 1
 window-colorspace = "display-p3"
-# Follow the macOS appearance setting.
-theme = light:claude-light.conf,dark:claude-dark.conf
+# Use the Claude Code dark palette regardless of macOS appearance.
+theme = claude-dark.conf
 # theme = light:token-light.conf,dark:token-dark.conf
 # theme = token-light.conf
 # theme = token-dark.conf

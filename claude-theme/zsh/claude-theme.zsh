@@ -5,17 +5,9 @@
 
 # ── Dark / Light detection ──
 # Override: export CLAUDE_THEME=light  (or dark)
-# Auto-detect macOS appearance if unset
+# Defaults to the Claude dark palette if unset.
 if [[ -z "$CLAUDE_THEME" ]]; then
-  if [[ "$(uname)" == "Darwin" ]]; then
-    if defaults read -g AppleInterfaceStyle &>/dev/null 2>&1; then
-      CLAUDE_THEME="dark"
-    else
-      CLAUDE_THEME="light"
-    fi
-  else
-    CLAUDE_THEME="dark"
-  fi
+  CLAUDE_THEME="dark"
 fi
 
 if [[ "$CLAUDE_THEME" == "light" ]]; then

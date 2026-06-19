@@ -94,13 +94,6 @@ dotfiles_theme_mode() {
     return 0
   fi
 
-  if [[ "$(uname -s)" == "Darwin" ]]; then
-    if ! defaults read -g AppleInterfaceStyle >/dev/null 2>&1; then
-      print -r -- "light"
-      return 0
-    fi
-  fi
-
   print -r -- "dark"
 }
 

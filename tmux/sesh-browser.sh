@@ -3,7 +3,7 @@
 set -uo pipefail
 
 SELF_PATH="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)/$(basename -- "${BASH_SOURCE[0]}")"
-FZF_COLOR_OPTS='--color=bg:#F5F3EB,fg:#1A1917,hl:#CC785C,fg+:#1A1917,bg+:#E8E6DB,hl+:#B85F3D,border:#D9D5CC,header:#207FDE,prompt:#CC785C,pointer:#CC785C,marker:#2E7C4C,spinner:#6A5BCC,info:#6B665F,label:#CC785C'
+FZF_COLOR_OPTS='--color=bg:#141413,fg:#EAE7DF,hl:#D4967E,fg+:#F5F2E9,bg+:#2B2A27,hl+:#E0AB96,border:#4A473F,header:#61AAF2,prompt:#D4967E,pointer:#D4967E,marker:#9ACA86,spinner:#9B87F5,info:#A9A39A,label:#D4967E,gutter:#141413,preview-bg:#141413,preview-fg:#EAE7DF'
 ROW_SEP=$'\x1f'
 LABEL_WIDTH=28
 COMMAND_WIDTH=10
@@ -506,7 +506,7 @@ browse() {
   preview_window="$(fzf_preview_window)"
 
   selection="$(
-    FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:-} ${FZF_COLOR_OPTS}" \
+    FZF_DEFAULT_OPTS="${FZF_COLOR_OPTS}" \
       "$SELF_PATH" source "$initial_mode" |
       fzf \
         --ansi \

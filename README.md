@@ -17,6 +17,7 @@ macOS development environment managed via symlinks. One clone, one bootstrap scr
 | btop | `btop/` | `~/.config/btop` |
 | lsd | `lsd/` | `~/.config/lsd` |
 | Yazi (file manager) | `yazi/` | `~/.config/yazi` |
+| k9s | `k9s/` | `~/.config/k9s` |
 | Codex themes | `codex/themes/` | `~/.codex/themes` |
 | Homebrew packages | `Brewfile` | — |
 
@@ -35,14 +36,14 @@ git clone https://github.com/<USER>/dotfiles.git ~/infra/dotfiles
 exec $SHELL -l
 ```
 
-Optional `~/.codex/config.toml` snippet for light-by-default:
+Optional `~/.codex/config.toml` snippet for dark-by-default:
 
 ```toml
 [tui]
 theme = "claude-code"
 ```
 
-`claude-code` is a repo-level alias that points to `claude-code-light.tmTheme`. Switch to `claude-code-dark` in `~/.codex/config.toml` or from Codex `/theme` when you want the dark variant.
+`claude-code` is a repo-level alias that points to `claude-code-dark.tmTheme`. Use `claude-code-light` in `~/.codex/config.toml` or from Codex `/theme` only when you want the light variant.
 
 ## Day-to-Day Usage
 
@@ -80,7 +81,7 @@ Codex CLI picks up custom `.tmTheme` files from `~/.codex/themes`. This repo shi
 
 | Theme | File | Notes |
 |---|---|---|
-| `claude-code` | `codex/themes/claude-code.tmTheme` | default alias → light |
+| `claude-code` | `codex/themes/claude-code.tmTheme` | default alias -> dark |
 | `claude-code-light` | `codex/themes/claude-code-light.tmTheme` | warm Kaku paper background |
 | `claude-code-dark` | `codex/themes/claude-code-dark.tmTheme` | warm Claude dark background |
 

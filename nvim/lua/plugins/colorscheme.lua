@@ -2,8 +2,6 @@
 -- Claude Code theme is built-in (see lua/claude-code/ and colors/).
 -- Old themes are preserved below for reference.
 
-local theme = require("config.theme")
-
 return {
   -- ── Claude Code (built-in) ────────────────────────────────
   -- No plugin dependency needed — the colorscheme lives in
@@ -13,7 +11,7 @@ return {
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = theme.get_colorscheme("claude-code-light"),
+      colorscheme = "claude-code-dark",
     },
   },
 
