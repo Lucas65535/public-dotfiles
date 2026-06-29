@@ -22,3 +22,4 @@ link_path "$repo_root/tmux/tmux.conf.local" "$config_home/tmux/tmux.conf.local"
 link_path "$repo_root/tmux/sesh-browser.sh" "$config_home/tmux/sesh-browser.sh"
 
 link_path "$repo_root/codex/themes" "$HOME/.codex/themes"
+link_path "$repo_root/claude-theme/claude-code-cli" "$HOME/.claude/themes"

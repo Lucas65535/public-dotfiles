@@ -341,9 +341,10 @@ strategy = "auto"
 ## How often the daemon should sync in seconds
 # sync_frequency = 300
 
-# [theme]
+[theme]
 ## Color theme to use for rendering in the terminal.
-# name = "autumn"
+## Custom themes live in themes/ (claude-dark / claude-light).
+name = "claude-dark"
 # debug = true
 
 [search]

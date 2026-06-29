@@ -118,7 +118,7 @@ M.light = {
   bright_green = "#5E8F6D",
   bright_yellow = "#9C7A39",
   bright_blue = "#4F79A8",
-  bright_magenta = "#6D5DBD",
+  bright_magenta = "#8B7DE0",
   bright_cyan = "#45809E",
   bright_white = "#4A473F",
 

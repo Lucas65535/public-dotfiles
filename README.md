@@ -19,9 +19,12 @@ macOS development environment managed via symlinks. One clone, one bootstrap scr
 | Yazi (file manager) | `yazi/` | `~/.config/yazi` |
 | k9s | `k9s/` | `~/.config/k9s` |
 | Codex themes | `codex/themes/` | `~/.codex/themes` |
+| Claude Code themes | `claude-theme/claude-code-cli/` | `~/.claude/themes` |
 | Homebrew packages | `Brewfile` | — |
 
 Theme variants live in-repo. The unified Claude palette source of truth is [`claude-theme/palette.md`](claude-theme/palette.md), and Codex-specific TextMate themes live under `codex/themes/`.
+
+The Claude palette is applied across: nvim, ghostty, codex, **Claude Code CLI** (`claude-theme/claude-code-cli/`), yazi, k9s, starship, tmux, zsh/fzf, lazygit, lsd, **bat** (`bat/themes/`), **btop** (`btop/themes/`), and **atuin** (`atuin/themes/`).
 
 ## Fresh Machine Setup
 
@@ -86,6 +89,29 @@ Codex CLI picks up custom `.tmTheme` files from `~/.codex/themes`. This repo shi
 | `claude-code-dark` | `codex/themes/claude-code-dark.tmTheme` | warm Claude dark background |
 
 Use Codex `/theme` to preview and switch interactively, or set `tui.theme = "claude-code"` / `tui.theme = "claude-code-dark"` in `~/.codex/config.toml`.
+
+### Claude Code Themes
+
+Claude Code (the CLI) auto-loads custom themes from `~/.claude/themes/` (symlinked to `claude-theme/claude-code-cli/`). Each `*.json` file is a theme; its slug is the filename without extension. The format is a small override layer over a built-in base theme:
+
+```json
+{ "name": "Claude Code Dark", "base": "dark", "overrides": { "claude": "#D4967E", ... } }
+```
+
+This repo ships two:
+
+| Theme slug | File | Base |
+|---|---|---|
+| `claude-code-dark` | `claude-code-dark.json` | `dark` |
+| `claude-code-light` | `claude-code-light.json` | `light` |
+
+Select with Claude Code `/theme` (entries appear as "Claude Code Dark/Light"), or set in `~/.claude/settings.json`:
+
+```json
+"theme": "custom:claude-code-dark"
+```
+
+Only override keys that exist in the base theme are applied, and values must be `#hex` or `rgb(...)`. The directory is watched, so edits hot-reload.
 
 ### Saving Changes
 

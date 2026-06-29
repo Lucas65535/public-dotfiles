@@ -1,0 +1,20 @@
+# Claude Code Light — atuin theme
+# Source of truth: claude-theme/palette.md (Light Palette)
+[theme]
+name = "claude-light"
+
+[colors]
+# Default / base text
+Base = "#1a1917"
+# Section titles, emphasis
+Title = "#cc785c"
+# Secondary annotations / metadata
+Annotation = "#6b665f"
+# Hints, low-emphasis guidance
+Guidance = "#8d877d"
+# Highlighted / important values
+Important = "#cc785c"
+# Status colors
+AlertInfo = "#386290"
+AlertWarn = "#8a6220"
+AlertError = "#a84b3a"

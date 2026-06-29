@@ -3,8 +3,10 @@
 # run `bat --help` to get a list of all possible configuration options.
 
 # Specify desired highlighting theme (e.g. "TwoDark"). Run `bat --list-themes`
-# for a list of all available themes
---theme="Monokai Extended"
+# for a list of all available themes.
+# Claude Code themes live in themes/ (built into the bat cache via `bat cache --build`).
+# Use "Claude Code Light" for the light variant.
+--theme="Claude Code Dark"
 
 # Enable this to use italic text on the terminal. This is not supported on all
 # terminal emulators (like tmux, by default):

@@ -1,0 +1,20 @@
+# Claude Code Dark — atuin theme
+# Source of truth: claude-theme/palette.md (Dark Palette)
+[theme]
+name = "claude-dark"
+
+[colors]
+# Default / base text
+Base = "#eae7df"
+# Section titles, emphasis
+Title = "#d4967e"
+# Secondary annotations / metadata
+Annotation = "#a9a39a"
+# Hints, low-emphasis guidance
+Guidance = "#6b665f"
+# Highlighted / important values
+Important = "#d4967e"
+# Status colors
+AlertInfo = "#61aaf2"
+AlertWarn = "#e8c96b"
+AlertError = "#d47563"
