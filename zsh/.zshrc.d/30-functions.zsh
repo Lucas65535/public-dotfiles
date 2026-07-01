@@ -36,7 +36,7 @@ y() {
 
 wiki() {
   local session_name="wiki"
-  local session_dir="$HOME/workspace/ob-docs"
+  local session_dir="$HOME/workspace/wiki"
   local cols lines
 
   command -v tmux >/dev/null 2>&1 || {

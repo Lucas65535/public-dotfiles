@@ -159,7 +159,7 @@ alias gmaster='gdefault'
 alias gshow='g show'
 greset() { g reset "HEAD~${1:-1}"; }
 
-alias brewup='brew update && brew upgrade && brew cleanup -v --prune=all'
+alias brewup='brew update && brew upgrade -y && brew cleanup -v --prune=all'
 
 alias cdcode='cd "$HOME/code"'
 alias cdwork='cd "$HOME/workspace"'
