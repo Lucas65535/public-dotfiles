@@ -17,6 +17,8 @@ for dir in nvim ghostty lazygit atuin bat btop lsd yazi k9s; do
   link_path "$repo_root/$dir" "$config_home/$dir"
 done
 
+link_path "$repo_root/herdr/config.toml" "$config_home/herdr/config.toml"
+
 link_path "$HOME/.local/share/tmux/oh-my-tmux/.tmux.conf" "$config_home/tmux/tmux.conf"
 link_path "$repo_root/tmux/tmux.conf.local" "$config_home/tmux/tmux.conf.local"
 link_path "$repo_root/tmux/sesh-browser.sh" "$config_home/tmux/sesh-browser.sh"

@@ -12,6 +12,7 @@ macOS development environment managed via symlinks. One clone, one bootstrap scr
 | Ghostty terminal | `ghostty/` | `~/.config/ghostty` |
 | lazygit | `lazygit/` | `~/.config/lazygit` |
 | tmux (oh-my-tmux) | `tmux/tmux.conf.local` | `~/.config/tmux/tmux.conf.local` |
+| Herdr | `herdr/config.toml` | `~/.config/herdr/config.toml` |
 | Atuin (shell history) | `atuin/` | `~/.config/atuin` |
 | bat | `bat/` | `~/.config/bat` |
 | btop | `btop/` | `~/.config/btop` |
@@ -24,7 +25,7 @@ macOS development environment managed via symlinks. One clone, one bootstrap scr
 
 Theme variants live in-repo. The unified Claude palette source of truth is [`claude-theme/palette.md`](claude-theme/palette.md), and Codex-specific TextMate themes live under `codex/themes/`.
 
-The Claude palette is applied across: nvim, ghostty, codex, **Claude Code CLI** (`claude-theme/claude-code-cli/`), yazi, k9s, starship, tmux, zsh/fzf, lazygit, lsd, **bat** (`bat/themes/`), **btop** (`btop/themes/`), and **atuin** (`atuin/themes/`).
+The Claude palette is applied across: nvim, ghostty, codex, **Claude Code CLI** (`claude-theme/claude-code-cli/`), yazi, k9s, starship, tmux, herdr, zsh/fzf, lazygit, lsd, **bat** (`bat/themes/`), **btop** (`btop/themes/`), and **atuin** (`atuin/themes/`).
 
 ## Fresh Machine Setup
 
@@ -77,6 +78,16 @@ scripts/update.zsh
 ```
 
 After editing `tmux.conf.local`, reload inside tmux with `<prefix>` + `r`.
+
+### Herdr
+
+This repo manages `herdr/config.toml` as `~/.config/herdr/config.toml`. The config keeps Herdr close to local tmux habits: `ctrl+a` prefix, `prefix+d` detach, `prefix+c` new tab, `prefix+w` picker, `prefix+h/j/k/l` pane focus, `prefix+minus` split, and Claude/tmux-colored terminal theme.
+
+After editing it, reload a running Herdr server:
+
+```bash
+herdr server reload-config
+```
 
 ### Codex Themes
 
@@ -206,4 +217,5 @@ Two patterns, chosen based on directory content:
 | `zi` | zoxide interactive | Jump with fzf picker |
 | `v` / `vv` | nvim / nvim . | Editor |
 | `t` | tmux | Session manager |
+| `hr` | herdr | Agent workspace manager |
 | `ls` / `ll` / `la` | lsd variants | File listing with icons |

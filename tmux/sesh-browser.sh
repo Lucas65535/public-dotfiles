@@ -27,7 +27,7 @@ fit_field() {
   local text="$1"
   local width="$2"
 
-  if (( ${#text} > width )); then
+  if ((${#text} > width)); then
     printf '%s~' "${text:0:width-1}"
   else
     printf '%s' "$text"
@@ -65,7 +65,7 @@ short_path() {
 
   IFS='/' read -r -a parts <<<"$path"
 
-  if (( ${#parts[@]} <= 4 )); then
+  if ((${#parts[@]} <= 4)); then
     printf '%s' "$path"
     return
   fi
@@ -76,7 +76,7 @@ short_path() {
 
   tail="${parts[${#parts[@]}-3]}/${parts[${#parts[@]}-2]}/${parts[${#parts[@]}-1]}"
 
-  if (( start == 1 )); then
+  if ((start == 1)); then
     printf '~/.../%s' "$tail"
   else
     printf '.../%s' "$tail"
@@ -98,31 +98,76 @@ icon_for() {
   local name="${4,,}"
 
   case "$cmd" in
-    nvim|vim|vi) printf '' ; return 0 ;;
-    zsh|bash|fish|sh|tmux) printf '' ; return 0 ;;
-    git|lazygit) printf '' ; return 0 ;;
-    node|nodejs|npm|pnpm|yarn|bun|deno) printf '󰎙' ; return 0 ;;
-    python|python3|ipython) printf '' ; return 0 ;;
-    ruby|irb) printf '' ; return 0 ;;
-    go) printf '' ; return 0 ;;
-    cargo|rustc) printf '' ; return 0 ;;
-    docker|docker-compose) printf '' ; return 0 ;;
-    ssh) printf '󰣀' ; return 0 ;;
-    yazi|lf|nnn) printf '' ; return 0 ;;
-    htop|btop) printf '' ; return 0 ;;
+  nvim | vim | vi)
+    printf ''
+    return 0
+    ;;
+  zsh | bash | fish | sh | tmux)
+    printf ''
+    return 0
+    ;;
+  git | lazygit)
+    printf ''
+    return 0
+    ;;
+  node | nodejs | npm | pnpm | yarn | bun | deno)
+    printf '󰎙'
+    return 0
+    ;;
+  python | python3 | ipython)
+    printf ''
+    return 0
+    ;;
+  ruby | irb)
+    printf ''
+    return 0
+    ;;
+  go)
+    printf ''
+    return 0
+    ;;
+  cargo | rustc)
+    printf ''
+    return 0
+    ;;
+  docker | docker-compose)
+    printf ''
+    return 0
+    ;;
+  ssh)
+    printf '󰣀'
+    return 0
+    ;;
+  yazi | lf | nnn)
+    printf ''
+    return 0
+    ;;
+  htop | btop)
+    printf ''
+    return 0
+    ;;
   esac
 
   case "$path:$name" in
-    *wiki*|*docs*|*knowledge*|*obsidian*) printf '󰈙' ; return 0 ;;
-    *config*|*dotfiles*) printf '' ; return 0 ;;
-    *code*|*dev*|*repo*|*project*) printf '󰲋' ; return 0 ;;
+  *wiki* | *docs* | *knowledge* | *obsidian*)
+    printf '󰈙'
+    return 0
+    ;;
+  *config* | *dotfiles*)
+    printf ''
+    return 0
+    ;;
+  *code* | *dev* | *repo* | *project*)
+    printf '󰲋'
+    return 0
+    ;;
   esac
 
   case "$kind" in
-    session) printf '󱂬' ;;
-    window) printf '󰖲' ;;
-    pane) printf '󰆍' ;;
-    *) printf '•' ;;
+  session) printf '󱂬' ;;
+  window) printf '󰖲' ;;
+  pane) printf '󰆍' ;;
+  *) printf '•' ;;
   esac
 }
 
@@ -148,11 +193,11 @@ source_sessions() {
     icon="$(icon_for session "$cmd" "$path" "$name")"
     status="[$windows w]${attached_flag:+ $attached_flag}"
 
-    (( ${#icon} > max_icon )) && max_icon=${#icon}
-    (( ${#name} > max_name )) && max_name=${#name}
-    (( ${#cmd} > max_cmd )) && max_cmd=${#cmd}
-    (( ${#display_path} > max_path )) && max_path=${#display_path}
-    (( ${#status} > max_status )) && max_status=${#status}
+    ((${#icon} > max_icon)) && max_icon=${#icon}
+    ((${#name} > max_name)) && max_name=${#name}
+    ((${#cmd} > max_cmd)) && max_cmd=${#cmd}
+    ((${#display_path} > max_path)) && max_path=${#display_path}
+    ((${#status} > max_status)) && max_status=${#status}
 
     rows+=("$icon${ROW_SEP}$name${ROW_SEP}$cmd${ROW_SEP}$display_path${ROW_SEP}$windows${ROW_SEP}$attached_flag")
   done < <(tmux list-sessions -F '#{session_name}	#{session_windows}	#{session_attached}	#{session_path}	#{pane_current_command}')
@@ -199,12 +244,12 @@ source_windows() {
     label="$session:$index"
     icon="$(icon_for window "$cmd" "$path" "$name")"
 
-    (( ${#icon} > max_icon )) && max_icon=${#icon}
-    (( ${#label} > max_label )) && max_label=${#label}
-    (( ${#name} > max_name )) && max_name=${#name}
-    (( ${#display_path} > max_path )) && max_path=${#display_path}
+    ((${#icon} > max_icon)) && max_icon=${#icon}
+    ((${#label} > max_label)) && max_label=${#label}
+    ((${#name} > max_name)) && max_name=${#name}
+    ((${#display_path} > max_path)) && max_path=${#display_path}
     status="[$panes p]${flags:+ [$flags]}"
-    (( ${#status} > max_status )) && max_status=${#status}
+    ((${#status} > max_status)) && max_status=${#status}
 
     rows+=("$icon${ROW_SEP}$label${ROW_SEP}$name${ROW_SEP}$display_path${ROW_SEP}$panes${ROW_SEP}$flags${ROW_SEP}$title${ROW_SEP}$session${ROW_SEP}$index")
   done < <(tmux list-windows -a -F '#{session_name}	#{window_index}	#{window_name}	#{window_panes}	#{window_active}	#{window_last_flag}	#{pane_current_command}	#{pane_current_path}	#{pane_title}')
@@ -251,11 +296,11 @@ source_panes() {
     label="$session:$window.$pane"
     icon="$(icon_for pane "$cmd" "$path" "$name")"
 
-    (( ${#icon} > max_icon )) && max_icon=${#icon}
-    (( ${#label} > max_label )) && max_label=${#label}
-    (( ${#cmd} > max_cmd )) && max_cmd=${#cmd}
-    (( ${#display_path} > max_path )) && max_path=${#display_path}
-    (( ${#flags} > max_status )) && max_status=${#flags}
+    ((${#icon} > max_icon)) && max_icon=${#icon}
+    ((${#label} > max_label)) && max_label=${#label}
+    ((${#cmd} > max_cmd)) && max_cmd=${#cmd}
+    ((${#display_path} > max_path)) && max_path=${#display_path}
+    ((${#flags} > max_status)) && max_status=${#flags}
 
     rows+=("$icon${ROW_SEP}$label${ROW_SEP}$cmd${ROW_SEP}$display_path${ROW_SEP}$flags${ROW_SEP}$title${ROW_SEP}$session${ROW_SEP}$pane_id")
   done < <(tmux list-panes -a -F '#{session_name}	#{window_index}	#{pane_index}	#{window_name}	#{pane_current_command}	#{pane_current_path}	#{pane_active}	#{pane_dead}	#{pane_id}	#{pane_title}')
@@ -290,8 +335,8 @@ source_dirs() {
     path="$(sanitize_text "$path")"
     display_path="$(short_path "$path")"
 
-    (( ${#icon} > max_icon )) && max_icon=${#icon}
-    (( ${#display_path} > max_path )) && max_path=${#display_path}
+    ((${#icon} > max_icon)) && max_icon=${#icon}
+    ((${#display_path} > max_path)) && max_path=${#display_path}
 
     rows+=("$icon${ROW_SEP}$display_path${ROW_SEP}$path")
   done < <(fd -H -d 2 -t d -E .Trash . "$HOME")
@@ -315,42 +360,42 @@ source_sesh() {
   local output
 
   case "$mode" in
-    all)
-      output="$(sesh list --icons 2>/dev/null || true)"
-      if [[ -n "$output" ]]; then
-        while IFS= read -r line; do
-          line="$(sanitize_text "$line")"
-          [[ -n "$line" ]] && printf 'sesh\t%s\t%s\n' "$line" "$line"
-        done <<<"$output"
-      else
-        source_sesh tmux
-        source_sesh configs
-        source_sesh zoxide
-      fi
-      ;;
-    tmux)
-      while IFS= read -r line; do
-        line="$(sanitize_text "$line")"
-        [[ -z "$line" ]] && continue
-        target="$(sesh_tmux_target "$line")"
-        printf 'sesh_tmux\t%s\t%s\t%s\n' "$line" "$line" "$target"
-      done < <(sesh list -t --icons 2>/dev/null)
-      ;;
-    configs)
+  all)
+    output="$(sesh list --icons 2>/dev/null || true)"
+    if [[ -n "$output" ]]; then
       while IFS= read -r line; do
         line="$(sanitize_text "$line")"
         [[ -n "$line" ]] && printf 'sesh\t%s\t%s\n' "$line" "$line"
-      done < <(sesh list -c --icons 2>/dev/null)
-      ;;
-    zoxide)
-      while IFS= read -r line; do
-        line="$(sanitize_text "$line")"
-        [[ -n "$line" ]] && printf 'sesh\t%s\t%s\n' "$line" "$line"
-      done < <(sesh list -z --icons 2>/dev/null)
-      ;;
-    *)
-      return 1
-      ;;
+      done <<<"$output"
+    else
+      source_sesh tmux
+      source_sesh configs
+      source_sesh zoxide
+    fi
+    ;;
+  tmux)
+    while IFS= read -r line; do
+      line="$(sanitize_text "$line")"
+      [[ -z "$line" ]] && continue
+      target="$(sesh_tmux_target "$line")"
+      printf 'sesh_tmux\t%s\t%s\t%s\n' "$line" "$line" "$target"
+    done < <(sesh list -t --icons 2>/dev/null)
+    ;;
+  configs)
+    while IFS= read -r line; do
+      line="$(sanitize_text "$line")"
+      [[ -n "$line" ]] && printf 'sesh\t%s\t%s\n' "$line" "$line"
+    done < <(sesh list -c --icons 2>/dev/null)
+    ;;
+  zoxide)
+    while IFS= read -r line; do
+      line="$(sanitize_text "$line")"
+      [[ -n "$line" ]] && printf 'sesh\t%s\t%s\n' "$line" "$line"
+    done < <(sesh list -z --icons 2>/dev/null)
+    ;;
+  *)
+    return 1
+    ;;
   esac
 }
 
@@ -410,12 +455,12 @@ preview_any() {
   local arg2="${3:-}"
 
   case "$kind" in
-    session) preview_session "$arg1" ;;
-    window) preview_window "$arg1" "$arg2" ;;
-    pane) preview_pane "$arg2" ;;
-    dir) preview_dir "$arg1" ;;
-    sesh|sesh_tmux) preview_sesh "$arg1" ;;
-    *) return 1 ;;
+  session) preview_session "$arg1" ;;
+  window) preview_window "$arg1" "$arg2" ;;
+  pane) preview_pane "$arg2" ;;
+  dir) preview_dir "$arg1" ;;
+  sesh | sesh_tmux) preview_sesh "$arg1" ;;
+  *) return 1 ;;
   esac
 }
 
@@ -446,51 +491,51 @@ kill_selection() {
   local arg2="${3:-}"
 
   case "$kind" in
-    session) tmux kill-session -t "$arg1" ;;
-    sesh_tmux) [[ -n "$arg2" ]] && tmux kill-session -t "$arg2" ;;
-    *) return 0 ;;
+  session) tmux kill-session -t "$arg1" ;;
+  sesh_tmux) [[ -n "$arg2" ]] && tmux kill-session -t "$arg2" ;;
+  *) return 0 ;;
   esac
 }
 
 mode_prompt() {
   case "$1" in
-    all) printf 'tmux> ' ;;
-    sesh) printf 'sesh> ' ;;
-    tmux) printf 'tmux> ' ;;
-    configs) printf 'cfg> ' ;;
-    zoxide) printf 'zoxide> ' ;;
-    sessions) printf 'sesh> ' ;;
-    windows) printf 'win> ' ;;
-    panes) printf 'pane> ' ;;
-    dirs) printf 'find> ' ;;
+  all) printf 'tmux> ' ;;
+  sesh) printf 'sesh> ' ;;
+  tmux) printf 'tmux> ' ;;
+  configs) printf 'cfg> ' ;;
+  zoxide) printf 'zoxide> ' ;;
+  sessions) printf 'sesh> ' ;;
+  windows) printf 'win> ' ;;
+  panes) printf 'pane> ' ;;
+  dirs) printf 'find> ' ;;
   esac
 }
 
 mode_header() {
   case "$1" in
-    all) printf ' ↵ enter open      󰐊 ctrl-a unified  󱂬 ctrl-s sessions  󰖲 ctrl-w windows\n 󰆍 ctrl-p panes    󰲋 ctrl-o sesh      ctrl-t tmux       ctrl-g configs\n 󰁔 ctrl-x zoxide   󰈞 ctrl-f find     󰆴 ctrl-d kill ' ;;
-    sesh) printf ' ↵ enter connect   󰐊 ctrl-a unified  󰲋 ctrl-o sesh       ctrl-t tmux\n  ctrl-g configs  󰁔 ctrl-x zoxide   󰈞 ctrl-f find      󰆴 ctrl-d kill ' ;;
-    tmux) printf ' ↵ enter connect   󰐊 ctrl-a unified  󰲋 ctrl-o sesh       ctrl-t tmux\n  ctrl-g configs  󰁔 ctrl-x zoxide   󰈞 ctrl-f find      󰆴 ctrl-d kill ' ;;
-    configs) printf ' ↵ connect config  󰐊 ctrl-a unified  󰲋 ctrl-o sesh       ctrl-t tmux\n  ctrl-g configs  󰁔 ctrl-x zoxide   󰈞 ctrl-f find ' ;;
-    zoxide) printf ' ↵ connect zoxide  󰐊 ctrl-a unified  󰲋 ctrl-o sesh       ctrl-t tmux\n  ctrl-g configs  󰁔 ctrl-x zoxide   󰈞 ctrl-f find ' ;;
-    sessions) printf ' ↵ enter connect   󰐊 ctrl-a unified  󱂬 ctrl-s sessions  󰖲 ctrl-w windows\n 󰆍 ctrl-p panes    󰲋 ctrl-o sesh      ctrl-t tmux      󰆴 ctrl-d kill ' ;;
-    windows) printf ' ↵ switch window   󰐊 ctrl-a unified  󱂬 ctrl-s sessions  󰖲 ctrl-w windows\n 󰆍 ctrl-p panes    󰲋 ctrl-o sesh      ctrl-t tmux      󰈞 ctrl-f find ' ;;
-    panes) printf ' ↵ switch pane     󰐊 ctrl-a unified  󱂬 ctrl-s sessions  󰖲 ctrl-w windows\n 󰆍 ctrl-p panes    󰲋 ctrl-o sesh      ctrl-t tmux      󰈞 ctrl-f find ' ;;
-    dirs) printf ' ↵ connect dir     󰐊 ctrl-a unified  󰲋 ctrl-o sesh       ctrl-t tmux\n  ctrl-g configs  󰁔 ctrl-x zoxide   󰈞 ctrl-f find ' ;;
+  all) printf ' 󱟀 enter open      󰐊 ctrl-a unified  󱂬 ctrl-s sessions  󰖲 ctrl-w windows\n 󰆍 ctrl-p panes    󰲋 ctrl-o sesh      ctrl-t tmux       ctrl-g configs\n 󰁔 ctrl-x zoxide   󰈞 ctrl-f find     󰆴 ctrl-d kill ' ;;
+  sesh) printf ' 󱟀 enter connect   󰐊 ctrl-a unified  󰲋 ctrl-o sesh       ctrl-t tmux\n  ctrl-g configs  󰁔 ctrl-x zoxide   󰈞 ctrl-f find      󰆴 ctrl-d kill ' ;;
+  tmux) printf ' 󱟀 enter connect   󰐊 ctrl-a unified  󰲋 ctrl-o sesh       ctrl-t tmux\n  ctrl-g configs  󰁔 ctrl-x zoxide   󰈞 ctrl-f find      󰆴 ctrl-d kill ' ;;
+  configs) printf ' 󱟀 connect config  󰐊 ctrl-a unified  󰲋 ctrl-o sesh       ctrl-t tmux\n  ctrl-g configs  󰁔 ctrl-x zoxide   󰈞 ctrl-f find ' ;;
+  zoxide) printf ' 󱟀 connect zoxide  󰐊 ctrl-a unified  󰲋 ctrl-o sesh       ctrl-t tmux\n  ctrl-g configs  󰁔 ctrl-x zoxide   󰈞 ctrl-f find ' ;;
+  sessions) printf ' 󱟀 enter connect   󰐊 ctrl-a unified  󱂬 ctrl-s sessions  󰖲 ctrl-w windows\n 󰆍 ctrl-p panes    󰲋 ctrl-o sesh      ctrl-t tmux      󰆴 ctrl-d kill ' ;;
+  windows) printf ' 󱟀 switch window   󰐊 ctrl-a unified  󱂬 ctrl-s sessions  󰖲 ctrl-w windows\n 󰆍 ctrl-p panes    󰲋 ctrl-o sesh      ctrl-t tmux      󰈞 ctrl-f find ' ;;
+  panes) printf ' 󱟀 switch pane     󰐊 ctrl-a unified  󱂬 ctrl-s sessions  󰖲 ctrl-w windows\n 󰆍 ctrl-p panes    󰲋 ctrl-o sesh      ctrl-t tmux      󰈞 ctrl-f find ' ;;
+  dirs) printf ' 󱟀 connect dir     󰐊 ctrl-a unified  󰲋 ctrl-o sesh       ctrl-t tmux\n  ctrl-g configs  󰁔 ctrl-x zoxide   󰈞 ctrl-f find ' ;;
   esac
 }
 
 mode_preview() {
   case "$1" in
-    all) printf "%s preview any {1} {3} {4}" "$SELF_PATH" ;;
-    sesh) printf "%s preview sesh {3}" "$SELF_PATH" ;;
-    tmux) printf "%s preview sesh {3}" "$SELF_PATH" ;;
-    configs) printf "%s preview sesh {3}" "$SELF_PATH" ;;
-    zoxide) printf "%s preview sesh {3}" "$SELF_PATH" ;;
-    sessions) printf "%s preview session {3}" "$SELF_PATH" ;;
-    windows) printf "%s preview window {3} {4}" "$SELF_PATH" ;;
-    panes) printf "%s preview pane {4}" "$SELF_PATH" ;;
-    dirs) printf "%s preview dir {3}" "$SELF_PATH" ;;
+  all) printf "%s preview any {1} {3} {4}" "$SELF_PATH" ;;
+  sesh) printf "%s preview sesh {3}" "$SELF_PATH" ;;
+  tmux) printf "%s preview sesh {3}" "$SELF_PATH" ;;
+  configs) printf "%s preview sesh {3}" "$SELF_PATH" ;;
+  zoxide) printf "%s preview sesh {3}" "$SELF_PATH" ;;
+  sessions) printf "%s preview session {3}" "$SELF_PATH" ;;
+  windows) printf "%s preview window {3} {4}" "$SELF_PATH" ;;
+  panes) printf "%s preview pane {4}" "$SELF_PATH" ;;
+  dirs) printf "%s preview dir {3}" "$SELF_PATH" ;;
   esac
 }
 
@@ -539,54 +584,66 @@ browse() {
   IFS=$'\t' read -r kind display arg1 arg2 arg3 _rest <<<"$selection"
 
   case "$kind" in
-    session) open_session "$arg1" ;;
-    window) open_window "$arg1" "$arg2" ;;
-    pane) open_pane "$arg1" "$arg2" ;;
-    dir) open_dir "$arg1" ;;
-    sesh|sesh_tmux) open_sesh "$arg1" ;;
-    *) return 1 ;;
+  session) open_session "$arg1" ;;
+  window) open_window "$arg1" "$arg2" ;;
+  pane) open_pane "$arg1" "$arg2" ;;
+  dir) open_dir "$arg1" ;;
+  sesh | sesh_tmux) open_sesh "$arg1" ;;
+  *) return 1 ;;
   esac
 }
 
 case "${1:-browse}" in
-  browse)
-    shift || true
-    browse "${1:-panes}"
+browse)
+  shift || true
+  browse "${1:-panes}"
+  ;;
+source)
+  case "${2:-}" in
+  all) source_all ;;
+  sesh) source_sesh all ;;
+  tmux) source_sesh tmux ;;
+  configs) source_sesh configs ;;
+  zoxide) source_sesh zoxide ;;
+  sessions) source_sessions ;;
+  windows) source_windows ;;
+  panes) source_panes ;;
+  dirs) source_dirs ;;
+  *) exit 1 ;;
+  esac
+  ;;
+preview)
+  case "${2:-}" in
+  any) preview_any "${3:-}" "${4:-}" "${5:-}" ;;
+  session)
+    shift 2
+    preview_session "$*"
     ;;
-  source)
-    case "${2:-}" in
-      all) source_all ;;
-      sesh) source_sesh all ;;
-      tmux) source_sesh tmux ;;
-      configs) source_sesh configs ;;
-      zoxide) source_sesh zoxide ;;
-      sessions) source_sessions ;;
-      windows) source_windows ;;
-      panes) source_panes ;;
-      dirs) source_dirs ;;
-      *) exit 1 ;;
-    esac
+  window) preview_window "${3:-}" "${4:-}" ;;
+  pane) preview_pane "${3:-}" ;;
+  dir)
+    shift 2
+    preview_dir "$*"
     ;;
-  preview)
-    case "${2:-}" in
-      any) preview_any "${3:-}" "${4:-}" "${5:-}" ;;
-      session) shift 2; preview_session "$*" ;;
-      window) preview_window "${3:-}" "${4:-}" ;;
-      pane) preview_pane "${3:-}" ;;
-      dir) shift 2; preview_dir "$*" ;;
-      sesh) shift 2; preview_sesh "$*" ;;
-      sesh_tmux) shift 2; preview_sesh "$*" ;;
-      *) exit 1 ;;
-    esac
+  sesh)
+    shift 2
+    preview_sesh "$*"
     ;;
-  kill)
-    shift || true
-    kill_selection "${1:-}" "${2:-}" "${3:-}"
+  sesh_tmux)
+    shift 2
+    preview_sesh "$*"
     ;;
-  preview-window)
-    fzf_preview_window
-    ;;
-  *)
-    exit 1
-    ;;
+  *) exit 1 ;;
+  esac
+  ;;
+kill)
+  shift || true
+  kill_selection "${1:-}" "${2:-}" "${3:-}"
+  ;;
+preview-window)
+  fzf_preview_window
+  ;;
+*)
+  exit 1
+  ;;
 esac
